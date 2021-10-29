@@ -52,6 +52,5 @@
       "./node_modules/.bin/eslint --max-warnings=5",
       "pretty-quick --staged"
     ]
-  },
-  "proxy": "http://localhost:5000"
+  }
 }
