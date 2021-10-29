@@ -1,4 +1,4 @@
-# AE Viso - Client project
+
 
 Front-End App: Wild Code School project
 
