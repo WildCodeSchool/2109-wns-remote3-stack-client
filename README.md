@@ -1,5 +1,3 @@
-# Stack - Client project
-
 Front-End App: Wild Code School project
 
 Team:
