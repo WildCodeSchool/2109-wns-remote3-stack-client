@@ -8,10 +8,15 @@ module.exports = {
       jsx: true, // Enable JSX since we're using React
     },
   },
-  plugins: ['@typescript-eslint'],
+  plugins: [],
   settings: {
     react: {
       version: 'detect', // Automatically detect the react version
+    },
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
     },
   },
   env: {
@@ -21,26 +26,50 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
+    'plugin:import/typescript',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
     'plugin:jsx-a11y/recommended',
+    'airbnb', // Import this BEFORE Prettier so prettier config overrides other formatting rules
     'plugin:prettier/recommended',
-    'airbnb', // Make this the last element so prettier config overrides other formatting rules
+  ],
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      rules: {
+        'no-undef': 'off',
+      },
+    },
   ],
   rules: {
-    'prettier/prettier': ['error', {}, { usePrettierrc: true }], // Use our .prettierrc file as source
-    'react/function-component-definition': [
-      2,
-      { namedComponents: 'function-declaration' },
-    ],
+    'no-use-before-define': 'off',
     'no-console': 1,
-    'react/prop-types': 1,
     'no-unused-vars': 'off',
+    '@typescript-eslint/no-use-before-define': ['error'],
     '@typescript-eslint/no-unused-vars': [
       'error',
       { argsIgnorePattern: '^_', ignoreRestSiblings: true },
     ],
+
+    'prettier/prettier': ['error', {}, { usePrettierrc: true }], // Use our .prettierrc file as source
+
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
+    'import/prefer-default-export': 'off',
+
     'react/jsx-filename-extension': [2, { extensions: ['.tsx', '.jsx'] }],
+    'react/react-in-jsx-scope': 'off',
+    'react/function-component-definition': [
+      2,
+      { namedComponents: 'function-declaration' },
+    ],
+    'react/prop-types': 1,
   },
 };
