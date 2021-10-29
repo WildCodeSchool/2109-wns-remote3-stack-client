@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './style/index.css';
 import App from './App';
 import { Provider } from 'react-redux';
 import { store } from './store';
@@ -18,5 +18,5 @@ ReactDOM.render(
       </Provider>
     </ApolloProvider>
   </React.StrictMode>,
-  document.getElementById('root'),
+  document.getElementById('root')
 );

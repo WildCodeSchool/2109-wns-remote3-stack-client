@@ -29,11 +29,17 @@ module.exports = {
   ],
   rules: {
     'prettier/prettier': ['error', {}, { usePrettierrc: true }], // Use our .prettierrc file as source
-    'react/function-component-definition': [2, { namedComponents: 'function-declaration' }],
+    'react/function-component-definition': [
+      2,
+      { namedComponents: 'function-declaration' },
+    ],
     'no-console': 1,
     'react/prop-types': 1,
     'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', ignoreRestSiblings: true }],
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      { argsIgnorePattern: '^_', ignoreRestSiblings: true },
+    ],
     'react/jsx-filename-extension': [2, { extensions: ['.tsx', '.jsx'] }],
   },
 };
