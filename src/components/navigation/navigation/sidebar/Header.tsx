@@ -12,11 +12,11 @@ function Header({ setIsSidebar }: IProps): JSX.Element {
     <div className="flex items-center w-full justify-between">
       <Link to="/settings">
         <button onClick={() => setIsSidebar(false)} type="button">
-          <img className="h-8 lg:h-5" src={settings} alt="settings" />
+          <img className="h-6 lg:h-5" src={settings} alt="settings" />
         </button>
       </Link>
       <button type="button" onClick={() => setIsSidebar(false)}>
-        <img className="h-6 lg:h-4" src={close} alt="close" />
+        <img className="h-5 lg:h-4" src={close} alt="close" />
       </button>
     </div>
   );

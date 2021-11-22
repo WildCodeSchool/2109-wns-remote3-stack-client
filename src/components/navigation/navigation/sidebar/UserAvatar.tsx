@@ -28,7 +28,7 @@ function UserAvatar({ setIsSidebar }: IProps): JSX.Element {
               backgroundSize: 'cover',
             }}
           />
-          <div className="flex flex-col items-start lg:ml-2">
+          <div className="flex flex-col items-center lg:ml-2">
             <div className="flex  font-bold text-purple text-2xl lg:text-base mt-2 lg:mt-0">
               <p>Welcome</p>
               <p className="ml-2">{user.username}</p>
