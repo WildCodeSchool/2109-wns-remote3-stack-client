@@ -14,6 +14,9 @@ module.exports = {
         lightPurple: '#8790E0',
         lightBlue: '#32C9E5',
       },
+      width: {
+        desktopSidebar: '20%',
+      },
     },
   },
   variants: {

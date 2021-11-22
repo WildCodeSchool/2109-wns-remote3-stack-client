@@ -4,12 +4,9 @@ import { RootState } from '.';
 
 export interface UserState {
   id?: string;
-  firstName?: string;
-  lastName?: string;
+  username?: string;
   email?: string;
-  role?: 'USER' | 'ADMIN' | 'SUPERADMIN' | null;
-  companyId?: string;
-  jobId?: string;
+  avatarUrl?: string;
 }
 
 interface UserStateWithLogged extends UserState {
@@ -34,6 +31,8 @@ interface ReturnUseUserFromStore {
 
 const initialState: UserStateWithLogged = {
   logged: false,
+  username: 'John',
+  email: 'john@gmail.com',
 };
 
 export const userSlice = createSlice({
