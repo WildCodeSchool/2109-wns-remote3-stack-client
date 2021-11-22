@@ -1,15 +1,12 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 
 import userReducer from './user.slice';
 
-const customizedMiddleware = getDefaultMiddleware({
-  serializableCheck: false,
-});
-
 export const store = configureStore({
   reducer: { user: userReducer },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }),
   devTools: true,
-  middleware: customizedMiddleware,
 });
 
 // Redux dependencies types

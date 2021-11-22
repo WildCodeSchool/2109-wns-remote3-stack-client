@@ -1,5 +1,3 @@
-# AE Viso - Client project
-
 Front-End App: Wild Code School project
 
 Team:
@@ -14,32 +12,33 @@ THIS APP ONLY WORKS WITH API:
 
 Don't forget to run the API before starting the client :
 
-- run `$ git clone https://github.com/WildCodeSchool/btz-0321-aeviso-client.git`  
+- run `$ git clone  
   in your terminal
-- run `$ cd btz-0321-aeviso-client`
+- run `$ cd
 - run `npm install `
 
 ## First Log
 
-Use the USER_EMAIL and USER_PASSWORD in the Environment Variables from the API to log you in.
 
 ## Development
 
 Run development server
 
 - run `npm run dev`
+- run `yarn dev`
 
 ## Production
 
 Build the project
 
 - run `npm run build`
+- run `yarn build`
 
 ## ES lint
 
 Run ES lint checks
 
-- run `npm run lint`
+- run `yarn lint`
 
 ## Build preview
 

@@ -39,13 +39,15 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<UserState>) => {
-      return { ...action.payload, logged: true };
-    },
+    login: (state, action: PayloadAction<UserState>) => ({
+      ...action.payload,
+      logged: true,
+    }),
     logout: () => initialState,
-    update: (state, action: PayloadAction<UserState>) => {
-      return { ...state, ...action.payload };
-    },
+    update: (state, action: PayloadAction<UserState>) => ({
+      ...state,
+      ...action.payload,
+    }),
   },
 });
 
@@ -57,7 +59,12 @@ export const useUserFromStore = (): ReturnUseUserFromStore => {
   const dispatchLogin = (payload: UserState) => dispatch(login(payload));
   const dispatchLogout = () => dispatch(logout());
   const dispatchUser = (payload: UserState) => dispatch(update(payload));
-  return { user, dispatchLogin, dispatchLogout, dispatchUser };
+  return {
+    user,
+    dispatchLogin,
+    dispatchLogout,
+    dispatchUser,
+  };
 };
 
 export default userSlice.reducer;
