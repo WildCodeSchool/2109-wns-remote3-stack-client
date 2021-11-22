@@ -17,7 +17,7 @@ function LinkButton({ item, setIsSidebar }: IProps): JSX.Element {
         <button
           type="button"
           onClick={() => setIsSidebar(false)}
-          className="bg-darkGray shadow-purple p-5 lg:py-5 lg:px-0 my-5 lg:my-0 w-full rounded-lg flex items-center"
+          className="bg-darkGray shadow-purple lg:shadow-none p-5 lg:py-5 lg:px-0 my-5 lg:my-0 w-full rounded-lg flex items-center"
         >
           <img src={item.icon} alt="icon" />
           <p className="ml-4">{item.name}</p>
