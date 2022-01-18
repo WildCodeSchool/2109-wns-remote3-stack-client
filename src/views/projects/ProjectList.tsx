@@ -19,10 +19,12 @@ function ProjectList(): JSX.Element {
     },
   });
 
+  // ON CREATED PROJECT ! ADD THE CREATED PROJECT TO THE ARRAY
   const onProjectCreated = (p: IProjectList) => {
     setData([...data, p]);
   };
 
+  // REVERSE THE ARRAY THE RENDER THE YOUNGER ONE IN FIRST
   const reverseData = [...data].reverse();
 
   if (loading) {

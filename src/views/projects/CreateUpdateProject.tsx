@@ -24,6 +24,8 @@ function CreateUpdateProject({
 }: IProps): JSX.Element {
   const { handleSubmit, register } = useForm();
   const [dateError, setDateError] = useState('');
+
+  // CREATE A NEW PROJECT
   const [create, { loading, error }] = useMutation<{
     createProject: IProjectList;
   }>(CREATE_PROJECT, {
@@ -37,15 +39,17 @@ function CreateUpdateProject({
     const date1 = new Date(data.startDate);
     const date2 = new Date(data.endDate);
 
+    // COMPARE STARTDATE AND ENDDATE
     if (date1 > date2) {
+      // IF THE USER SELECT A ENDDATE OLDER THAN THE STARTDATE RETURN A ERROR
       setDateError(`You can't choose a EndDate older than the startDate`);
     } else {
       const projectData = {
         name: data.name,
         description: data.description,
         status: data.status,
-        startDate: new Date(data.startDate),
-        endDate: new Date(data.endDate),
+        startDate: date1,
+        endDate: date2,
         estimeeSpentTime: parseInt(data.estimeeSpentTime, 10),
       };
       create({ variables: projectData });
