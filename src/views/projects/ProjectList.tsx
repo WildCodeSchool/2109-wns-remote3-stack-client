@@ -29,19 +29,24 @@ function ProjectList(): JSX.Element {
 
   return (
     <div className="py-5 lg:py-0">
-      <HeaderList setIsForm={setIsForm} />
+      <HeaderList name="Projects List" setIsForm={setIsForm} />
       <div className={`${isForm && 'flex'}`}>
         {isForm && (
           <CreateUpdateProject setIsForm={setIsForm} isForm={isForm} />
         )}
         <div
-          className={`mt-2 ${
-            isForm && 'hidden lg:flex lg:flex-col lg:w-6/12 pl-5'
+          className={`${
+            isForm ? 'hidden lg:flex lg:flex-col lg:w-6/12 pl-5' : 'mt-2'
           }`}
         >
           {data.map((item) => {
             return <OneProject isForm={isForm} item={item} />;
           })}
+          {data.length === 0 && (
+            <p className="font-normal lg:py-5 py-2 text-purple">
+              There is no projects for now
+            </p>
+          )}
         </div>
       </div>
     </div>

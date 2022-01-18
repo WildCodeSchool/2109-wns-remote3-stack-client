@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
+import { useForm } from 'react-hook-form';
 import close from '../../assets/icons/close.svg';
 
 interface IProps {
@@ -7,6 +8,11 @@ interface IProps {
 }
 
 function CreateUpdateProject({ isForm, setIsForm }: IProps): JSX.Element {
+  const { handleSubmit } = useForm();
+
+  const onSubmit = () => {
+    console.log('hello');
+  };
   return (
     <div
       className={`py-4 w-0 border-r border-purple  pr-5 ${
@@ -19,6 +25,12 @@ function CreateUpdateProject({ isForm, setIsForm }: IProps): JSX.Element {
           <img className="h-5 w-5" src={close} alt="" />
         </button>
       </div>
+
+      <form onSubmit={handleSubmit(onSubmit)} action="create/Update project">
+        <label htmlFor="name">
+          <input type="text" />
+        </label>
+      </form>
     </div>
   );
 }

@@ -4,23 +4,22 @@ import add from '../../assets/icons/add.svg';
 
 interface IProps {
   setIsForm: Dispatch<SetStateAction<boolean>>;
+  name: string;
 }
 
-function HeaderList({ setIsForm }: IProps): JSX.Element {
+function HeaderList({ setIsForm, name }: IProps): JSX.Element {
   const { pathname } = useLocation();
 
   return (
     <div>
-      <h1 className="text-2xl font-lexend text-purple">Project List</h1>
+      <h1 className="text-2xl mt-2 font-lexend text-purple">{name}</h1>
       <div className="flex w-full justify-between mt-5 border-b border-purple pb-2">
         <div className="flex">
           <Link
-            className={` mr-2 lg:mr-4 ${
-              pathname === '/tasks' && 'text-purple'
-            }`}
+            className={`mr-4 ${pathname === '/tasks' && 'text-purple'}`}
             to="/tasks"
           >
-            Task
+            Tasks
           </Link>
           <Link
             className={`${pathname === '/projects' && 'text-purple'}`}
@@ -35,7 +34,7 @@ function HeaderList({ setIsForm }: IProps): JSX.Element {
           className="flex items-center"
         >
           <img className="h-4 w-4 mr-2" src={add} alt="" />
-          Add Projects
+          {name === 'Projects List' ? <p> Add Projects</p> : <p>Create task</p>}
         </button>
       </div>
     </div>

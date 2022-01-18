@@ -4,7 +4,7 @@ import HomePage from './views/HomePage';
 import Profil from './views/Profil';
 import ProjectList from './views/projects/ProjectList';
 import Settings from './views/Settings';
-import TaskList from './views/TaskList';
+import TaskList from './views/tasks/TaskList';
 import UsersList from './views/UsersList';
 
 function Routes(): JSX.Element {
