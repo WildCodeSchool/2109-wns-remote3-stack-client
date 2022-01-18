@@ -15,7 +15,7 @@ function OneProject({ item, isForm }: IProps): JSX.Element {
         key={item.id}
       >
         <div className="flex flex-col items-start">
-          <p className="text-xl">Name: {item.name}</p>
+          <p className="text-xl">{item.name}</p>
           <div
             className={`flex flex-col lg:flex-row items-start mt-2 ${
               isForm ? 'text-xs' : 'text-sm'
@@ -33,7 +33,7 @@ function OneProject({ item, isForm }: IProps): JSX.Element {
             </p>
           </div>
         </div>
-        <p className="mt-2">Status: {item.status}</p>
+        <p className="mt-2 border rounded-full px-6">{item.status}</p>
       </button>
     </Link>
   );

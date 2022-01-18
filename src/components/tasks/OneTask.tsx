@@ -15,7 +15,7 @@ function OneTask({ item, isForm }: IProps): JSX.Element {
         key={item.id}
       >
         <div className="flex flex-col items-start">
-          <p className="text-xl">Subject: {item.subject}</p>
+          <p className="text-xl">{item.subject}</p>
           <div
             className={`flex flex-col lg:flex-row items-start mt-2 ${
               isForm ? 'text-xs' : 'text-sm'
@@ -33,7 +33,7 @@ function OneTask({ item, isForm }: IProps): JSX.Element {
             </p>
           </div>
         </div>
-        <p className="mt-2">Advancement: {item.advancement}</p>
+        <p className="mt-2 rounded-full border px-6">{item.advancement}</p>
       </button>
     </Link>
   );
