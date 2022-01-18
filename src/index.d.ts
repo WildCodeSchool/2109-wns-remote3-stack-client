@@ -7,6 +7,15 @@ interface IProjectList {
   estimeeSpentTime: string;
 }
 
+interface IProjectPayload {
+  name: string;
+  description: string;
+  status: string;
+  startDate: string;
+  endDate: string;
+  estimeeSpentTime: string;
+}
+
 interface IUser {
   id: string;
   email: string;

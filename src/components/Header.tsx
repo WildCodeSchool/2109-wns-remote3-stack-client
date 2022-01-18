@@ -9,7 +9,7 @@ interface IProps {
 
 function Header({ setIsSidebar }: IProps): JSX.Element {
   return (
-    <div className="flex lg:flex-row-reverse  items-center w-full justify-between">
+    <div className="flex lg:hidden px-3 pt-5 lg:flex-row-reverse  items-center w-full justify-between">
       <Link to="/tasks">
         <img className="h-10" src={logo} alt="stack" />
       </Link>
