@@ -8,6 +8,7 @@ import TaskList from './views/tasks/TaskList';
 import UsersList from './views/UsersList';
 import Page404 from './views/Page404';
 import ProjectDetails from './views/projects/ProjectDetails';
+import TaskDetails from './views/tasks/TaskDetails';
 
 function Routes(): JSX.Element {
   return (
@@ -22,6 +23,7 @@ function Routes(): JSX.Element {
       <Route exact path="/profil" component={Profil} />
       <Route exact path="/error404" component={Page404} />
       <Route path="/project/:id" component={ProjectDetails} />
+      <Route path="/task/:id" component={TaskDetails} />
     </div>
   );
 }

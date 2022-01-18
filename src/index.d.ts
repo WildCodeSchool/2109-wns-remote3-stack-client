@@ -32,6 +32,20 @@ interface ITaskList {
   estimeeSpentTime: string;
 }
 
+interface ITask {
+  getTaskByID: getTaskByID;
+}
+
+interface getTaskByID {
+  id: string;
+  subject: string;
+  projectId: string;
+  advancement: string;
+  startDate: string;
+  endDate: string;
+  estimeeSpentTime: string;
+}
+
 interface IUser {
   id: string;
   email: string;
