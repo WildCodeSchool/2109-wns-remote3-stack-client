@@ -1,7 +1,38 @@
 import React from 'react';
+import { useQuery } from '@apollo/client';
+import { RouteComponentProps } from 'react-router-dom';
 
-function ProjectDetails(): JSX.Element {
-  return <div>PROJECTDETAILS</div>;
+import * as queries from '../../API/queries/projectQueries';
+
+function ProjectDetails({
+  match,
+}: RouteComponentProps<{ id?: string }>): JSX.Element {
+  const idProject = match.params.id;
+
+  const { loading, error, data } = useQuery<IProject>(queries.GetOneProject, {
+    variables: { getProjectByIdId: idProject },
+  });
+  if (loading) {
+    return <p>...loading</p>;
+  }
+  if (error) {
+    return <p>error</p>;
+  }
+
+  return (
+    <div className="lg:flex justify-between mt-9">
+      {data && (
+        <div className="lg:w-1/2">
+          <h1
+            style={{ borderBottom: '2px solid #8790E0' }}
+            className="text-xl text-lightPurple border-2 border-transparent pb-2 w-full"
+          >
+            PROJECT {data.getProjectByID.name.toUpperCase()}
+          </h1>
+          <p className="mt-5">{data.getProjectByID.description}</p>
+        </div>
+      )}
+    </div>
+  );
 }
-
 export default ProjectDetails;

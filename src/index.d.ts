@@ -7,6 +7,20 @@ interface IProjectList {
   estimeeSpentTime: string;
 }
 
+interface IProject {
+  getProjectByID: getProjectByID;
+}
+
+interface getProjectByID {
+  id: string;
+  name: string;
+  description: string;
+  status: string;
+  startDate: string;
+  endDate: string;
+  estimeeSpentTime: string;
+}
+
 interface IUser {
   id: string;
   email: string;
