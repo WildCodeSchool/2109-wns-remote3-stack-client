@@ -29,9 +29,15 @@ function ProjectDetails({
               style={{ borderBottom: '2px solid #8790E0' }}
               className="text-xl text-lightPurple border-2 border-transparent pb-2 w-full"
             >
-              PROJECT {data.getProjectByID.name.toUpperCase()}
+              Project {data.getProjectByID.name}
             </h1>
             <p className="mt-5">{data.getProjectByID.description}</p>
+            <h2
+              style={{ borderBottom: '2px solid #8790E0' }}
+              className="text-xl text-lightPurple border-2 border-transparent mt-14 pb-2 w-full"
+            >
+              Project Tasks
+            </h2>
           </div>
           <div className="lg:w-1/2">
             <ProjectOwner />
