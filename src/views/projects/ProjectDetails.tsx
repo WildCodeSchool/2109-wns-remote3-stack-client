@@ -21,7 +21,10 @@ function ProjectDetails(): JSX.Element {
   return (
     <>
       {data && (
-        <div className="lg:flex justify-between mt-9">
+        <div className="lg:flex lg:flex-row-reverse justify-between mt-9">
+          <div className="lg:w-1/2">
+            <ProjectOwner />
+          </div>
           <div className="lg:w-1/2">
             <h1
               style={{ borderBottom: '2px solid #8790E0' }}
@@ -39,9 +42,6 @@ function ProjectDetails(): JSX.Element {
             {data.getProjectByID.tasks.map((item) => {
               return <OneTask isForm={false} item={item} />;
             })}
-          </div>
-          <div className="lg:w-1/2">
-            <ProjectOwner />
           </div>
         </div>
       )}

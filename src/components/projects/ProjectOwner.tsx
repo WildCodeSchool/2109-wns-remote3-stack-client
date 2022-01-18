@@ -3,7 +3,7 @@ import dfltAvatar from '../../assets/DefaultAvatar.webp';
 
 function ProjectOwner(): JSX.Element {
   return (
-    <div className="flex items-center float-right">
+    <div className="flex items-center pb-5 lg:float-right">
       <div
         className="h-24 lg:h-8 w-24 lg:w-8 rounded-full border-4 lg:border-2 border-purple"
         style={{
