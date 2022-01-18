@@ -31,6 +31,7 @@ function CreateUpdateProject({
   }>(CREATE_PROJECT, {
     onCompleted: (p: { createProject: IProjectList }) => {
       toast('New project successfully created');
+      // ON SUCCESS WE CALL THE PROJECT CREATED FUNCTION FROM THE PARENT
       onProjectCreated(p.createProject);
     },
   });
