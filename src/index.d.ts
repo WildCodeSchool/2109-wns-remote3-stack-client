@@ -17,3 +17,12 @@ interface IUser {
   createdAt: Date;
   updatedAt: Date;
 }
+
+interface ITaskList {
+  id: string;
+  subject: string;
+  startDate: string;
+  endDate: string;
+  estimeeSpentTime: string;
+  advancement: string;
+}
