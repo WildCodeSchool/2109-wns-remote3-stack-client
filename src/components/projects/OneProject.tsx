@@ -8,7 +8,7 @@ interface IProps {
 
 function OneProject({ item, isForm }: IProps): JSX.Element {
   return (
-    <Link to={`/project/:${item.id}`}>
+    <Link to={`/project/${item.id}`}>
       <button
         type="button"
         className="w-full bg-darkGray border border-lightGray transform hover:border-lightPurple  hover:bg-transparent duration-500 rounded-md my-5 lg:my-3 p-2 lg:p-5 flex flex-col lg:flex-row lg:items-end  lg:justify-between"

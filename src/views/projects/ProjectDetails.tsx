@@ -1,18 +1,15 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import { RouteComponentProps } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import * as queries from '../../API/queries/projectQueries';
 import ProjectOwner from '../../components/projects/ProjectOwner';
 import OneTask from '../../components/tasks/OneTask';
 
-function ProjectDetails({
-  match,
-}: RouteComponentProps<{ id?: string }>): JSX.Element {
-  const idProject = match.params.id;
-
+function ProjectDetails(): JSX.Element {
+  const { id }: { id: string } = useParams();
   const { loading, error, data } = useQuery<IProject>(queries.GetOneProject, {
-    variables: { getProjectByIdId: idProject },
+    variables: { getProjectByIdId: id },
   });
   if (loading) {
     return <p>...loading</p>;
