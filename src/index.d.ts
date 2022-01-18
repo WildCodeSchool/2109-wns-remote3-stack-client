@@ -19,6 +19,17 @@ interface getProjectByID {
   startDate: string;
   endDate: string;
   estimeeSpentTime: string;
+  tasks: ITaskList[];
+}
+
+interface ITaskList {
+  id: string;
+  subject: string;
+  projectId: string;
+  advancement: string;
+  startDate: string;
+  endDate: string;
+  estimeeSpentTime: string;
 }
 
 interface IUser {

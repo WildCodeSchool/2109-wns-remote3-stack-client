@@ -19,6 +19,15 @@ export const GetOneProject = gql`
       name
       description
       status
+      tasks {
+        id
+        subject
+        projectId
+        startDate
+        endDate
+        estimeeSpentTime
+        advancement
+      }
       startDate
       endDate
       estimeeSpentTime

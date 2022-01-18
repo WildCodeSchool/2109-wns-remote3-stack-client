@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { RouteComponentProps } from 'react-router-dom';
 
 import * as queries from '../../API/queries/projectQueries';
 import ProjectOwner from '../../components/projects/ProjectOwner';
+import OneTask from '../../components/tasks/OneTask';
 
 function ProjectDetails({
   match,
@@ -38,6 +39,9 @@ function ProjectDetails({
             >
               Project Tasks
             </h2>
+            {data.getProjectByID.tasks.map((item) => {
+              return <OneTask isForm={false} item={item} />;
+            })}
           </div>
           <div className="lg:w-1/2">
             <ProjectOwner />
