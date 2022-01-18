@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import arrow from '../assets/icons/arrow.svg';
-import logoWithoutText from '../assets/logoWithoutText.svg';
+import arrow from '@assets/icons/arrow.svg';
+import logoWithoutText from '@assets/logoWithoutText.svg';
 
 function Header(): JSX.Element {
   return (

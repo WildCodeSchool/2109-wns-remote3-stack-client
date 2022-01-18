@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
-import close from '../../assets/icons/close.svg';
+import close from '@assets/icons/close.svg';
 
 interface IProps {
   isForm: boolean;

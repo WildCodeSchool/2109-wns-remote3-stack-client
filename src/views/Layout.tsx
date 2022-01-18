@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Switch } from 'react-router-dom';
 
+import Sidebar from '@components/navigation/Sidebar';
+import Header from '@components/Header';
 import Routes from '../router';
-import Sidebar from '../components/navigation/Sidebar';
-import Header from '../components/Header';
 
 function Layout(): JSX.Element {
   const [isSideBar, setIsSidebar] = useState(false);

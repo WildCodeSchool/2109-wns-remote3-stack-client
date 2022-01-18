@@ -1,9 +1,9 @@
 import { useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 
-import * as queries from '../../API/queries/projectQueries';
-import HeaderList from '../../components/navigation/HeaderList';
-import OneProject from '../../components/projects/OneProject';
+import * as queries from '@api/queries/projectQueries';
+import HeaderList from '@components/navigation/HeaderList';
+import OneProject from '@components/projects/OneProject';
 import CreateUpdateProject from './CreateUpdateProject';
 
 interface IResponse {

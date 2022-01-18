@@ -1,12 +1,12 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import HomePage from './views/HomePage';
-import Profil from './views/Profil';
-import ProjectList from './views/projects/ProjectList';
-import Settings from './views/Settings';
-import TaskList from './views/tasks/TaskList';
-import UsersList from './views/UsersList';
-import Page404 from './views/Page404';
+import HomePage from '@views/HomePage';
+import Profil from '@views/Profil';
+import ProjectList from '@views/projects/ProjectList';
+import Settings from '@views/Settings';
+import TaskList from '@views/tasks/TaskList';
+import UsersList from '@views/UsersList';
+import Page404 from '@views/Page404';
 
 function Routes(): JSX.Element {
   return (
@@ -19,7 +19,7 @@ function Routes(): JSX.Element {
       <Route exact path="/users" component={UsersList} />
       <Route exact path="/settings" component={Settings} />
       <Route exact path="/profil" component={Profil} />
-      <Route exact path="/error404" component={Page404} />
+      <Route path="/*" component={Page404} />
     </div>
   );
 }
