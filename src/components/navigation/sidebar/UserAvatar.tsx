@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
-import { useUserFromStore } from '../../../../store/user.slice';
-import dfltAvatar from '../../../../assets/DefaultAvatar.webp';
+import { useUserFromStore } from '../../../store/user.slice';
+import dfltAvatar from '../../../assets/DefaultAvatar.webp';
 
 interface IProps {
   setIsSidebar: Dispatch<SetStateAction<boolean>>;
@@ -15,7 +15,7 @@ function UserAvatar({ setIsSidebar }: IProps): JSX.Element {
         <button
           onClick={() => setIsSidebar(false)}
           type="button"
-          className="w-full flex flex-col lg:flex-row items-center py-5"
+          className="w-full flex flex-col lg:flex-row items-center py-3"
         >
           <div
             className="h-24 lg:h-8 w-24 lg:w-8 rounded-full border-4 lg:border-2 border-purple"

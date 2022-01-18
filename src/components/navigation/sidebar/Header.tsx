@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
-import close from '../../../../assets/icons/close.svg';
-import settings from '../../../../assets/icons/settings.svg';
+import close from '../../../assets/icons/close.svg';
+import settings from '../../../assets/icons/settings.svg';
 
 interface IProps {
   setIsSidebar: Dispatch<SetStateAction<boolean>>;
@@ -16,7 +16,7 @@ function Header({ setIsSidebar }: IProps): JSX.Element {
         </button>
       </Link>
       <button type="button" onClick={() => setIsSidebar(false)}>
-        <img className="h-5 lg:h-4" src={close} alt="close" />
+        <img className="h-5 lg:h-4 lg:hidden" src={close} alt="close" />
       </button>
     </div>
   );

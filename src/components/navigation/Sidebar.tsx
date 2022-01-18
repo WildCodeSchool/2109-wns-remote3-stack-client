@@ -6,11 +6,18 @@ import UserAvatar from './sidebar/UserAvatar';
 
 interface IProps {
   setIsSidebar: Dispatch<SetStateAction<boolean>>;
+  isSideBar: boolean;
 }
 
-function Sidebar({ setIsSidebar }: IProps): JSX.Element {
+function Sidebar({ setIsSidebar, isSideBar }: IProps): JSX.Element {
   return (
-    <div className="w-screen lg:w-desktopSidebar h-screen bg-darkBlue lg:bg-darkGray px-5 py-8 fixed inset-0">
+    <div
+      className={`w-screen lg:w-desktopSidebar h-screen bg-darkBlue lg:bg-darkGray px-5 py-8 fixed inset-0 ${
+        isSideBar
+          ? 'transform translate-x-0 duration-500'
+          : 'transform -translate-x-full lg:translate-x-0 duration-500'
+      }`}
+    >
       <Header setIsSidebar={setIsSidebar} />
       <div className="h-full flex flex-col lg:justify-between lg:py-10">
         <div>
