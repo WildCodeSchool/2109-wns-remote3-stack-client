@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import './style/index.css';
 import { ApolloProvider } from '@apollo/client';
 import { Provider } from 'react-redux';
+import { client } from '@api/client';
 import { ToastContainer } from 'react-toastify';
 import App from './App';
 import { store } from './store';
-import { client } from './API/client';
 import 'react-toastify/dist/ReactToastify.css';
 
 ReactDOM.render(

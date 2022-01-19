@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../assets/logo.svg';
-import burger from '../assets/icons/burger.svg';
+import logo from '@assets/logo.svg';
+import burger from '@assets/icons/burger.svg';
 
 interface IProps {
   setIsSidebar: Dispatch<SetStateAction<boolean>>;

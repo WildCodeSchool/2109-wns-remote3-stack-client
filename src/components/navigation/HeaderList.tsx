@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import add from '../../assets/icons/add.svg';
+import add from '@assets/icons/add.svg';
 
 interface IProps {
   setIsForm: Dispatch<SetStateAction<boolean>>;

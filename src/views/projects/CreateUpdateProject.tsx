@@ -2,9 +2,8 @@ import { useMutation } from '@apollo/client';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-
+import close from '@assets/icons/close.svg';
 import { CREATE_PROJECT } from '../../API/mutation/createProject';
-import close from '../../assets/icons/close.svg';
 import DateInput from '../../components/formInput/DateInput';
 import NumberInput from '../../components/formInput/NumberInput';
 import SelectInput from '../../components/formInput/SelectInput';
