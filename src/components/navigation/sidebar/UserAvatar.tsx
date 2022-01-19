@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
-import { useUserFromStore } from '../../../store/user.slice';
-import dfltAvatar from '../../../assets/DefaultAvatar.webp';
+import { useUserFromStore } from '@store/user.slice';
+import dfltAvatar from '@assets/DefaultAvatar.webp';
 
 interface IProps {
   setIsSidebar: Dispatch<SetStateAction<boolean>>;

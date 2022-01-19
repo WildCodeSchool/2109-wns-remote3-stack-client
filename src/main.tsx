@@ -4,9 +4,9 @@ import './style/index.css';
 import { ApolloProvider } from '@apollo/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { client } from '@api/client';
 import App from './App';
 import { store } from './store';
-import { client } from './API/client';
 
 ReactDOM.render(
   <React.StrictMode>

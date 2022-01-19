@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
-import close from '../../../assets/icons/close.svg';
-import settings from '../../../assets/icons/settings.svg';
+import close from '@assets/icons/close.svg';
+import settings from '@assets/icons/settings.svg';
 
 interface IProps {
   setIsSidebar: Dispatch<SetStateAction<boolean>>;
