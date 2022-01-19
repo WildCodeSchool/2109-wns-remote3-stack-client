@@ -64,6 +64,16 @@ interface getTaskByID {
   endDate: string;
   estimeeSpentTime: string;
 }
+interface ITagList {
+  id: string;
+  label: string;
+  color: string;
+}
+
+interface ITagPayload {
+  label: string;
+  color: string;
+}
 
 interface IUser {
   id: string;

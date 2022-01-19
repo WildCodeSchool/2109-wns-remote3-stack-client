@@ -7,7 +7,7 @@ import { CREATE_TASK } from '../../API/mutation/createTask';
 import { GET_ALL_PROJECTS } from '../../API/queries/projectQueries';
 import DateInput from '../../components/formInput/DateInput';
 import NumberInput from '../../components/formInput/NumberInput';
-import SelectInputId from '../../components/formInput/SelectInputId';
+import SelectInputId from '../../components/formInput/SelectInputProjectId';
 import SelectInput from '../../components/formInput/SelectInput';
 import TextInput from '../../components/formInput/TextInput';
 
