@@ -1,7 +1,7 @@
-import task from '../../assets/icons/task.svg';
-import projects from '../../assets/icons/projects.svg';
-import users from '../../assets/icons/users.svg';
-import home from '../../assets/icons/home.svg';
+import task from '@assets/icons/task.svg';
+import projects from '@assets/icons/projects.svg';
+import users from '@assets/icons/users.svg';
+import home from '@assets/icons/home.svg';
 
 export const nav = [
   { icon: home, name: 'Home', link: '/' },
