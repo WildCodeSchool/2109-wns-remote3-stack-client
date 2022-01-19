@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
-
-import * as queries from '../../API/queries/projectQueries';
-import ProjectOwner from '../../components/projects/ProjectOwner';
-import OneTask from '../../components/tasks/OneTask';
+import ProjectTask from '@components/projects/ProjectTask';
+import { GetOneProject } from '@api/queries/projectQueries';
+import ProjectInformations from '@components/projects/ProjectInformations';
+import ProjectUser from '@components/projects/ProjectUser';
+import NavMobile from '@components/projects/NavMobile';
+import CreateUpdateProject from './CreateUpdateProject';
 
 function ProjectDetails(): JSX.Element {
   const { id }: { id: string } = useParams();
-  const { loading, error, data } = useQuery<IProject>(queries.GetOneProject, {
+  const [navLink, setNavLink] = useState('task');
+  const [isModal, setIsModal] = useState(false);
+  const { loading, error, data } = useQuery<IProject>(GetOneProject, {
     variables: { getProjectByIdId: id },
   });
+
   if (loading) {
     return <p>...loading</p>;
   }
@@ -21,27 +26,29 @@ function ProjectDetails(): JSX.Element {
   return (
     <>
       {data && (
-        <div className="lg:flex lg:flex-row-reverse justify-between mt-9">
-          <div className="lg:w-1/2">
-            <ProjectOwner />
+        <div className="lg:flex flex-col justify-between mx-5 my-8">
+          <div className="lg:flex lg:flex-row flex flex-col-reverse">
+            <div className="lg:w-1/2 mt-7 lg:mt-0  lg:mr-10">
+              <h1 className="text-xl text-lightPurple border-b border-lightPurple pb-2 w-full">
+                Name: {data.getProjectByID.name}
+              </h1>
+              <p className="mt-5 font-thin text-sm leading-6 pr-5">
+                {data.getProjectByID.description}
+              </p>
+            </div>
+            <ProjectInformations setIsModal={setIsModal} data={data} />
+            {isModal && (
+              <CreateUpdateProject projectId={id} setIsModal={setIsModal} />
+            )}
           </div>
-          <div className="lg:w-1/2">
-            <h1
-              style={{ borderBottom: '2px solid #8790E0' }}
-              className="text-xl text-lightPurple border-2 border-transparent pb-2 w-full"
-            >
-              Project {data.getProjectByID.name}
-            </h1>
-            <p className="mt-5">{data.getProjectByID.description}</p>
-            <h2
-              style={{ borderBottom: '2px solid #8790E0' }}
-              className="text-xl text-lightPurple border-2 border-transparent mt-14 pb-2 w-full"
-            >
-              Project Tasks
-            </h2>
-            {data.getProjectByID.tasks.map((item) => {
-              return <OneTask isForm={false} item={item} />;
-            })}
+          <NavMobile setNavLink={setNavLink} navLink={navLink} />
+          <div className="flex flex-col lg:hidden mb-10">
+            {navLink === 'task' && <ProjectTask data={data} />}
+            {navLink === 'users' && <ProjectUser data={data} />}
+          </div>
+          <div className="hidden lg:flex mt-7">
+            <ProjectTask data={data} />
+            <ProjectUser data={data} />
           </div>
         </div>
       )}

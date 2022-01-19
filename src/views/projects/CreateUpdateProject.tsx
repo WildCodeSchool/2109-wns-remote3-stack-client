@@ -1,8 +1,11 @@
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import close from '@assets/icons/close.svg';
+import { useHistory } from 'react-router-dom';
+import { GetOneProject, UPDATE_PROJECT } from '@api/queries/projectQueries';
+import { format } from 'date-fns';
 import { CREATE_PROJECT } from '../../API/mutation/createProject';
 import DateInput from '../../components/formInput/DateInput';
 import NumberInput from '../../components/formInput/NumberInput';
@@ -11,28 +14,51 @@ import TextArea from '../../components/formInput/TextArea';
 import TextInput from '../../components/formInput/TextInput';
 
 interface IProps {
-  isForm: boolean;
-  setIsForm: Dispatch<SetStateAction<boolean>>;
-  onProjectCreated: (p: IProjectList) => void;
+  setIsModal: Dispatch<SetStateAction<boolean>>;
+  projectId: string | undefined;
 }
 
-function CreateUpdateProject({
-  isForm,
-  setIsForm,
-  onProjectCreated,
-}: IProps): JSX.Element {
-  const { handleSubmit, register } = useForm();
+function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
+  const { handleSubmit, register, setValue } = useForm();
+  const router = useHistory();
   const [dateError, setDateError] = useState('');
-
   // CREATE A NEW PROJECT
-  const [create, { loading, error }] = useMutation<{
+  const [create, { loading: createLoading, error: createError }] = useMutation<{
     createProject: IProjectList;
   }>(CREATE_PROJECT, {
-    onCompleted: (p: { createProject: IProjectList }) => {
+    onCompleted: (d: { createProject: IProjectList }) => {
+      router.push(`/project/${d.createProject.id}`);
       toast('New project successfully created');
-      // ON SUCCESS WE CALL THE PROJECT CREATED FUNCTION FROM THE PARENT
-      onProjectCreated(p.createProject);
     },
+  });
+
+  const [update, { loading: updateLoading, error: updateError }] = useMutation<{
+    createProject: IProjectList;
+  }>(UPDATE_PROJECT, {
+    onCompleted: () => {
+      setIsModal(false);
+    },
+  });
+
+  const {
+    loading: isLoading,
+    error: isError,
+    data: oneProjectData,
+  } = useQuery<IProject>(GetOneProject, {
+    onCompleted: (d: IProject) => {
+      const endDate = format(new Date(d.getProjectByID.endDate), 'yyyy-mm-dd');
+      const startDate = format(
+        new Date(d.getProjectByID.endDate),
+        'yyyy-mm-dd'
+      );
+      setValue('name', d.getProjectByID.name);
+      setValue('description', d.getProjectByID.description);
+      setValue('status', d.getProjectByID.status);
+      setValue('endDate', endDate);
+      setValue('startDate', startDate);
+      setValue('estimeeSpentTime', d.getProjectByID.estimeeSpentTime);
+    },
+    variables: { getProjectByIdId: projectId },
   });
 
   const onSubmit: SubmitHandler<IProjectPayload> = (data: IProjectPayload) => {
@@ -52,99 +78,111 @@ function CreateUpdateProject({
         endDate: date2,
         estimeeSpentTime: parseInt(data.estimeeSpentTime, 10),
       };
-      create({ variables: projectData });
+      if (projectId === undefined) {
+        create({ variables: projectData });
+      } else {
+        update({ variables: { ...projectData, updateProjectId: projectId } });
+      }
     }
   };
 
   const projectStatus = ['TO_DO', 'IN_PROGRESS', 'BLOCKED', 'DONE'];
 
-  if (loading) {
+  if (createLoading || updateLoading || isLoading) {
     return <p>...loading</p>;
   }
-  if (error) {
+  if (createError || isError || updateError) {
     return <p>error</p>;
   }
   return (
-    <div
-      className={`py-5 px-4 w-0  min-h-full lg:pr-8 ${
-        isForm && 'transform w-full lg:fixed right-0 lg:w-5/12 duration-500'
-      }`}
-    >
-      <div className="flex w-full justify-between items-center">
-        <h2 className="text-lg">Create a new project</h2>
-        <button onClick={() => setIsForm(false)} type="button" className="mt-2">
-          <img className="h-5 w-5" src={close} alt="" />
-        </button>
-      </div>
-
-      <form onSubmit={handleSubmit(onSubmit)} action="create/Update project">
-        <TextInput
-          label="Name"
-          placeholder="project name"
-          register={register}
-          name="name"
-          required
-          id="name"
-          error=""
-        />
-        <TextArea
-          label="Description"
-          placeholder="project description"
-          register={register}
-          name="description"
-          required
-          id="description"
-          error=""
-        />
-        <SelectInput
-          label="Select project status"
-          data={projectStatus}
-          name="status"
-          id="status"
-          register={register}
-          required
-        />
-        <div className="flex flex-wrap">
-          <div className="lg:w-3/12 mr-5">
-            <DateInput
-              label="Start date"
-              id="startdate"
-              register={register}
-              name="startDate"
-              required
-            />
-          </div>
-          <div className="lg:w-3/12 mr-5">
-            <DateInput
-              label="End date"
-              id="enddate"
-              register={register}
-              name="endDate"
-              required
-            />
-          </div>
-          <div className="lg:w-4/12 w-full">
-            <NumberInput
-              label="Estimee spent time"
-              placeholder="hours"
-              register={register}
-              name="estimeeSpentTime"
-              required
-              id="estimeeSpentTime"
-              error=""
-            />
-          </div>
+    <div className="w-screen fixed inset-0 z-50 h-full  bg-darkGray bg-opacity-70 flex items-center justify-center ">
+      <div className="p-7 lg:pr-8 bg-darkBlue h-full lg:h-modal rounded-md shadow-2xl  lg:w-5/12 lg:overflow-y-scroll">
+        <div className="flex w-full justify-between items-center">
+          <h2 className="text-lg lg:text-2xl">
+            {projectId === undefined
+              ? 'Create a new project'
+              : oneProjectData?.getProjectByID.name}
+          </h2>
+          <button
+            onClick={() => setIsModal(false)}
+            type="button"
+            className="mt-2"
+          >
+            <img className="h-5 w-5" src={close} alt="" />
+          </button>
         </div>
-        {dateError !== '' && (
-          <p className="text-xs text-red-500 mt-3">{dateError}</p>
-        )}
-        <button
-          type="submit"
-          className="mt-8 bg-purple rounded-sm w-full text-white px-5 py-2"
-        >
-          Create project
-        </button>
-      </form>
+
+        <form onSubmit={handleSubmit(onSubmit)} action="create/Update project">
+          <TextInput
+            label="Name"
+            placeholder="project name"
+            register={register}
+            name="name"
+            required
+            id="name"
+            error=""
+          />
+          <TextArea
+            label="Description"
+            placeholder="project description"
+            register={register}
+            name="description"
+            required
+            id="description"
+            error=""
+          />
+          <SelectInput
+            label="Select project status"
+            data={projectStatus}
+            name="status"
+            id="status"
+            register={register}
+            required
+          />
+          <div className="flex flex-wrap">
+            <div className="lg:w-3/12 mr-5">
+              <DateInput
+                label="Start date"
+                id="startDate"
+                name="startDate"
+                register={register}
+                required
+              />
+            </div>
+            <div className="lg:w-3/12 mr-5">
+              <DateInput
+                label="End date"
+                id="endDate"
+                name="endDate"
+                register={register}
+                required
+              />
+            </div>
+            <div className="lg:w-4/12 w-full">
+              <NumberInput
+                label="Estimee spent time"
+                placeholder="hours"
+                register={register}
+                name="estimeeSpentTime"
+                id="estimeeSpentTime"
+                required
+                error=""
+              />
+            </div>
+          </div>
+          {dateError !== '' && (
+            <p className="text-xs text-red-500 mt-3">{dateError}</p>
+          )}
+          <button
+            type="submit"
+            className="mt-8 bg-purple rounded-md w-full text-white px-5 py-2"
+          >
+            {projectId === undefined
+              ? 'Create a new project'
+              : 'update my project'}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
