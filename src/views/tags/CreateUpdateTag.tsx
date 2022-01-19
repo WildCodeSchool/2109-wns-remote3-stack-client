@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import React from 'react';
+import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { CREATE_TAG } from '../../API/mutation/createTag';
@@ -12,6 +12,7 @@ interface IProps {
 
 function CreateUpdateTag({ onTagCreated }: IProps): JSX.Element {
   const { handleSubmit, register } = useForm();
+  const [isModal, setIsModal] = useState('block');
 
   // CREATE A NEW TAG
   const [create, { loading, error }] = useMutation<{
@@ -31,6 +32,7 @@ function CreateUpdateTag({ onTagCreated }: IProps): JSX.Element {
       color: data.color,
     };
     create({ variables: tagData });
+    setIsModal('hidden');
   };
 
   if (loading) {
@@ -41,7 +43,7 @@ function CreateUpdateTag({ onTagCreated }: IProps): JSX.Element {
   }
 
   return (
-    <div>
+    <div className={`${isModal}`}>
       <div className="flex w-full justify-between items-center">
         <h2 className="text-lg">Create a new tag</h2>
       </div>

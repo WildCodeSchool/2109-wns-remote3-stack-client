@@ -4,14 +4,14 @@ import { FieldValues, UseFormRegister } from 'react-hook-form';
 
 interface IProps {
   label: string;
-  data: IProjectList[];
+  data: ITagList[];
   name: string;
   id: string;
   register: UseFormRegister<FieldValues>;
   required: boolean;
 }
 
-function SelectInputProjectId({
+function SelectInputTagId({
   label,
   data,
   name,
@@ -30,7 +30,7 @@ function SelectInputProjectId({
         {data?.map((item) => {
           return (
             <option className="py-2" key={item.id} value={item.id}>
-              {item.name}
+              {item.label}
             </option>
           );
         })}
@@ -40,4 +40,4 @@ function SelectInputProjectId({
   );
 }
 
-export default SelectInputProjectId;
+export default SelectInputTagId;

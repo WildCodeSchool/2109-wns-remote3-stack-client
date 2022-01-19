@@ -7,19 +7,24 @@ import { CREATE_TASK } from '../../API/mutation/createTask';
 import { GET_ALL_PROJECTS } from '../../API/queries/projectQueries';
 import DateInput from '../../components/formInput/DateInput';
 import NumberInput from '../../components/formInput/NumberInput';
-import SelectInputId from '../../components/formInput/SelectInputProjectId';
 import SelectInput from '../../components/formInput/SelectInput';
 import TextInput from '../../components/formInput/TextInput';
+import SelectInputProjectId from '../../components/formInput/SelectInputProjectId';
+import SelectInputTagId from '../../components/formInput/SelectInputTagId';
+import { GET_ALL_TAGS } from '../../API/queries/tagQueries';
+import CreateUpdateTag from '../tags/CreateUpdateTag';
 
 interface IProps {
   isForm: boolean;
   setIsForm: Dispatch<SetStateAction<boolean>>;
   onTaskCreated: (p: ITaskList) => void;
 }
-interface IResponse {
+interface IResponseProjects {
   getAllProjects: IProjectList[];
 }
-
+interface IResponseTags {
+  getAllTags: ITagList[];
+}
 function CreateUpdateTask({
   isForm,
   setIsForm,
@@ -27,6 +32,8 @@ function CreateUpdateTask({
 }: IProps): JSX.Element {
   const { handleSubmit, register } = useForm();
   const [dataProjects, setDataProjects] = useState<IProjectList[]>([]);
+  const [dataTags, setDataTags] = useState<ITagList[]>([]);
+  const [isModal, setIsModal] = useState(false);
 
   // CREATE A NEW TASK
   const [create, { loading, error }] = useMutation<{
@@ -40,11 +47,22 @@ function CreateUpdateTask({
   });
 
   // FETCH THE PROJECT LIST
-  useQuery<IResponse>(GET_ALL_PROJECTS, {
+  useQuery<IResponseProjects>(GET_ALL_PROJECTS, {
     onCompleted: (d) => {
       setDataProjects(d.getAllProjects);
     },
   });
+
+  // FETCH THE TAGS LIST
+  useQuery<IResponseTags>(GET_ALL_TAGS, {
+    onCompleted: (d) => {
+      setDataTags(d.getAllTags);
+    },
+  });
+
+  const onTagCreated = () => {
+    setDataTags(dataTags);
+  };
 
   const onSubmit: SubmitHandler<ITaskPayload> = (data: ITaskPayload) => {
     const date2 = new Date(data.endDate);
@@ -79,8 +97,14 @@ function CreateUpdateTask({
         </button>
       </div>
 
+      {isModal && (
+        <div className="w-screen fixed inset-0 z-50 h-full  bg-darkGray bg-opacity-70 flex items-center justify-center">
+          <CreateUpdateTag onTagCreated={onTagCreated} />
+        </div>
+      )}
+
       <form onSubmit={handleSubmit(onSubmit)} action="create/Update task">
-        <SelectInputId
+        <SelectInputProjectId
           label="Select project"
           data={dataProjects}
           name="projectId"
@@ -105,6 +129,17 @@ function CreateUpdateTask({
           register={register}
           required
         />
+        <SelectInputTagId
+          label="Select tag"
+          data={dataTags}
+          name="tagId"
+          id="tagId"
+          register={register}
+          required
+        />
+        <button type="button" onClick={() => setIsModal(true)}>
+          Create a new tag
+        </button>
         <div className="flex flex-wrap">
           <div className="lg:w-3/12 mr-5">
             <DateInput
