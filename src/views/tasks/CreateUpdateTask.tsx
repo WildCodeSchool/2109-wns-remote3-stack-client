@@ -69,6 +69,7 @@ function CreateUpdateTask({
     const taskData = {
       subject: data.subject,
       projectId: data.projectId,
+      tagId: data.tagId,
       advancement: data.advancement,
       endDate: date2,
       estimeeSpentTime: parseInt(data.estimeeSpentTime, 10),

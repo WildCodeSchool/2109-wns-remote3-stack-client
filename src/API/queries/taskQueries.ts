@@ -19,6 +19,7 @@ export const GET_ONE_TASK = gql`
       id
       subject
       projectId
+      tagId
       startDate
       endDate
       estimeeSpentTime

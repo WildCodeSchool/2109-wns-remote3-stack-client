@@ -40,11 +40,13 @@ interface ITaskList {
   startDate: string;
   endDate: string;
   estimeeSpentTime: string;
+  tagId: string;
 }
 
 interface ITaskPayload {
   subject: string;
   projectId: string;
+  tagId: string;
   advancement: string;
   startDate: string;
   endDate: string;
