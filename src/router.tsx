@@ -19,7 +19,9 @@ function Routes(): JSX.Element {
       <Route exact path="/users" component={UsersList} />
       <Route exact path="/settings" component={Settings} />
       <Route exact path="/profil" component={Profil} />
-      <Route path="/*" component={Page404} />
+      <Route exact path="/error404" component={Page404} />
+      <Route path="/project/:id" component={ProjectDetails} />
+      <Route path="/task/:id" component={TaskDetails} />
     </div>
   );
 }

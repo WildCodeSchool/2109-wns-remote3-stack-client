@@ -12,3 +12,25 @@ export const GET_ALL_PROJECTS = gql`
     }
   }
 `;
+export const GetOneProject = gql`
+  query getProjectByIdId($getProjectByIdId: String!) {
+    getProjectByID(id: $getProjectByIdId) {
+      id
+      name
+      description
+      status
+      tasks {
+        id
+        subject
+        projectId
+        startDate
+        endDate
+        estimeeSpentTime
+        advancement
+      }
+      startDate
+      endDate
+      estimeeSpentTime
+    }
+  }
+`;
