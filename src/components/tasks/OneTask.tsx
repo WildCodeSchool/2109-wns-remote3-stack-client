@@ -2,20 +2,20 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 interface IProps {
-  item: IProjectList;
+  item: ITaskList;
   isForm: boolean;
 }
 
-function OneProject({ item, isForm }: IProps): JSX.Element {
+function OneTask({ item, isForm }: IProps): JSX.Element {
   return (
-    <Link to={`/project/${item.id}`}>
+    <Link to={`/task/${item.id}`}>
       <button
         type="button"
         className="w-full bg-darkGray border border-lightGray transform hover:border-lightPurple  hover:bg-transparent duration-500 rounded-md my-5 lg:my-3 p-2 lg:p-5 flex flex-col lg:flex-row lg:items-end  lg:justify-between"
         key={item.id}
       >
         <div className="flex flex-col items-start">
-          <p className="text-xl">{item.name}</p>
+          <p className="text-xl">{item.subject}</p>
           <div
             className={`flex flex-col lg:flex-row items-start mt-2 ${
               isForm ? 'text-xs' : 'text-sm'
@@ -33,10 +33,10 @@ function OneProject({ item, isForm }: IProps): JSX.Element {
             </p>
           </div>
         </div>
-        <p className="mt-2 border rounded-full px-6">{item.status}</p>
+        <p className="mt-2 rounded-full border px-6">{item.advancement}</p>
       </button>
     </Link>
   );
 }
 
-export default OneProject;
+export default OneTask;
