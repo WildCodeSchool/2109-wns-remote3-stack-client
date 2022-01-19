@@ -27,7 +27,7 @@ function TaskList(): JSX.Element {
     return <p>error</p>;
   }
   return (
-    <div className="py-5 lg:py-0">
+    <div className="py-5 lg:py-0 lg:pt-28">
       <HeaderList setIsForm={setIsForm} name="Tasks list" />
       {isForm && <p>form</p>}
       <div className={`${isForm && 'flex'}`}>
