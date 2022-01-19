@@ -12,7 +12,7 @@ interface IProps {
 function Sidebar({ setIsSidebar, isSideBar }: IProps): JSX.Element {
   return (
     <div
-      className={`w-screen lg:w-desktopSidebar h-screen bg-darkBlue lg:bg-darkGray px-5 py-8 fixed inset-0 ${
+      className={`w-screen z-20 lg:w-desktopSidebar h-screen bg-darkBlue lg:bg-darkGray px-5 py-8 fixed inset-0 ${
         isSideBar
           ? 'transform translate-x-0 duration-500'
           : 'transform -translate-x-full lg:translate-x-0 duration-500'
@@ -22,7 +22,7 @@ function Sidebar({ setIsSidebar, isSideBar }: IProps): JSX.Element {
       <div className="h-full flex flex-col lg:justify-between lg:py-10">
         <div>
           <UserAvatar setIsSidebar={setIsSidebar} />
-          <div className="w-full mt-5">
+          <div className="w-full">
             {nav.map((item) => {
               return (
                 <div key={item.name}>
@@ -32,7 +32,7 @@ function Sidebar({ setIsSidebar, isSideBar }: IProps): JSX.Element {
             })}
           </div>
         </div>
-        <div className="bg-purple items-center  justify-center p-2 w-full  mt-2 lg:mt-10 rounded-lg flex">
+        <div className="bg-purple items-center  justify-center p-2 w-full  mt-2 lg:mt-10 rounded-sm flex">
           <p className="ml-2">logout</p>
         </div>
       </div>
