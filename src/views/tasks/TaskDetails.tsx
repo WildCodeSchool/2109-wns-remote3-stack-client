@@ -7,7 +7,7 @@ import * as queries from '../../API/queries/taskQueries';
 function TaskDetails(): JSX.Element {
   const { id }: { id: string } = useParams();
 
-  const { loading, error, data } = useQuery<ITask>(queries.GetOneTask, {
+  const { loading, error, data } = useQuery<ITask>(queries.GET_ONE_TASK, {
     variables: { getTaskByIdId: id },
   });
   if (loading) {

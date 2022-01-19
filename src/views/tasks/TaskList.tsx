@@ -13,12 +13,20 @@ interface IResponse {
 function TaskList(): JSX.Element {
   const [data, setData] = useState<ITaskList[]>([]);
   const [isForm, setIsForm] = useState(false);
-  // FETCH THE PROJECT LIST
-  const { loading, error } = useQuery<IResponse>(queries.GetAllTasks, {
+  // FETCH THE TASK LIST
+  const { loading, error } = useQuery<IResponse>(queries.GET_ALL_TASKS, {
     onCompleted: (d) => {
       setData(d.getAllTasks);
     },
   });
+
+  // ON CREATED TASK ! ADD THE CREATED TASK TO THE ARRAY
+  const onTaskCreated = (p: ITaskList) => {
+    setData([...data, p]);
+  };
+
+  // REVERSE THE ARRAY THE RENDER THE YOUNGER ONE IN FIRST
+  const reverseData = [...data].reverse();
 
   if (loading) {
     return <p>...loading</p>;
@@ -31,13 +39,19 @@ function TaskList(): JSX.Element {
       <HeaderList setIsForm={setIsForm} name="Tasks list" />
       {isForm && <p>form</p>}
       <div className={`${isForm && 'flex'}`}>
-        {isForm && <CreateUpdateTask setIsForm={setIsForm} isForm={isForm} />}
+        {isForm && (
+          <CreateUpdateTask
+            setIsForm={setIsForm}
+            isForm={isForm}
+            onTaskCreated={onTaskCreated}
+          />
+        )}
         <div
           className={`${
             isForm ? 'hidden lg:flex lg:flex-col lg:w-6/12 pl-5' : 'mt-2'
           }`}
         >
-          {data.map((item) => {
+          {reverseData.map((item) => {
             return <OneTask isForm={isForm} item={item} />;
           })}
           {data.length === 0 && (

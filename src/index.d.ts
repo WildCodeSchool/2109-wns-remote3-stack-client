@@ -1,6 +1,16 @@
 interface IProjectList {
   id: string;
   name: string;
+  description: string;
+  status: string;
+  startDate: string;
+  endDate: string;
+  estimeeSpentTime: string;
+}
+
+interface IProjectPayload {
+  name: string;
+  description: string;
   status: string;
   startDate: string;
   endDate: string;
@@ -24,6 +34,15 @@ interface getProjectByID {
 
 interface ITaskList {
   id: string;
+  subject: string;
+  projectId: string;
+  advancement: string;
+  startDate: string;
+  endDate: string;
+  estimeeSpentTime: string;
+}
+
+interface ITaskPayload {
   subject: string;
   projectId: string;
   advancement: string;

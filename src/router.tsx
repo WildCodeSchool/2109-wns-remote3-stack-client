@@ -7,8 +7,8 @@ import Settings from '@views/Settings';
 import TaskList from '@views/tasks/TaskList';
 import UsersList from '@views/UsersList';
 import Page404 from '@views/Page404';
-import ProjectDetails from './views/projects/ProjectDetails';
-import TaskDetails from './views/tasks/TaskDetails';
+import ProjectDetails from '@views/projects/ProjectDetails';
+import TaskDetails from '@views/tasks/TaskDetails';
 
 function Routes(): JSX.Element {
   return (

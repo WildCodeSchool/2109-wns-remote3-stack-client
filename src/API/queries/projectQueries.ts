@@ -12,7 +12,7 @@ export const GET_ALL_PROJECTS = gql`
     }
   }
 `;
-export const GetOneProject = gql`
+export const GET_ONE_PROJECT = gql`
   query getProjectByIdId($getProjectByIdId: String!) {
     getProjectByID(id: $getProjectByIdId) {
       id

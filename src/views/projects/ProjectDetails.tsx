@@ -8,7 +8,7 @@ import OneTask from '../../components/tasks/OneTask';
 
 function ProjectDetails(): JSX.Element {
   const { id }: { id: string } = useParams();
-  const { loading, error, data } = useQuery<IProject>(queries.GetOneProject, {
+  const { loading, error, data } = useQuery<IProject>(queries.GET_ONE_PROJECT, {
     variables: { getProjectByIdId: id },
   });
   if (loading) {
