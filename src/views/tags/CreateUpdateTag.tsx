@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { CREATE_TAG } from '../../API/mutation/createTag';
@@ -8,11 +8,11 @@ import TextInput from '../../components/formInput/TextInput';
 
 interface IProps {
   onTagCreated: (p: ITagList) => void;
+  setIsModal: Dispatch<SetStateAction<boolean>>;
 }
 
-function CreateUpdateTag({ onTagCreated }: IProps): JSX.Element {
+function CreateUpdateTag({ onTagCreated, setIsModal }: IProps): JSX.Element {
   const { handleSubmit, register } = useForm();
-  const [isModal, setIsModal] = useState('block');
 
   // CREATE A NEW TAG
   const [create, { loading, error }] = useMutation<{
@@ -22,6 +22,7 @@ function CreateUpdateTag({ onTagCreated }: IProps): JSX.Element {
       toast('New tag successfully created');
       // ON SUCCESS WE CALL THE TAG CREATED FUNCTION FROM THE PARENT
       onTagCreated(p.createTag);
+      setIsModal(false);
     },
   });
   const color = ['red', 'yellow', 'green', 'blue', 'purple'];
@@ -32,7 +33,6 @@ function CreateUpdateTag({ onTagCreated }: IProps): JSX.Element {
       color: data.color,
     };
     create({ variables: tagData });
-    setIsModal('hidden');
   };
 
   if (loading) {
@@ -43,10 +43,8 @@ function CreateUpdateTag({ onTagCreated }: IProps): JSX.Element {
   }
 
   return (
-    <div className={`${isModal}`}>
-      <div className="flex w-full justify-between items-center">
-        <h2 className="text-lg">Create a new tag</h2>
-      </div>
+    <div>
+      <h2 className="text-lg">Create a new tag</h2>
       <form onSubmit={handleSubmit(onSubmit)} action="create/Update tag">
         <TextInput
           label="label"

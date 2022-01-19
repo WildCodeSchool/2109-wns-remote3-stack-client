@@ -99,7 +99,10 @@ function CreateUpdateTask({
 
       {isModal && (
         <div className="w-screen fixed inset-0 z-50 h-full  bg-darkGray bg-opacity-70 flex items-center justify-center">
-          <CreateUpdateTag onTagCreated={onTagCreated} />
+          <CreateUpdateTag
+            onTagCreated={onTagCreated}
+            setIsModal={setIsModal}
+          />
         </div>
       )}
 
