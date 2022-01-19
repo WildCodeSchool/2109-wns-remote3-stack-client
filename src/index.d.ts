@@ -1,6 +1,16 @@
 interface IProjectList {
   id: string;
   name: string;
+  description: string;
+  status: string;
+  startDate: string;
+  endDate: string;
+  estimeeSpentTime: string;
+}
+
+interface IProjectPayload {
+  name: string;
+  description: string;
   status: string;
   startDate: string;
   endDate: string;
