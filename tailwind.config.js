@@ -18,6 +18,9 @@ module.exports = {
       width: {
         desktopSidebar: '16%',
       },
+      height: {
+        list: '600px',
+      },
       boxShadow: {
         purple: '2px 1px 19px 5px rgba(121, 80, 236, 0.1)',
       },

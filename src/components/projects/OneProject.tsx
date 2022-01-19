@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface IProps {
   item: IProjectList;
@@ -7,32 +8,37 @@ interface IProps {
 
 function OneProject({ item, isForm }: IProps): JSX.Element {
   return (
-    <button
-      type="button"
-      className="w-full bg-darkGray border border-lightGray transform hover:border-lightPurple  hover:bg-transparent duration-500 rounded-md my-5 lg:my-3 p-2 lg:p-5 flex flex-col lg:flex-row lg:items-end  lg:justify-between"
-      key={item.id}
-    >
-      <div className="flex flex-col items-start">
-        <p className="text-xl">Name: {item.name}</p>
-        <div
-          className={`flex flex-col lg:flex-row items-start mt-2 ${
-            isForm ? 'text-xs' : 'text-sm'
-          } `}
-        >
-          <p className="my-1 lg:mr-4 text-left">
-            Start Date:
-            <br /> {item.startDate}
-          </p>
-          <p className="my-1 lg:mx-4 text-left">
-            End Date: <br /> {item.endDate}
-          </p>
-          <p className=" my-1 lg:ml-4 text-left">
-            Estimee spent time: <br /> {item.estimeeSpentTime}
-          </p>
+    <Link to={`/project/${item.id}`}>
+      <button
+        type="button"
+        className={`w-full bg-darkGray border border-lightGray transform hover:border-lightPurple  hover:bg-transparent duration-500 rounded-md my-5 ${
+          isForm ? 'lg:my-2' : 'lg:my-4'
+        } p-3  mx-1 lg:p-3 flex flex-col lg:flex-row lg:items-end  lg:justify-between`}
+      >
+        <div className="flex flex-col items-start w-full">
+          <p className="text-lg">Name: {item.name}</p>
+          <div
+            className={`flex flex-col lg:flex-row items-start mt-2 ${
+              isForm ? 'text-xs' : 'text-sm'
+            } `}
+          >
+            <p className="my-1 lg:mr-4 text-left">
+              Start Date: {new Date(item.startDate).toLocaleDateString()}
+            </p>
+            <p className="my-1 lg:mx-4 text-left">
+              End Date: {new Date(item.endDate).toLocaleDateString()}
+            </p>
+          </div>
+
+          <div className="flex  lg:items-center w-full mt-5 lg:mt-2 justify-between">
+            <p className="text-left text-sm">
+              Estimee spent time: {item.estimeeSpentTime}
+            </p>
+            <p className="text-left text-sm ">{item.status}</p>
+          </div>
         </div>
-      </div>
-      <p className="mt-2">Status: {item.status}</p>
-    </button>
+      </button>
+    </Link>
   );
 }
 
