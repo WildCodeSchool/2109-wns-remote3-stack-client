@@ -3,8 +3,8 @@ import React from 'react';
 import { FieldValues, UseFormRegister } from 'react-hook-form';
 
 interface IProps {
-  label: string;
   data: ITagList[];
+  label: string;
   name: string;
   id: string;
   register: UseFormRegister<FieldValues>;
@@ -20,27 +20,26 @@ function SelectInputTag({
   required,
 }: IProps): JSX.Element {
   return (
-    <label className="flex w-full mt-5 flex-col text-sm" htmlFor={label}>
-      {label}
-      <select
-        className="bg-darkGray mt-2 border rounded-sm focus:outline-none p-2 border-purple"
-        {...register(name, { required })}
-        id={id}
-      >
+    <div>
+      <p>{label}</p>
+      <label htmlFor={id}>
         {data?.map((item) => {
           return (
-            <option
-              className="py-2"
-              key={item.id}
-              value={[item.label, item.color]}
-            >
+            <div>
+              <input
+                {...register(name, { required })}
+                id={id}
+                type="checkbox"
+                className="py-2"
+                key={item.id}
+                value={[item.label, item.color]}
+              />
               {item.label}
-            </option>
+            </div>
           );
         })}
-      </select>
-      {required && <p className="text-xs text-purple mt-1">Fieds required</p>}
-    </label>
+      </label>
+    </div>
   );
 }
 

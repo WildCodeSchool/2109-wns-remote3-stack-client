@@ -12,7 +12,7 @@ import TextInput from '../../components/formInput/TextInput';
 import SelectInputProjectId from '../../components/formInput/SelectInputProjectId';
 import { GET_ALL_TAGS } from '../../API/queries/tagQueries';
 import CreateUpdateTag from '../tags/CreateUpdateTag';
-import SelectInputTag from '../../components/formInput/SelectInputTag';
+import TagListSelect from '../../components/formInput/TagListSelect';
 
 interface IProps {
   setIsModal: Dispatch<SetStateAction<boolean>>;
@@ -66,8 +66,12 @@ function CreateUpdateTask({ setIsModal, onTaskCreated }: IProps): JSX.Element {
       projectId: data.projectId,
       tags: [
         {
-          label: data.tags,
-          color: data.tags,
+          label: 'kiki',
+          color: 'jenpeups',
+        },
+        {
+          label: 'lord',
+          color: 'kaka',
         },
       ],
       advancement: data.advancement,
@@ -134,14 +138,7 @@ function CreateUpdateTask({ setIsModal, onTaskCreated }: IProps): JSX.Element {
               register={register}
               required
             />
-            <SelectInputTag
-              label="Select tag"
-              data={dataTags}
-              name="tags"
-              id="tags"
-              register={register}
-              required
-            />
+            <TagListSelect />
             <button type="button" onClick={() => setIsModalTag(true)}>
               Create a new tag
             </button>
