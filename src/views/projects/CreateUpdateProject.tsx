@@ -5,12 +5,13 @@ import { toast } from 'react-toastify';
 import close from '@assets/icons/close.svg';
 import { useHistory } from 'react-router-dom';
 import {
-  GetOneProject,
+  CREATE_PROJECT,
+  GET_ONE_PROJECT,
   GET_ALL_PROJECTS,
   UPDATE_PROJECT,
 } from '@api/queries/projectQueries';
 import { format } from 'date-fns';
-import { CREATE_PROJECT } from '../../API/mutation/createProject';
+import { useUserFromStore } from '@store/user.slice';
 import DateInput from '../../components/formInput/DateInput';
 import NumberInput from '../../components/formInput/NumberInput';
 import SelectInput from '../../components/formInput/SelectInput';
@@ -24,6 +25,7 @@ interface IProps {
 
 function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
   const { handleSubmit, register, setValue } = useForm();
+  const { user } = useUserFromStore();
   const router = useHistory();
   const [dateError, setDateError] = useState('');
 
@@ -49,7 +51,7 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
 
   // ON UPDATE GET THE PROJECT'S DATA
   const { loading: isLoading, error: isError } = useQuery<IProject>(
-    GetOneProject,
+    GET_ONE_PROJECT,
     {
       skip: !projectId,
       // ON SUCCES SET THE DEFAULT VALUE TO THE FORM'S INPUTS
@@ -90,7 +92,7 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
       };
       // IF PROJECT ID IS DEFINE WE UPDATE ESLE WE CREATE
       if (projectId === undefined) {
-        create({ variables: projectData });
+        create({ variables: { ...projectData, userId: user.id } });
       } else {
         update({ variables: { ...projectData, updateProjectId: projectId } });
       }

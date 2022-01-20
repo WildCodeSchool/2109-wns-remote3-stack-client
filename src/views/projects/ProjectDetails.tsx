@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import ProjectTask from '@components/projects/ProjectTask';
-import { GetOneProject } from '@api/queries/projectQueries';
 import ProjectInformations from '@components/projects/ProjectInformations';
 import ProjectUser from '@components/projects/ProjectUser';
 import NavMobile from '@components/projects/NavMobile';
+import { GET_ONE_PROJECT } from '@api/queries/projectQueries';
 import CreateUpdateProject from './CreateUpdateProject';
 
 function ProjectDetails(): JSX.Element {
   const { id }: { id: string } = useParams();
   const [navLink, setNavLink] = useState('task');
   const [isModal, setIsModal] = useState(false);
-  const { loading, error, data } = useQuery<IProject>(GetOneProject, {
+  const { loading, error, data } = useQuery<IProject>(GET_ONE_PROJECT, {
     variables: { getProjectByIdId: id },
   });
 

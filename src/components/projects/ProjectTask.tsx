@@ -9,7 +9,7 @@ interface IProps {
 
 function ProjectTask({ data }: IProps): JSX.Element {
   return (
-    <div className="lg:w-1/2 lg:mr-5">
+    <div className="lg:w-1/2 lg:mr-5 bg-darkGray lg:p-5 rounded-md">
       <div className="flex w-full justify-between pr-5  pb-2 items-center border-b border-lightPurple">
         <h2 className="text-xl text-lightPurple w-6/12 lg:w-8/12">
           {`Project's Tasks`}

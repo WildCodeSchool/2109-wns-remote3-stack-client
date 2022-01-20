@@ -47,10 +47,14 @@ interface ITask {
   getTaskByID: getTaskByID;
 }
 
+interface getUserWithProjects {
+  getUserWithProjects: { projects: IUserProject[] };
+}
+
 interface IUserProject {
-  id: string;
   userId: string;
-  projectID: string;
+  projectId: string;
+  projectRole: string;
 }
 interface getTaskByID {
   id: string;
@@ -62,6 +66,14 @@ interface getTaskByID {
   estimeeSpentTime: string;
 }
 
+interface getAllUsers {
+  getAllUsers: IUser[];
+}
+
+interface getUserByID {
+  getUserByID: IUser;
+}
+
 interface IUser {
   id: string;
   email: string;
@@ -69,6 +81,4 @@ interface IUser {
   firstName: string;
   lastName: string;
   avatar: string | null;
-  createdAt: Date;
-  updatedAt: Date;
 }

@@ -1,0 +1,64 @@
+import React, { Dispatch, SetStateAction } from 'react';
+import Avatar from './Avatar';
+
+interface IProps {
+  userToAssign: IUser | undefined;
+  setProjectRoleSelected: Dispatch<SetStateAction<string>>;
+  project: IProject;
+  createUserProject: () => void;
+}
+
+function UserRole({
+  createUserProject,
+  userToAssign,
+  project,
+  setProjectRoleSelected,
+}: IProps): JSX.Element {
+  // PROJECT ROLE ARRAY
+  const projectRole = [
+    'PROJECT_MANAGER',
+    'DEVELOPPER',
+    'UX_DESIGNER',
+    'DEVOPS',
+  ];
+  return (
+    <div className="p-7">
+      <p className="text-lg">
+        You want to assign{' '}
+        <span className="text-lightPurple">{userToAssign?.firstName} </span>
+        <span className="text-lightPurple">{userToAssign?.lastName}</span> to
+        the{' '}
+        <span className="text-lightPurple">{project.getProjectByID.name}</span>{' '}
+        project
+      </p>
+      <div className="mt-5">
+        <Avatar data={userToAssign as IUser} />
+        <div className="mt-5 flex flex-col items-start">
+          <p className="">Assign as</p>
+          <select
+            defaultValue={projectRole[0]}
+            onChange={(e) => setProjectRoleSelected(e.target.value)}
+            className="w-6/12 mt-2 border-lightPurple text-sm p-2 border bg-darkBlue"
+          >
+            {projectRole.map((item) => {
+              return (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              );
+            })}
+          </select>
+          <button
+            onClick={() => createUserProject()}
+            className="mt-10 bg-purple w-8/12 rounded-md transform hover:scale-105 duration-300 py-2"
+            type="button"
+          >
+            Assign user
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default UserRole;
