@@ -9,6 +9,7 @@ interface IResponse {
 
 function ProjectList(): JSX.Element {
   const [data, setData] = useState<ITagList[]>([]);
+  const [dataTag, setData1Tag] = useState<ITagList[]>([]);
   // FETCH THE PROJECT LIST
   const { loading, error } = useQuery<IResponse>(GET_ALL_TAGS, {
     onCompleted: (d) => {
@@ -26,11 +27,21 @@ function ProjectList(): JSX.Element {
     return <p>error</p>;
   }
 
+  const toto = () => {
+    console.log('toto');
+  };
+
   return (
     <div className="mt-2 flex flex-wrap px-3 lg:pr-6">
       {reverseData.map((item) => {
         return (
-          <div key={item.id}>
+          <div
+            tabIndex={0}
+            key={item.id}
+            role="button"
+            onKeyPress={toto}
+            onClick={() => setData1Tag([...dataTag, item])}
+          >
             <OneTag item={item} />
           </div>
         );

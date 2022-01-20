@@ -2,6 +2,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import OneTag from '@components/tag/OnTag';
 import close from '@assets/icons/close.svg';
 import { CREATE_TASK } from '../../API/mutation/createTask';
 import { GET_ALL_PROJECTS } from '../../API/queries/projectQueries';
@@ -12,7 +13,6 @@ import TextInput from '../../components/formInput/TextInput';
 import SelectInputProjectId from '../../components/formInput/SelectInputProjectId';
 import { GET_ALL_TAGS } from '../../API/queries/tagQueries';
 import CreateUpdateTag from '../tags/CreateUpdateTag';
-import TagListSelect from '../../components/formInput/TagListSelect';
 
 interface IProps {
   setIsModal: Dispatch<SetStateAction<boolean>>;
@@ -27,8 +27,9 @@ interface IResponseTags {
 function CreateUpdateTask({ setIsModal, onTaskCreated }: IProps): JSX.Element {
   const { handleSubmit, register } = useForm();
   const [dataProjects, setDataProjects] = useState<IProjectList[]>([]);
-  const [dataTags, setDataTags] = useState<ITagList[]>([]);
+  const [dataTagsList, setDataTagsList] = useState<ITagList[]>([]);
   const [isModalTag, setIsModalTag] = useState(false);
+  const [dataTag, setDataTag] = useState<ITagList[]>([]);
 
   // CREATE A NEW TASK
   const [create, { loading, error }] = useMutation<{
@@ -51,12 +52,15 @@ function CreateUpdateTask({ setIsModal, onTaskCreated }: IProps): JSX.Element {
   // FETCH THE TAGS LIST
   useQuery<IResponseTags>(GET_ALL_TAGS, {
     onCompleted: (d) => {
-      setDataTags(d.getAllTags);
+      setDataTagsList(d.getAllTags);
     },
   });
 
+  // REVERSE THE ARRAY THE RENDER THE YOUNGER ONE IN FIRST
+  const reverseData = [...dataTagsList].reverse();
+
   const onTagCreated = () => {
-    setDataTags(dataTags);
+    setDataTagsList(dataTagsList);
   };
 
   const onSubmit: SubmitHandler<ITaskPayload> = (data: ITaskPayload) => {
@@ -64,22 +68,13 @@ function CreateUpdateTask({ setIsModal, onTaskCreated }: IProps): JSX.Element {
     const taskData = {
       subject: data.subject,
       projectId: data.projectId,
-      tags: [
-        {
-          label: 'kiki',
-          color: 'jenpeups',
-        },
-        {
-          label: 'lord',
-          color: 'kaka',
-        },
-      ],
+      tags: dataTag,
       advancement: data.advancement,
       endDate: date2,
       estimeeSpentTime: parseInt(data.estimeeSpentTime, 10),
     };
     create({ variables: taskData });
-    console.log(typeof data.tags);
+    console.log(dataTag);
   };
   const taskAdvancement = ['TO_DO', 'IN_PROGRESS', 'BLOCKED', 'DONE'];
 
@@ -89,7 +84,9 @@ function CreateUpdateTask({ setIsModal, onTaskCreated }: IProps): JSX.Element {
   if (error) {
     return <p>error</p>;
   }
-
+  const toto = () => {
+    console.log('toto');
+  };
   return (
     <div className="w-screen fixed inset-0 z-50 h-full  bg-darkGray bg-opacity-70 flex items-center justify-center ">
       {isModalTag && (
@@ -138,7 +135,21 @@ function CreateUpdateTask({ setIsModal, onTaskCreated }: IProps): JSX.Element {
               register={register}
               required
             />
-            <TagListSelect />
+            <div className="mt-2 flex flex-wrap px-3 lg:pr-6">
+              {reverseData.map(({ __typename, ...item }) => {
+                return (
+                  <div
+                    tabIndex={0}
+                    key={item.id}
+                    role="button"
+                    onKeyPress={toto}
+                    onClick={() => setDataTag([...dataTag, item])}
+                  >
+                    <OneTag item={item} />
+                  </div>
+                );
+              })}
+            </div>
             <button type="button" onClick={() => setIsModalTag(true)}>
               Create a new tag
             </button>

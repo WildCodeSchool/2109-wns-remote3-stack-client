@@ -6,12 +6,11 @@ interface IProps {
 
 function OneTag({ item }: IProps): JSX.Element {
   return (
-    <button
+    <input
+      value={item.label}
       type="button"
-      className={` opacity-80 hover:opacity-100 text-xs text-light border px-2 rounded-full bg-${item.color}`}
-    >
-      {item.label}
-    </button>
+      className={` bg-transparent opacity-80 hover:opacity-100 text-xs text-light border px-2 rounded-full bg-${item.color}`}
+    />
   );
 }
 

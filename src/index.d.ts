@@ -73,6 +73,7 @@ interface getTaskByID {
   estimeeSpentTime: string;
 }
 interface ITagList {
+  __typename?: string;
   id: string;
   label: string;
   color: string;
