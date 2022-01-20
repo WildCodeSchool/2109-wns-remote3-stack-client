@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client';
 import React, { Dispatch, SetStateAction } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import close from '@assets/icons/close.svg';
 import { toast } from 'react-toastify';
 import { CREATE_TAG } from '../../API/mutation/createTag';
 import SelectInput from '../../components/formInput/SelectInput';
@@ -44,7 +45,16 @@ function CreateUpdateTag({ onTagCreated, setIsModal }: IProps): JSX.Element {
 
   return (
     <div>
-      <h2 className="text-lg">Create a new tag</h2>
+      <div className="flex items-center">
+        <h2 className="text-lg">Create a new tag</h2>
+        <button
+          onClick={() => setIsModal(false)}
+          type="button"
+          className="mt-2 "
+        >
+          <img className="h-3 ml-2 w-3" src={close} alt="" />
+        </button>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)} action="create/Update tag">
         <TextInput
           label="label"

@@ -41,17 +41,17 @@ interface ITaskList {
   startDate: string;
   endDate: string;
   estimeeSpentTime: string;
-  tagId: string;
+  tags: ITagList[];
 }
 
 interface ITaskPayload {
   subject: string;
   projectId: string;
-  tagId: string;
   advancement: string;
   startDate: string;
   endDate: string;
   estimeeSpentTime: string;
+  tags: ITagPayload[];
 }
 
 interface ITask {

@@ -12,7 +12,7 @@ interface IResponse {
 
 function TaskList(): JSX.Element {
   const [data, setData] = useState<ITaskList[]>([]);
-  const [isForm, setIsForm] = useState(false);
+  const [isModal, setIsModal] = useState(false);
   // FETCH THE TASK LIST
   const { loading, error } = useQuery<IResponse>(queries.GET_ALL_TASKS, {
     onCompleted: (d) => {
@@ -36,30 +36,26 @@ function TaskList(): JSX.Element {
   }
   return (
     <div className="py-5 lg:py-0 lg:pt-28">
-      <HeaderList setIsModal={setIsForm} name="Tasks list" />
-      {isForm && <p>form</p>}
-      <div className={`${isForm && 'flex'}`}>
-        {isForm && (
-          <CreateUpdateTask
-            setIsForm={setIsForm}
-            isForm={isForm}
-            onTaskCreated={onTaskCreated}
-          />
+      <HeaderList setIsModal={setIsModal} name="Tasks list" />
+      {isModal && (
+        <CreateUpdateTask
+          setIsModal={setIsModal}
+          onTaskCreated={onTaskCreated}
+        />
+      )}
+      <div className="mt-2 px-3 lg:pr-6">
+        {reverseData.map((item) => {
+          return (
+            <div key={item.id}>
+              <OneTask item={item} />;
+            </div>
+          );
+        })}
+        {data.length === 0 && (
+          <p className="font-normal lg:py-5 py-2 text-purple">
+            There is no taks for now
+          </p>
         )}
-        <div
-          className={`${
-            isForm ? 'hidden lg:flex lg:flex-col lg:w-6/12 pl-5' : 'mt-2'
-          }`}
-        >
-          {reverseData.map((item) => {
-            return <OneTask isForm={isForm} item={item} />;
-          })}
-          {data.length === 0 && (
-            <p className="font-normal lg:py-5 py-2 text-purple">
-              There is no taks for now
-            </p>
-          )}
-        </div>
       </div>
     </div>
   );

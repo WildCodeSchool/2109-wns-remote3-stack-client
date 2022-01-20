@@ -11,7 +11,7 @@ interface IProps {
   required: boolean;
 }
 
-function SelectInputTagId({
+function SelectInputTag({
   label,
   data,
   name,
@@ -29,7 +29,11 @@ function SelectInputTagId({
       >
         {data?.map((item) => {
           return (
-            <option className="py-2" key={item.id} value={item.id}>
+            <option
+              className="py-2"
+              key={item.id}
+              value={[item.label, item.color]}
+            >
               {item.label}
             </option>
           );
@@ -40,4 +44,4 @@ function SelectInputTagId({
   );
 }
 
-export default SelectInputTagId;
+export default SelectInputTag;

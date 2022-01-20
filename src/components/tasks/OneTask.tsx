@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom';
 
 interface IProps {
   item: ITaskList;
-  isForm: boolean;
 }
 
-function OneTask({ item, isForm }: IProps): JSX.Element {
+function OneTask({ item }: IProps): JSX.Element {
   return (
     <Link to={`/task/${item.id}`}>
       <button
@@ -16,22 +15,16 @@ function OneTask({ item, isForm }: IProps): JSX.Element {
       >
         <div className="flex flex-col items-start">
           <p className="text-xl">{item.subject}</p>
-          <div
-            className={`flex flex-col lg:flex-row items-start mt-2 ${
-              isForm ? 'text-xs' : 'text-sm'
-            } `}
-          >
-            <p className="my-1 lg:mr-4 text-left">
-              Start Date:
-              <br /> {item.startDate}
-            </p>
-            <p className="my-1 lg:mx-4 text-left">
-              End Date: <br /> {item.endDate}
-            </p>
-            <p className=" my-1 lg:ml-4 text-left">
-              Estimee spent time: <br /> {item.estimeeSpentTime}
-            </p>
-          </div>
+          <p className="my-1 lg:mr-4 text-left">
+            Start Date:
+            <br /> {item.startDate}
+          </p>
+          <p className="my-1 lg:mx-4 text-left">
+            End Date: <br /> {item.endDate}
+          </p>
+          <p className=" my-1 lg:ml-4 text-left">
+            Estimee spent time: <br /> {item.estimeeSpentTime}
+          </p>
         </div>
         <p className="mt-2 rounded-full border px-6">{item.advancement}</p>
         {/* <div>{item.tagId}</div> */}
