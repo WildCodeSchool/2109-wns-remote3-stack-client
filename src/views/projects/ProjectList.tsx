@@ -30,7 +30,7 @@ function ProjectList(): JSX.Element {
   }
 
   return (
-    <div className="pb-5 lg:py-0 lg:pt-28">
+    <div className="pb-5 lg:py-0">
       <HeaderList name="Projects List" setIsModal={setIsModal} />
 
       {isModal && (

@@ -4,7 +4,11 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import close from '@assets/icons/close.svg';
 import { useHistory } from 'react-router-dom';
-import { GetOneProject, UPDATE_PROJECT } from '@api/queries/projectQueries';
+import {
+  GetOneProject,
+  GET_ALL_PROJECTS,
+  UPDATE_PROJECT,
+} from '@api/queries/projectQueries';
 import { format } from 'date-fns';
 import { CREATE_PROJECT } from '../../API/mutation/createProject';
 import DateInput from '../../components/formInput/DateInput';
@@ -31,6 +35,7 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
       router.push(`/project/${d.createProject.id}`);
       toast('New project successfully created');
     },
+    refetchQueries: [GET_ALL_PROJECTS],
   });
 
   // UPDATE A PROJECT
@@ -102,10 +107,12 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
   }
   return (
     <div className="w-screen fixed inset-0 z-50 h-full  bg-darkGray bg-opacity-70 flex items-center justify-center ">
-      <div className="p-7 lg:pr-8 bg-darkBlue h-full lg:h-modal rounded-md shadow-2xl  lg:w-5/12 lg:overflow-y-scroll">
+      <div className="p-4  lg:pr-8 lg:py-4 bg-darkBlue h-full lg:h-modal rounded-md shadow-2xl  lg:w-5/12">
         <div className="flex w-full justify-between items-center">
           <h2 className="text-lg lg:text-2xl">
-            {projectId === undefined ? 'Create a new project' : 'updateProject'}
+            {projectId === undefined
+              ? 'Create a new project'
+              : 'Update project'}
           </h2>
           <button
             onClick={() => setIsModal(false)}
@@ -179,7 +186,7 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
           )}
           <button
             type="submit"
-            className="mt-8 bg-purple rounded-md w-full text-white px-5 py-2"
+            className="lg:mt-8 mt-5 bg-purple rounded-md w-full text-white px-5 py-2"
           >
             {projectId === undefined
               ? 'Create a new project'

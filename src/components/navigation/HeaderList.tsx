@@ -11,7 +11,7 @@ function HeaderList({ setIsModal, name }: IProps): JSX.Element {
   const { pathname } = useLocation();
 
   return (
-    <div className="lg:fixed lg:top-0 pt-5 z-10 bg-darkBlue border-b border-purple lg:w-10/12 px-5">
+    <div className="pt-5 bg-darkBlue border-b border-purple lg:w-full px-4">
       <h1 className="text-2xl  mt-2 lg:mt-0 font-lexend text-purple">{name}</h1>
       <div className="flex w-full justify-between mt-5  pb-2">
         <div className="flex">
