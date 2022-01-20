@@ -17,7 +17,6 @@ function TaskList(): JSX.Element {
   const { loading, error } = useQuery<IResponse>(queries.GET_ALL_TASKS, {
     onCompleted: (d) => {
       setData(d.getAllTasks);
-      console.log();
     },
   });
 

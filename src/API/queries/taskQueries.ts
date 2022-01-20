@@ -9,6 +9,11 @@ export const GET_ALL_TASKS = gql`
       endDate
       estimeeSpentTime
       advancement
+      tags {
+        id
+        label
+        color
+      }
     }
   }
 `;
@@ -23,6 +28,11 @@ export const GET_ONE_TASK = gql`
       endDate
       estimeeSpentTime
       advancement
+      tags {
+        id
+        label
+        color
+      }
     }
   }
 `;

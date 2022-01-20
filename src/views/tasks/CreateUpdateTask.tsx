@@ -64,17 +64,16 @@ function CreateUpdateTask({ setIsModal, onTaskCreated }: IProps): JSX.Element {
   };
 
   const onSubmit: SubmitHandler<ITaskPayload> = (data: ITaskPayload) => {
-    const date2 = new Date(data.endDate);
+    const date = new Date(data.endDate);
     const taskData = {
       subject: data.subject,
       projectId: data.projectId,
       tags: dataTag,
       advancement: data.advancement,
-      endDate: date2,
+      endDate: date,
       estimeeSpentTime: parseInt(data.estimeeSpentTime, 10),
     };
     create({ variables: taskData });
-    console.log(dataTag);
   };
   const taskAdvancement = ['TO_DO', 'IN_PROGRESS', 'BLOCKED', 'DONE'];
 
@@ -84,9 +83,7 @@ function CreateUpdateTask({ setIsModal, onTaskCreated }: IProps): JSX.Element {
   if (error) {
     return <p>error</p>;
   }
-  const toto = () => {
-    console.log('toto');
-  };
+
   return (
     <div className="w-screen fixed inset-0 z-50 h-full  bg-darkGray bg-opacity-70 flex items-center justify-center ">
       {isModalTag && (
@@ -142,7 +139,7 @@ function CreateUpdateTask({ setIsModal, onTaskCreated }: IProps): JSX.Element {
                     tabIndex={0}
                     key={item.id}
                     role="button"
-                    onKeyPress={toto}
+                    onKeyPress={undefined}
                     onClick={() => setDataTag([...dataTag, item])}
                   >
                     <OneTag item={item} />
