@@ -30,6 +30,7 @@ interface getProjectByID {
   endDate: string;
   estimeeSpentTime: string;
   tasks: ITaskList[];
+  members: IUserProject[];
 }
 
 interface ITaskList {
@@ -57,6 +58,11 @@ interface ITask {
   getTaskByID: getTaskByID;
 }
 
+interface IUserProject {
+  id: string;
+  userId: string;
+  projectID: string;
+}
 interface getTaskByID {
   id: string;
   subject: string;

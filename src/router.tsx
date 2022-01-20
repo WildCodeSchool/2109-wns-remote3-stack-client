@@ -7,8 +7,8 @@ import Settings from '@views/Settings';
 import TaskList from '@views/tasks/TaskList';
 import UsersList from '@views/UsersList';
 import Page404 from '@views/Page404';
-import ProjectDetails from '@views/projects/ProjectDetails';
 import TaskDetails from '@views/tasks/TaskDetails';
+import ProjectDetails from './views/projects/ProjectDetails';
 
 function Routes(): JSX.Element {
   return (
@@ -16,7 +16,6 @@ function Routes(): JSX.Element {
       {' '}
       <Route exact path="/" component={HomePage} />
       <Route exact path="/projects" component={ProjectList} />
-      <Route exact path="/projectsettings" />
       <Route exact path="/tasks" component={TaskList} />
       <Route exact path="/users" component={UsersList} />
       <Route exact path="/settings" component={Settings} />

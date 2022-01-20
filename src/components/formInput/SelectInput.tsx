@@ -23,7 +23,7 @@ function SelectInput({
     <label className="flex w-full mt-5 flex-col text-sm" htmlFor={label}>
       {label}
       <select
-        className="bg-darkGray mt-2 border rounded-sm focus:outline-none p-2 border-purple"
+        className="bg-darkGray mt-2 border rounded-md focus:outline-none p-2 border-purple"
         {...register(name, { required })}
         id={id}
       >
