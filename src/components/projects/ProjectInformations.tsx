@@ -1,8 +1,9 @@
+import { getProjectById } from '@api/types/getProjectById';
 import React, { Dispatch, SetStateAction } from 'react';
 import ProjectOwner from './ProjectOwner';
 
 interface IProps {
-  data: IProject;
+  data: getProjectById;
   setIsModal: Dispatch<SetStateAction<boolean>>;
 }
 

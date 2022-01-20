@@ -6,13 +6,14 @@ import { GetOneProject } from '@api/queries/projectQueries';
 import ProjectInformations from '@components/projects/ProjectInformations';
 import ProjectUser from '@components/projects/ProjectUser';
 import NavMobile from '@components/projects/NavMobile';
+import { getProjectById } from '@api/types/getProjectById';
 import CreateUpdateProject from './CreateUpdateProject';
 
 function ProjectDetails(): JSX.Element {
   const { id }: { id: string } = useParams();
   const [navLink, setNavLink] = useState('task');
   const [isModal, setIsModal] = useState(false);
-  const { loading, error, data } = useQuery<IProject>(GetOneProject, {
+  const { loading, error, data } = useQuery<getProjectById>(GetOneProject, {
     variables: { getProjectByIdId: id },
   });
 

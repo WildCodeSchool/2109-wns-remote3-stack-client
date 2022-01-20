@@ -1,7 +1,8 @@
+import { getProjectById } from '@api/types/getProjectById';
 import React from 'react';
 
 interface IProps {
-  data: IProject;
+  data: getProjectById;
 }
 
 function ProjectUser({ data }: IProps): JSX.Element {

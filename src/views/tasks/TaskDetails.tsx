@@ -2,12 +2,13 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 
-import * as queries from '../../API/queries/taskQueries';
+import { GetOneTask } from '@api/queries/taskQueries';
+import { getTaskByID } from '@api/types/getTaskByID';
 
 function TaskDetails(): JSX.Element {
   const { id }: { id: string } = useParams();
 
-  const { loading, error, data } = useQuery<ITask>(queries.GetOneTask, {
+  const { loading, error, data } = useQuery<getTaskByID>(GetOneTask, {
     variables: { getTaskByIdId: id },
   });
   if (loading) {
