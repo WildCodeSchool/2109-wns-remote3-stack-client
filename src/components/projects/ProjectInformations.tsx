@@ -1,8 +1,9 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { DELETE_PROJECT } from '@api/queries/projectQueries';
+import { DELETE_PROJECT, GET_ALL_PROJECTS } from '@api/queries/projectQueries';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom';
+import DeleteModal from '@components/modal/DeleteModal';
 import ProjectOwner from './ProjectOwner';
 import settings from '../../assets/icons/settings.svg';
 import trash from '../../assets/icons/trash.svg';
@@ -18,11 +19,11 @@ function ProjectInformations({ data, setIsModal }: IProps): JSX.Element {
   const router = useHistory();
 
   const [deleteProject, { loading, error }] = useMutation(DELETE_PROJECT, {
+    refetchQueries: [{ query: GET_ALL_PROJECTS }],
     onCompleted: () => {
       setIsDeleteModal(false);
       router.push('/projects');
       toast('Project successfully deleted');
-      window.location.reload();
     },
   });
 
@@ -35,29 +36,27 @@ function ProjectInformations({ data, setIsModal }: IProps): JSX.Element {
   return (
     <div className="lg:w-1/2  rounded-md lg:p-5 lg:border border-lightPurple">
       {isDeleteModal && (
-        <div className="w-screen fixed inset-0 z-50 h-full  bg-darkGray bg-opacity-70 flex items-center justify-center ">
-          <div className="p-5 lg:pr-8 bg-darkBlue h-32 rounded-md shadow-2xl  lg:w-3/12">
-            <p className="mb-5 text-xl">Delete {data.getProjectByID.name} ?</p>
-            <button
-              className="bg-purple px-8 py-2 rounded-md"
-              onClick={() =>
-                deleteProject({
-                  variables: { deleteProjectByIdId: data.getProjectByID.id },
-                })
-              }
-              type="button"
-            >
-              Yes
-            </button>
-            <button
-              className="bg-purple px-8 py-2 rounded-md ml-5"
-              onClick={() => setIsDeleteModal(false)}
-              type="button"
-            >
-              No
-            </button>
-          </div>
-        </div>
+        <DeleteModal>
+          <p className="mb-5 text-xl">Delete {data.getProjectByID.name} ?</p>
+          <button
+            className="bg-purple px-8 py-2 rounded-md"
+            onClick={() =>
+              deleteProject({
+                variables: { deleteProjectByIdId: data.getProjectByID.id },
+              })
+            }
+            type="button"
+          >
+            Yes
+          </button>
+          <button
+            className="bg-purple px-8 py-2 rounded-md ml-5"
+            onClick={() => setIsDeleteModal(false)}
+            type="button"
+          >
+            No
+          </button>
+        </DeleteModal>
       )}
       <div className="flex flex-col items-start lg:flex-row w-full justify-between">
         <ProjectOwner />
