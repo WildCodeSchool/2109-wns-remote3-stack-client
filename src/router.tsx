@@ -16,7 +16,6 @@ function Routes(): JSX.Element {
       {' '}
       <Route exact path="/" component={HomePage} />
       <Route exact path="/projects" component={ProjectList} />
-      <Route exact path="/projectsettings" />
       <Route exact path="/tasks" component={TaskList} />
       <Route exact path="/users" component={UsersList} />
       <Route exact path="/settings" component={Settings} />

@@ -3,11 +3,11 @@ import { Link, useLocation } from 'react-router-dom';
 import add from '@assets/icons/add.svg';
 
 interface IProps {
-  setIsForm: Dispatch<SetStateAction<boolean>>;
+  setIsModal: Dispatch<SetStateAction<boolean>>;
   name: string;
 }
 
-function HeaderList({ setIsForm, name }: IProps): JSX.Element {
+function HeaderList({ setIsModal, name }: IProps): JSX.Element {
   const { pathname } = useLocation();
 
   return (
@@ -29,7 +29,7 @@ function HeaderList({ setIsForm, name }: IProps): JSX.Element {
           </Link>
         </div>
         <button
-          onClick={() => setIsForm(true)}
+          onClick={() => setIsModal(true)}
           type="button"
           className="flex items-center"
         >

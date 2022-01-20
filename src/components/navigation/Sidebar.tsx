@@ -32,7 +32,7 @@ function Sidebar({ setIsSidebar, isSideBar }: IProps): JSX.Element {
             })}
           </div>
         </div>
-        <div className="bg-purple items-center  justify-center p-2 w-full  mt-2 lg:mt-10 rounded-sm flex">
+        <div className="bg-purple items-center  justify-center p-2 w-full  mt-2 lg:mt-10 rounded-md flex">
           <p className="ml-2">logout</p>
         </div>
       </div>
