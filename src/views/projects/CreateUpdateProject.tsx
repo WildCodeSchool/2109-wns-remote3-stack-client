@@ -22,6 +22,7 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
   const { handleSubmit, register, setValue } = useForm();
   const router = useHistory();
   const [dateError, setDateError] = useState('');
+
   // CREATE A NEW PROJECT
   const [create, { loading: createLoading, error: createError }] = useMutation<{
     createProject: IProjectList;
@@ -32,6 +33,7 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
     },
   });
 
+  // UPDATE A PROJECT
   const [update, { loading: updateLoading, error: updateError }] = useMutation<{
     createProject: IProjectList;
   }>(UPDATE_PROJECT, {
@@ -40,26 +42,29 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
     },
   });
 
-  const {
-    loading: isLoading,
-    error: isError,
-    data: oneProjectData,
-  } = useQuery<IProject>(GetOneProject, {
-    onCompleted: (d: IProject) => {
-      const endDate = format(new Date(d.getProjectByID.endDate), 'yyyy-mm-dd');
-      const startDate = format(
-        new Date(d.getProjectByID.endDate),
-        'yyyy-mm-dd'
-      );
-      setValue('name', d.getProjectByID.name);
-      setValue('description', d.getProjectByID.description);
-      setValue('status', d.getProjectByID.status);
-      setValue('endDate', endDate);
-      setValue('startDate', startDate);
-      setValue('estimeeSpentTime', d.getProjectByID.estimeeSpentTime);
-    },
-    variables: { getProjectByIdId: projectId },
-  });
+  // ON UPDATE GET THE PROJECT'S DATA
+  const { loading: isLoading, error: isError } = useQuery<IProject>(
+    GetOneProject,
+    {
+      skip: !projectId,
+      // ON SUCCES SET THE DEFAULT VALUE TO THE FORM'S INPUTS
+      onCompleted: (d: IProject) => {
+        setValue(
+          'startDate',
+          format(new Date(d.getProjectByID.startDate), 'yyyy-MM-dd')
+        );
+        setValue(
+          'endDate',
+          format(new Date(d.getProjectByID.endDate), 'yyyy-MM-dd')
+        );
+        setValue('name', d.getProjectByID.name);
+        setValue('description', d.getProjectByID.description);
+        setValue('status', d.getProjectByID.status);
+        setValue('estimeeSpentTime', d.getProjectByID.estimeeSpentTime);
+      },
+      variables: { getProjectByIdId: projectId },
+    }
+  );
 
   const onSubmit: SubmitHandler<IProjectPayload> = (data: IProjectPayload) => {
     const date1 = new Date(data.startDate);
@@ -78,6 +83,7 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
         endDate: date2,
         estimeeSpentTime: parseInt(data.estimeeSpentTime, 10),
       };
+      // IF PROJECT ID IS DEFINE WE UPDATE ESLE WE CREATE
       if (projectId === undefined) {
         create({ variables: projectData });
       } else {
@@ -92,16 +98,14 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
     return <p>...loading</p>;
   }
   if (createError || isError || updateError) {
-    return <p>error</p>;
+    toast('Oops something bad happen');
   }
   return (
     <div className="w-screen fixed inset-0 z-50 h-full  bg-darkGray bg-opacity-70 flex items-center justify-center ">
       <div className="p-7 lg:pr-8 bg-darkBlue h-full lg:h-modal rounded-md shadow-2xl  lg:w-5/12 lg:overflow-y-scroll">
         <div className="flex w-full justify-between items-center">
           <h2 className="text-lg lg:text-2xl">
-            {projectId === undefined
-              ? 'Create a new project'
-              : oneProjectData?.getProjectByID.name}
+            {projectId === undefined ? 'Create a new project' : 'updateProject'}
           </h2>
           <button
             onClick={() => setIsModal(false)}
