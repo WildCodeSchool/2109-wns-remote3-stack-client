@@ -56,7 +56,7 @@ function TaskList(): JSX.Element {
           })}
           {data.length === 0 && (
             <p className="font-normal lg:py-5 py-2 text-purple">
-              There is no projects for now
+              There is no taks for now
             </p>
           )}
         </div>

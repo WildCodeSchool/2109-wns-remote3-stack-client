@@ -7,7 +7,6 @@ interface IProps {
 }
 
 function OneTask({ item, isForm }: IProps): JSX.Element {
-  console.log(item);
   return (
     <Link to={`/task/${item.id}`}>
       <button
@@ -35,7 +34,7 @@ function OneTask({ item, isForm }: IProps): JSX.Element {
           </div>
         </div>
         <p className="mt-2 rounded-full border px-6">{item.advancement}</p>
-        <div>{item.tagId}</div>
+        {/* <div>{item.tagId}</div> */}
       </button>
     </Link>
   );
