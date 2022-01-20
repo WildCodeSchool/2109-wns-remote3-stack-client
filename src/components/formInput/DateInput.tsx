@@ -21,7 +21,7 @@ function DateInput({
     <label htmlFor={id} className="flex w-full mt-5 flex-col text-sm">
       {label}
       <input
-        className="bg-darkGray mt-1 border rounded-sm focus:outline-none p-2 border-purple"
+        className="bg-darkGray mt-1 border rounded-md focus:outline-none p-2 border-purple"
         type="Date"
         id={name}
         {...register(name, { required })}
