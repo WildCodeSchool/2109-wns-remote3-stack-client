@@ -28,7 +28,7 @@ function TaskList(): JSX.Element {
   }
   return (
     <div className="py-5 lg:py-0">
-      <HeaderList setIsForm={setIsForm} name="Tasks list" />
+      <HeaderList setIsModal={setIsForm} name="Tasks list" />
       {isForm && <p>form</p>}
       <div className={`${isForm && 'flex'}`}>
         {isForm && <CreateUpdateTask setIsForm={setIsForm} isForm={isForm} />}
