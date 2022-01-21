@@ -71,6 +71,7 @@ interface getTaskByID {
   startDate: string;
   endDate: string;
   estimeeSpentTime: string;
+  tags: ITagList;
 }
 interface ITagList {
   __typename?: string;

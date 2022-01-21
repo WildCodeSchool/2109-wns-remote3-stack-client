@@ -4,7 +4,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import OneTag from '@components/tag/OnTag';
 import close from '@assets/icons/close.svg';
-import { CREATE_TASK } from '../../API/mutation/createTask';
+import { format } from 'date-fns';
+import { CREATE_TASK, UPDATE_TASK } from '../../API/mutation/createTask';
 import { GET_ALL_PROJECTS } from '../../API/queries/projectQueries';
 import DateInput from '../../components/formInput/DateInput';
 import NumberInput from '../../components/formInput/NumberInput';
@@ -13,9 +14,11 @@ import TextInput from '../../components/formInput/TextInput';
 import SelectInputProjectId from '../../components/formInput/SelectInputProjectId';
 import { GET_ALL_TAGS } from '../../API/queries/tagQueries';
 import CreateUpdateTag from '../tags/CreateUpdateTag';
+import { GET_ONE_TASK } from '../../API/queries/taskQueries';
 
 interface IProps {
   setIsModal: Dispatch<SetStateAction<boolean>>;
+  taskId: string | undefined;
   onTaskCreated: (p: ITaskList) => void;
 }
 interface IResponseProjects {
@@ -24,14 +27,19 @@ interface IResponseProjects {
 interface IResponseTags {
   getAllTags: ITagList[];
 }
-function CreateUpdateTask({ setIsModal, onTaskCreated }: IProps): JSX.Element {
-  const { handleSubmit, register } = useForm();
+
+function CreateUpdateTask({
+  setIsModal,
+  onTaskCreated,
+  taskId,
+}: IProps): JSX.Element {
+  const { handleSubmit, register, setValue } = useForm();
   const [dataProjects, setDataProjects] = useState<IProjectList[]>([]);
   const [dataTagsList, setDataTagsList] = useState<ITagList[]>([]);
   const [isModalTag, setIsModalTag] = useState(false);
   const [dataTag, setDataTag] = useState<ITagList[]>([]);
 
-  // CREATE A NEW TASK
+  // CREATE A TASK
   const [create, { loading, error }] = useMutation<{
     createTask: ITaskList;
   }>(CREATE_TASK, {
@@ -40,6 +48,33 @@ function CreateUpdateTask({ setIsModal, onTaskCreated }: IProps): JSX.Element {
       // ON SUCCESS WE CALL THE TASK CREATED FUNCTION FROM THE PARENT
       onTaskCreated(p.createTask);
     },
+  });
+
+  // UPDATE A TASK
+  const [update, { loading: updateLoading, error: updateError }] = useMutation<{
+    createTask: ITaskList;
+  }>(UPDATE_TASK, {
+    onCompleted: () => {
+      setIsModal(false);
+    },
+  });
+
+  // ON UPDATE GET THE TASKS'S DATA
+  const { loading: isLoading, error: isError } = useQuery<ITask>(GET_ONE_TASK, {
+    skip: !taskId,
+    // ON SUCCES SET THE DEFAULT VALUE TO THE FORM'S INPUTS
+    onCompleted: (d: ITask) => {
+      setValue('subject', d.getTaskByID.subject);
+      setValue('advancement', d.getTaskByID.advancement);
+      setValue('estimeeSpentTime', d.getTaskByID.estimeeSpentTime);
+      setValue('taskId', d.getTaskByID.id);
+      setValue('tags', d.getTaskByID.tags);
+      setValue(
+        'endDate',
+        format(new Date(d.getTaskByID.endDate), 'yyyy-MM-dd')
+      );
+    },
+    variables: { getTaskByIdId: taskId },
   });
 
   // FETCH THE PROJECT LIST
@@ -74,16 +109,22 @@ function CreateUpdateTask({ setIsModal, onTaskCreated }: IProps): JSX.Element {
       estimeeSpentTime: parseInt(data.estimeeSpentTime, 10),
     };
     create({ variables: taskData });
+
+    // IF TASK ID IS DEFINE WE UPDATE ESLE WE CREATE
+    if (taskId === undefined) {
+      create({ variables: taskData });
+    } else {
+      update({ variables: { ...taskData, updateTaskId: taskId } });
+    }
   };
   const taskAdvancement = ['TO_DO', 'IN_PROGRESS', 'BLOCKED', 'DONE'];
 
-  if (loading) {
+  if (loading || updateLoading || isLoading) {
     return <p>...loading</p>;
   }
-  if (error) {
-    return <p>error</p>;
+  if (error || isError || updateError) {
+    toast('Oops something bad happen');
   }
-
   return (
     <div className="w-screen fixed inset-0 z-50 h-full  bg-darkGray bg-opacity-70 flex items-center justify-center ">
       {isModalTag && (
@@ -97,7 +138,9 @@ function CreateUpdateTask({ setIsModal, onTaskCreated }: IProps): JSX.Element {
       {isModalTag === false && (
         <div className="p-7 lg:pr-8 bg-darkBlue h-full lg:h-modal rounded-md shadow-2xl  lg:w-5/12 lg:overflow-y-scroll">
           <div className="flex w-full justify-between items-center">
-            <h2 className="text-lg">Create a new task</h2>
+            <h2 className="text-lg">
+              {taskId === undefined ? 'Create a new task' : 'update task'}
+            </h2>
             <button
               onClick={() => setIsModal(false)}
               type="button"
@@ -176,7 +219,7 @@ function CreateUpdateTask({ setIsModal, onTaskCreated }: IProps): JSX.Element {
               type="submit"
               className="mt-8 bg-purple rounded-sm w-full text-white px-5 py-2"
             >
-              Create task
+              {taskId === undefined ? 'Create a new task' : 'update task'}
             </button>
           </form>
         </div>

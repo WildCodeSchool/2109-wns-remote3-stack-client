@@ -23,6 +23,7 @@ function TaskList(): JSX.Element {
   // ON CREATED TASK ! ADD THE CREATED TASK TO THE ARRAY
   const onTaskCreated = (p: ITaskList) => {
     setData([...data, p]);
+    window.location.reload();
   };
 
   // REVERSE THE ARRAY THE RENDER THE YOUNGER ONE IN FIRST
@@ -39,6 +40,7 @@ function TaskList(): JSX.Element {
       <HeaderList setIsModal={setIsModal} name="Tasks list" />
       {isModal && (
         <CreateUpdateTask
+          taskId={undefined}
           setIsModal={setIsModal}
           onTaskCreated={onTaskCreated}
         />
@@ -47,7 +49,7 @@ function TaskList(): JSX.Element {
         {reverseData.map((item) => {
           return (
             <div key={item.id}>
-              <OneTask item={item} />;
+              <OneTask item={item} />
             </div>
           );
         })}
