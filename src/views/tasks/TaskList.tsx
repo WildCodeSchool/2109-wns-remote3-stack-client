@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 
-import HeaderList from '../../components/navigation/HeaderList';
-import * as queries from '../../API/queries/taskQueries';
-import OneTask from '../../components/tasks/OneTask';
+import HeaderList from '@components/navigation/HeaderList';
+import * as queries from '@api/queries/taskQueries';
+import OneTask from '@components/tasks/OneTask';
+import { GetAllTasks_getAllTasks } from '@api/types/GetAllTasks';
 import CreateUpdateTask from './CreateUpdateTask';
 
 interface IResponse {
-  getAllTasks: ITaskList[];
+  getAllTasks: GetAllTasks_getAllTasks[];
 }
 
 function TaskList(): JSX.Element {
-  const [data, setData] = useState<ITaskList[]>([]);
+  const [data, setData] = useState<GetAllTasks_getAllTasks[]>([]);
   const [isModal, setIsModal] = useState(false);
   // FETCH THE TASK LIST
   const { loading, error } = useQuery<IResponse>(queries.GET_ALL_TASKS, {
@@ -21,7 +22,7 @@ function TaskList(): JSX.Element {
   });
 
   // ON CREATED TASK ! ADD THE CREATED TASK TO THE ARRAY
-  const onTaskCreated = (p: ITaskList) => {
+  const onTaskCreated = (p: GetAllTasks_getAllTasks) => {
     setData([...data, p]);
     window.location.reload();
   };

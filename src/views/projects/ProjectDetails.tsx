@@ -5,14 +5,15 @@ import ProjectTask from '@components/projects/ProjectTask';
 import ProjectInformations from '@components/projects/ProjectInformations';
 import ProjectUser from '@components/projects/ProjectUser';
 import NavMobile from '@components/projects/NavMobile';
+import { GET_ONE_PROJECT } from '@api/queries/projectQueries';
+import { getProjectById } from '@api/types/getProjectById';
 import CreateUpdateProject from './CreateUpdateProject';
-import { GET_ONE_PROJECT } from '../../API/queries/projectQueries';
 
 function ProjectDetails(): JSX.Element {
   const { id }: { id: string } = useParams();
   const [navLink, setNavLink] = useState('task');
   const [isModal, setIsModal] = useState(false);
-  const { loading, error, data } = useQuery<IProject>(GET_ONE_PROJECT, {
+  const { loading, error, data } = useQuery<getProjectById>(GET_ONE_PROJECT, {
     variables: { getProjectByIdId: id },
   });
 

@@ -4,14 +4,19 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import close from '@assets/icons/close.svg';
 import { useHistory } from 'react-router-dom';
-import { GET_ONE_PROJECT, UPDATE_PROJECT } from '@api/queries/projectQueries';
+import { GET_ONE_PROJECT, GET_ALL_PROJECTS } from '@api/queries/projectQueries';
 import { format } from 'date-fns';
-import { CREATE_PROJECT } from '../../API/mutation/createProject';
-import DateInput from '../../components/formInput/DateInput';
-import NumberInput from '../../components/formInput/NumberInput';
-import SelectInput from '../../components/formInput/SelectInput';
-import TextArea from '../../components/formInput/TextArea';
-import TextInput from '../../components/formInput/TextInput';
+import { useUserFromStore } from '@store/user.slice';
+import { GetAllProjects_getAllProjects } from '@api/types/GetAllProjects';
+import { getProjectById } from '@api/types/getProjectById';
+import { createProjectVariables } from '@api/types/createProject';
+import { updateProjectVariables } from '@api/types/updateProject';
+import DateInput from '@components/formInput/DateInput';
+import NumberInput from '@components/formInput/NumberInput';
+import SelectInput from '@components/formInput/SelectInput';
+import TextArea from '@components/formInput/TextArea';
+import TextInput from '@components/formInput/TextInput';
+import { CREATE_PROJECT, UPDATE_PROJECT } from '@api/mutation/projects';
 
 interface IProps {
   setIsModal: Dispatch<SetStateAction<boolean>>;
@@ -20,22 +25,24 @@ interface IProps {
 
 function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
   const { handleSubmit, register, setValue } = useForm();
+  const { user } = useUserFromStore();
   const router = useHistory();
   const [dateError, setDateError] = useState('');
 
   // CREATE A NEW PROJECT
   const [create, { loading: createLoading, error: createError }] = useMutation<{
-    createProject: IProjectList;
+    createProject: GetAllProjects_getAllProjects;
   }>(CREATE_PROJECT, {
-    onCompleted: (d: { createProject: IProjectList }) => {
+    onCompleted: (d: { createProject: GetAllProjects_getAllProjects }) => {
       router.push(`/project/${d.createProject.id}`);
       toast('New project successfully created');
     },
+    refetchQueries: [GET_ALL_PROJECTS],
   });
 
   // UPDATE A PROJECT
   const [update, { loading: updateLoading, error: updateError }] = useMutation<{
-    createProject: IProjectList;
+    createProject: GetAllProjects_getAllProjects;
   }>(UPDATE_PROJECT, {
     onCompleted: () => {
       setIsModal(false);
@@ -43,12 +50,12 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
   });
 
   // ON UPDATE GET THE PROJECT'S DATA
-  const { loading: isLoading, error: isError } = useQuery<IProject>(
+  const { loading: isLoading, error: isError } = useQuery<getProjectById>(
     GET_ONE_PROJECT,
     {
       skip: !projectId,
       // ON SUCCES SET THE DEFAULT VALUE TO THE FORM'S INPUTS
-      onCompleted: (d: IProject) => {
+      onCompleted: (d: getProjectById) => {
         setValue(
           'startDate',
           format(new Date(d.getProjectByID.startDate), 'yyyy-MM-dd')
@@ -66,7 +73,9 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
     }
   );
 
-  const onSubmit: SubmitHandler<IProjectPayload> = (data: IProjectPayload) => {
+  const onSubmit: SubmitHandler<
+    createProjectVariables | updateProjectVariables
+  > = (data: createProjectVariables | updateProjectVariables) => {
     const date1 = new Date(data.startDate);
     const date2 = new Date(data.endDate);
 
@@ -81,11 +90,11 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
         status: data.status,
         startDate: date1,
         endDate: date2,
-        estimeeSpentTime: parseInt(data.estimeeSpentTime, 10),
+        estimeeSpentTime: parseFloat(`${data.estimeeSpentTime}`),
       };
       // IF PROJECT ID IS DEFINE WE UPDATE ESLE WE CREATE
       if (projectId === undefined) {
-        create({ variables: projectData });
+        create({ variables: { ...projectData, userId: user.id } });
       } else {
         update({ variables: { ...projectData, updateProjectId: projectId } });
       }
@@ -102,10 +111,12 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
   }
   return (
     <div className="w-screen fixed inset-0 z-50 h-full  bg-darkGray bg-opacity-70 flex items-center justify-center ">
-      <div className="p-7 lg:pr-8 bg-darkBlue h-full lg:h-modal rounded-md shadow-2xl  lg:w-5/12 lg:overflow-y-scroll">
+      <div className="p-4  lg:pr-8 lg:py-4 bg-darkBlue h-full lg:h-modal rounded-md shadow-2xl  lg:w-5/12">
         <div className="flex w-full justify-between items-center">
           <h2 className="text-lg lg:text-2xl">
-            {projectId === undefined ? 'Create a new project' : 'updateProject'}
+            {projectId === undefined
+              ? 'Create a new project'
+              : 'Update project'}
           </h2>
           <button
             onClick={() => setIsModal(false)}
@@ -179,7 +190,7 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
           )}
           <button
             type="submit"
-            className="mt-8 bg-purple rounded-md w-full text-white px-5 py-2"
+            className="lg:mt-8 mt-5 bg-purple rounded-md w-full text-white px-5 py-2"
           >
             {projectId === undefined
               ? 'Create a new project'

@@ -28,7 +28,7 @@ function TextArea({
         id={id}
         placeholder={placeholder}
         {...register(name, { required })}
-        className="bg-darkGray mt-2 border h-52 rounded-md focus:outline-none p-2 border-purple"
+        className="bg-darkGray mt-2 border lg:h-24 rounded-md focus:outline-none p-2 border-purple"
       />
       <p className="text-red text-xs">{error}</p>
       {required && <p className="text-xs text-purple mt-1">Fieds required</p>}

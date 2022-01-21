@@ -2,7 +2,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import OneTag from '@components/tag/OnTag';
+import OneTag from '@components/tag/OneTag';
 import close from '@assets/icons/close.svg';
 import { format } from 'date-fns';
 import {
@@ -19,17 +19,23 @@ import { GET_ALL_TAGS } from '../../API/queries/tagQueries';
 import CreateUpdateTag from '../tags/CreateUpdateTag';
 import { GET_ONE_TASK } from '../../API/queries/taskQueries';
 import Loader from '../../components/Loader';
+import { GetAllTasks_getAllTasks } from '../../API/types/GetAllTasks';
+import { GetAllProjects_getAllProjects } from '../../API/types/GetAllProjects';
+import { GetAllTags_getAllTags } from '../../API/types/GetAllTags';
+import { UpdateTaskByIdVariables } from '../../API/types/UpdateTaskById';
+import { getTaskByID } from '../../API/types/getTaskByID';
+import { CreateTaskWithTagsVariables } from '../../API/types/CreateTaskWithTags';
 
 interface IProps {
   setIsModal: Dispatch<SetStateAction<boolean>>;
   taskId: string | undefined;
-  onTaskCreated: (p: ITaskList) => void;
+  onTaskCreated: (p: GetAllTasks_getAllTasks) => void;
 }
 interface IResponseProjects {
-  getAllProjects: IProjectList[];
+  getAllProjects: GetAllProjects_getAllProjects[];
 }
 interface IResponseTags {
-  getAllTags: ITagList[];
+  getAllTags: GetAllTags_getAllTags[];
 }
 
 function CreateUpdateTask({
@@ -38,16 +44,18 @@ function CreateUpdateTask({
   taskId,
 }: IProps): JSX.Element {
   const { handleSubmit, register, setValue } = useForm();
-  const [dataProjects, setDataProjects] = useState<IProjectList[]>([]);
-  const [dataTagsList, setDataTagsList] = useState<ITagList[]>([]);
+  const [dataProjects, setDataProjects] = useState<
+    GetAllProjects_getAllProjects[]
+  >([]);
+  const [dataTagsList, setDataTagsList] = useState<GetAllTags_getAllTags[]>([]);
   const [isModalTag, setIsModalTag] = useState(false);
-  const [dataTag, setDataTag] = useState<ITagList[]>([]);
+  const [dataTag, setDataTag] = useState<GetAllTags_getAllTags[]>([]);
 
   // CREATE A TASK
   const [create, { loading, error }] = useMutation<{
-    createTask: ITaskList;
+    createTask: GetAllTasks_getAllTasks;
   }>(CREATE_TASK_WITH_TAGS, {
-    onCompleted: (p: { createTask: ITaskList }) => {
+    onCompleted: (p: { createTask: GetAllTasks_getAllTasks }) => {
       toast('New task successfully created');
       // ON SUCCESS WE CALL THE TASK CREATED FUNCTION FROM THE PARENT
       onTaskCreated(p.createTask);
@@ -57,7 +65,7 @@ function CreateUpdateTask({
 
   // UPDATE A TASK
   const [update, { loading: updateLoading, error: updateError }] = useMutation<{
-    createTask: ITaskList;
+    createTask: UpdateTaskByIdVariables;
   }>(UPDATE_TASK, {
     onCompleted: () => {
       setIsModal(false);
@@ -65,22 +73,25 @@ function CreateUpdateTask({
   });
 
   // ON UPDATE GET THE TASKS'S DATA
-  const { loading: isLoading, error: isError } = useQuery<ITask>(GET_ONE_TASK, {
-    skip: !taskId,
-    // ON SUCCES SET THE DEFAULT VALUE TO THE FORM'S INPUTS
-    onCompleted: (d: ITask) => {
-      setValue('subject', d.getTaskByID.subject);
-      setValue('advancement', d.getTaskByID.advancement);
-      setValue('estimeeSpentTime', d.getTaskByID.estimeeSpentTime);
-      setValue('taskId', d.getTaskByID.id);
-      setValue('tags', d.getTaskByID.tags);
-      setValue(
-        'endDate',
-        format(new Date(d.getTaskByID.endDate), 'yyyy-MM-dd')
-      );
-    },
-    variables: { idTask: taskId },
-  });
+  const { loading: isLoading, error: isError } = useQuery<getTaskByID>(
+    GET_ONE_TASK,
+    {
+      skip: !taskId,
+      // ON SUCCES SET THE DEFAULT VALUE TO THE FORM'S INPUTS
+      onCompleted: (d: getTaskByID) => {
+        setValue('subject', d.getTaskByID.subject);
+        setValue('advancement', d.getTaskByID.advancement);
+        setValue('estimeeSpentTime', d.getTaskByID.estimeeSpentTime);
+        setValue('taskId', d.getTaskByID.id);
+        setValue('tags', d.getTaskByID.tags);
+        setValue(
+          'endDate',
+          format(new Date(d.getTaskByID.endDate), 'yyyy-MM-dd')
+        );
+      },
+      variables: { idTask: taskId },
+    }
+  );
 
   // FETCH THE PROJECT LIST
   useQuery<IResponseProjects>(GET_ALL_PROJECTS, {
@@ -103,7 +114,9 @@ function CreateUpdateTask({
     setDataTagsList(dataTagsList);
   };
 
-  const onSubmit: SubmitHandler<ITaskPayload> = (data: ITaskPayload) => {
+  const onSubmit: SubmitHandler<CreateTaskWithTagsVariables> = (
+    data: CreateTaskWithTagsVariables
+  ) => {
     const date = new Date(data.endDate);
     const taskData = {
       subject: data.subject,
@@ -111,7 +124,7 @@ function CreateUpdateTask({
       tags: dataTag,
       advancement: data.advancement,
       endDate: date,
-      estimeeSpentTime: parseInt(data.estimeeSpentTime, 10),
+      estimeeSpentTime: data.estimeeSpentTime,
     };
     // IF TASK ID IS DEFINE WE UPDATE ESLE WE CREATE
     if (taskId === undefined) {
@@ -180,7 +193,7 @@ function CreateUpdateTask({
               required
             />
             <div className="mt-2 flex flex-wrap px-3 lg:pr-6">
-              {reverseData.map(({ __typename, ...item }) => {
+              {reverseData.map((item) => {
                 return (
                   <div
                     className="cursor-pointer"

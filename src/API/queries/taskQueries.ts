@@ -4,6 +4,7 @@ export const GET_ALL_TASKS = gql`
   query GetAllTasks {
     getAllTasks {
       id
+      projectId
       subject
       startDate
       endDate

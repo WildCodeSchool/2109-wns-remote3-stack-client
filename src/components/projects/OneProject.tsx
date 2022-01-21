@@ -1,8 +1,9 @@
+import { GetAllProjects_getAllProjects } from '@api/types/GetAllProjects';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 interface IProps {
-  item: IProjectList;
+  item: GetAllProjects_getAllProjects;
 }
 
 function OneProject({ item }: IProps): JSX.Element {

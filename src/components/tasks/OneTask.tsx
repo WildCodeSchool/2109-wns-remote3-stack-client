@@ -1,8 +1,9 @@
 import React from 'react';
+import { GetAllTasks_getAllTasks } from '@api/types/GetAllTasks';
 import { Link } from 'react-router-dom';
 
 interface IProps {
-  item: ITaskList;
+  item: GetAllTasks_getAllTasks;
 }
 
 function OneTask({ item }: IProps): JSX.Element {

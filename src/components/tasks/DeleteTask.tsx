@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { DELETE_TASK } from '../../API/mutation/deleteTasks';
+import { DELETE_TASK } from '@api/mutation/deleteTasks';
+import { getTaskByID } from '@api/types/getTaskByID';
 
 interface IProps {
-  item: ITask;
+  item: getTaskByID;
 }
 
 function DeleteTask({ item }: IProps): JSX.Element {

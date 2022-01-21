@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
-
-import DeleteTask from '@components/tasks/DeleteTask';
-import * as queries from '../../API/queries/taskQueries';
-import CreateUpdateTask from './CreateUpdateTask';
+import { getTaskByID } from '@api/types/getTaskByID';
+import { GET_ONE_TASK } from '../../API/queries/taskQueries';
+import { getProjectById } from '../../API/types/getProjectById';
 import { GET_ONE_PROJECT } from '../../API/queries/projectQueries';
+import CreateUpdateTask from './CreateUpdateTask';
+import DeleteTask from '../../components/tasks/DeleteTask';
 
 function TaskDetails(): JSX.Element {
   const [isModal, setIsModal] = useState(false);
@@ -15,7 +16,7 @@ function TaskDetails(): JSX.Element {
     loading: loadingTask,
     error: errorTask,
     data: dataTask,
-  } = useQuery<ITask>(queries.GET_ONE_TASK, {
+  } = useQuery<getTaskByID>(GET_ONE_TASK, {
     variables: { taskId: id },
   });
 
@@ -23,7 +24,7 @@ function TaskDetails(): JSX.Element {
     loading: loadingProject,
     error: errorProject,
     data: dataProject,
-  } = useQuery<IProject>(GET_ONE_PROJECT, {
+  } = useQuery<getProjectById>(GET_ONE_PROJECT, {
     variables: {
       getProjectByIdId: dataTask ? dataTask.getTaskByID.projectId : '',
     },

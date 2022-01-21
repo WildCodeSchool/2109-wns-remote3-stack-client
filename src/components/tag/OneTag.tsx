@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { GetAllTags_getAllTags } from '@api/types/GetAllTags';
 
 interface IProps {
-  item: ITagList;
+  item: GetAllTags_getAllTags;
 }
 
 function OneTag({ item }: IProps): JSX.Element {
