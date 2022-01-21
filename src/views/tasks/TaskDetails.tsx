@@ -36,7 +36,7 @@ function TaskDetails(): JSX.Element {
             <CreateUpdateTask
               taskId={data.getTaskByID.id}
               setIsModal={setIsModal}
-              onTaskCreated={() => console.log('')}
+              onTaskCreated={() => console.log('error')}
             />
           )}
         </div>

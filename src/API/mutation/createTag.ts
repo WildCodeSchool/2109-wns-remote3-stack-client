@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const CREATE_TAG = gql`
-  mutation CreateTag($label: String!, $color: String!) {
-    createTag(label: $label, color: $color) {
+  mutation CreateTag($payload: ITagPayload!) {
+    createTag(payload: $payload) {
       id
       label
       color

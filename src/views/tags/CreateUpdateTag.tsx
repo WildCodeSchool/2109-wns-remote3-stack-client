@@ -30,8 +30,10 @@ function CreateUpdateTag({ onTagCreated, setIsModal }: IProps): JSX.Element {
 
   const onSubmit: SubmitHandler<ITagPayload> = (data: ITagPayload) => {
     const tagData = {
-      label: data.label,
-      color: data.color,
+      payload: {
+        label: data.label,
+        color: data.color,
+      },
     };
     create({ variables: tagData });
   };

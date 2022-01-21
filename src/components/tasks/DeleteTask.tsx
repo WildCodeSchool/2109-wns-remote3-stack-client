@@ -13,8 +13,6 @@ function DeleteTask({ item }: IProps): JSX.Element {
 
   const router = useHistory();
 
-  console.log(item.getTaskByID.id);
-
   const [deleteTask, { loading, error }] = useMutation(DELETE_TASK, {
     onCompleted: () => {
       router.push('/tasks');
