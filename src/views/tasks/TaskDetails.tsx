@@ -67,7 +67,6 @@ function TaskDetails(): JSX.Element {
             <CreateUpdateTask
               taskId={dataTask.getTaskByID.id}
               setIsModal={setIsModal}
-              onTaskCreated={() => console.log('error')}
             />
           )}
           <button

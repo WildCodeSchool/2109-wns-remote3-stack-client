@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { DELETE_TASK } from '@api/mutation/deleteTasks';
 import { getTaskByID } from '@api/types/getTaskByID';
+import { GET_ALL_TASKS } from '@api/queries/taskQueries';
 
 interface IProps {
   item: getTaskByID;
@@ -15,10 +16,14 @@ function DeleteTask({ item }: IProps): JSX.Element {
   const router = useHistory();
 
   const [deleteTask, { loading, error }] = useMutation(DELETE_TASK, {
+    refetchQueries: [
+      {
+        query: GET_ALL_TASKS,
+      },
+    ],
     onCompleted: () => {
       router.push('/tasks');
       toast('Task successfully deleted');
-      window.location.reload();
     },
   });
 
