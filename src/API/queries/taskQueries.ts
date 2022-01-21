@@ -1,21 +1,27 @@
 import { gql } from '@apollo/client';
 
-export const GetAllTasks = gql`
+export const GET_ALL_TASKS = gql`
   query GetAllTasks {
     getAllTasks {
       id
+      projectId
       subject
       startDate
       endDate
       estimeeSpentTime
       advancement
+      tags {
+        id
+        label
+        color
+      }
     }
   }
 `;
 
-export const GetOneTask = gql`
-  query getTaskByID($getTaskByIdId: String!) {
-    getTaskByID(id: $getTaskByIdId) {
+export const GET_ONE_TASK = gql`
+  query getTaskByID($taskId: String!) {
+    getTaskByID(id: $taskId) {
       id
       subject
       projectId
@@ -23,6 +29,11 @@ export const GetOneTask = gql`
       endDate
       estimeeSpentTime
       advancement
+      tags {
+        id
+        label
+        color
+      }
     }
   }
 `;

@@ -31,6 +31,7 @@ interface ReturnUseUserFromStore {
 
 const initialState: UserStateWithLogged = {
   logged: false,
+  id: '0626cca8-f77c-456a-a5a2-fab4ab667575',
   username: 'John',
   email: 'john@gmail.com',
 };
