@@ -5,13 +5,13 @@ interface IProps {
 }
 
 function OneTag({ item }: IProps): JSX.Element {
-  const [backgroundColor, setBackgroundColor] = useState('darkBlue');
+  const [backgroundColor, setBackgroundColor] = useState('bg-lightPurple');
   return (
     <input
-      onClick={() => setBackgroundColor(item.color)}
+      onClick={() => setBackgroundColor(`bg-${item.color}-500`)}
       value={item.label}
       type="button"
-      className={`mr-2 hover:bg-opacity-100 bg-opacity-80 text-xs text-light border border-${backgroundColor}-500 px-2 rounded-full bg-${backgroundColor}-500`}
+      className={`cursor-pointer mr-2 hover:bg-opacity-100 bg-opacity-80 text-xs text-light px-2 rounded-full ${backgroundColor}`}
     />
   );
 }

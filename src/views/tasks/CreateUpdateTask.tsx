@@ -183,6 +183,7 @@ function CreateUpdateTask({
               {reverseData.map(({ __typename, ...item }) => {
                 return (
                   <div
+                    className="cursor-pointer"
                     tabIndex={0}
                     key={item.id}
                     role="button"
