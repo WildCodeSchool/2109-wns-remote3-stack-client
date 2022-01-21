@@ -35,6 +35,6 @@ export interface createProjectVariables {
   description: string;
   status: string;
   startDate: any;
-  endDate: string;
+  endDate: any;
   estimeeSpentTime: number;
 }
