@@ -9,7 +9,10 @@ import { format } from 'date-fns';
 import { useUserFromStore } from '@store/user.slice';
 import { GetAllProjects_getAllProjects } from '@api/types/GetAllProjects';
 import { getProjectById } from '@api/types/getProjectById';
-import { createProjectVariables } from '@api/types/createProject';
+import {
+  createProjectVariables,
+  createProject_createProject,
+} from '@api/types/createProject';
 import { updateProjectVariables } from '@api/types/updateProject';
 import DateInput from '@components/formInput/DateInput';
 import NumberInput from '@components/formInput/NumberInput';
@@ -30,11 +33,12 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
   const [dateError, setDateError] = useState('');
 
   // CREATE A NEW PROJECT
-  const [create, { loading: createLoading, error: createError }] = useMutation<{
-    createProject: GetAllProjects_getAllProjects;
-  }>(CREATE_PROJECT, {
-    onCompleted: (d: { createProject: GetAllProjects_getAllProjects }) => {
-      router.push(`/project/${d.createProject.id}`);
+  const [create, { loading: createLoading, error: createError }] = useMutation<
+    createProject_createProject,
+    createProjectVariables
+  >(CREATE_PROJECT, {
+    onCompleted: (d) => {
+      router.push(`/project/${d.id}`);
       toast('New project successfully created');
     },
     refetchQueries: [GET_ALL_PROJECTS],
@@ -94,7 +98,7 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
       };
       // IF PROJECT ID IS DEFINE WE UPDATE ESLE WE CREATE
       if (projectId === undefined) {
-        create({ variables: { ...projectData, userId: user.id } });
+        create({ variables: { ...projectData, userId: user.id! } });
       } else {
         update({ variables: { ...projectData, updateProjectId: projectId } });
       }

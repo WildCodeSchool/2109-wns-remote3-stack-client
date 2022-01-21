@@ -28,6 +28,6 @@ export interface updateProjectVariables {
   description: string;
   status: string;
   startDate: any;
-  endDate: string;
+  endDate: any;
   estimeeSpentTime: number;
 }

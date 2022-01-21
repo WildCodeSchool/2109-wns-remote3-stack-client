@@ -7,7 +7,7 @@ export const CREATE_PROJECT = gql`
     $description: String!
     $status: String!
     $startDate: DateTime!
-    $endDate: String!
+    $endDate: DateTime!
     $estimeeSpentTime: Float!
   ) {
     createProject(
@@ -41,7 +41,7 @@ export const UPDATE_PROJECT = gql`
     $description: String!
     $status: String!
     $startDate: DateTime!
-    $endDate: String!
+    $endDate: DateTime!
     $estimeeSpentTime: Float!
   ) {
     updateProject(
