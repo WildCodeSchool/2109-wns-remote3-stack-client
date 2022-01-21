@@ -16,13 +16,13 @@ function UserRole({
 }: IProps): JSX.Element {
   // PROJECT ROLE ARRAY
   const projectRole = [
-    'PROJECT_MANAGER',
     'DEVELOPPER',
     'UX_DESIGNER',
     'DEVOPS',
+    'PROJECT_MANAGER',
   ];
   return (
-    <div className="p-7">
+    <div className="px-7 mt-5">
       <p className="text-lg">
         You want to assign{' '}
         <span className="text-lightPurple">{userToAssign?.firstName} </span>
@@ -31,26 +31,27 @@ function UserRole({
         <span className="text-lightPurple">{project.getProjectByID.name}</span>{' '}
         project
       </p>
-      <div className="mt-5">
+      <div className="mt-5 w-full">
         <Avatar data={userToAssign as IUser} />
-        <div className="mt-5 flex flex-col items-start">
-          <p className="">Assign as</p>
-          <select
-            defaultValue={projectRole[0]}
-            onChange={(e) => setProjectRoleSelected(e.target.value)}
-            className="w-6/12 mt-2 border-lightPurple text-sm p-2 border bg-darkBlue"
-          >
-            {projectRole.map((item) => {
-              return (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              );
-            })}
-          </select>
+        <div className="mt-5 flex items-end w-full">
+          <div className="flex flex-col w-8/12">
+            <p className="">Assign as</p>
+            <select
+              onChange={(e) => setProjectRoleSelected(e.target.value)}
+              className="w-10/12 mt-2 border-lightPurple text-sm p-2 border bg-darkBlue"
+            >
+              {projectRole.map((item) => {
+                return (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
           <button
             onClick={() => createUserProject()}
-            className="mt-10 bg-purple w-8/12 rounded-md transform hover:scale-105 duration-300 py-2"
+            className=" bg-purple w-4/12 rounded-md transform hover:scale-105 duration-300 py-2"
             type="button"
           >
             Assign user

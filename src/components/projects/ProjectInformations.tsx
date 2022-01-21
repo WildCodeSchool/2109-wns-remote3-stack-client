@@ -63,7 +63,7 @@ function ProjectInformations({ data, setIsModal }: IProps): JSX.Element {
         <button
           onClick={() => setIsModal(true)}
           type="button"
-          className="text-left flex text-sm underline mt-5"
+          className="text-left hover:text-purple flex text-sm underline mt-5"
         >
           {` Update project's informations`}
           <img src={settings} className="ml-2 h-5 w-5" alt="" />
@@ -89,7 +89,7 @@ function ProjectInformations({ data, setIsModal }: IProps): JSX.Element {
         <button
           onClick={() => setIsDeleteModal(true)}
           type="button"
-          className="text-left mt-5 lg:mt-0 flex text-sm underline"
+          className="text-left mt-5 hover:text-purple lg:mt-0 flex text-sm underline"
         >
           delete project
           <img src={trash} className="ml-2 h-5 w-5" alt="" />

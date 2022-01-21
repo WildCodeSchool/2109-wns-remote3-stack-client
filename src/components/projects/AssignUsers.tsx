@@ -3,6 +3,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import React, { SetStateAction, Dispatch, useState } from 'react';
 import close from '@assets/icons/close.svg';
 import { CREATE_USER_PROJECT } from '@api/queries/userProject';
+import { GET_USER_WITH_PROJECT } from '@api/queries/userQueries';
 import { GET_ONE_PROJECT } from '@api/queries/projectQueries';
 import User from './User';
 import UserRole from './UserRole';
@@ -12,6 +13,7 @@ interface IProps {
   project: IProject;
   userToAssign: IUser | undefined;
   setUserToAssign: Dispatch<SetStateAction<IUser | undefined>>;
+  isUsersProjectModal: boolean;
 }
 
 function AssignUsers({
@@ -19,8 +21,10 @@ function AssignUsers({
   project,
   userToAssign,
   setUserToAssign,
+  isUsersProjectModal,
 }: IProps): JSX.Element {
-  const [projectRoleSelected, setProjectRoleSelected] = useState('');
+  const [projectRoleSelected, setProjectRoleSelected] = useState('DEVELOPPER');
+  const [searchValue, setSearchValue] = useState('');
 
   // GET ALL USERS
   const { loading, error, data } = useQuery<getAllUsers>(GET_ALL_USERS);
@@ -33,11 +37,11 @@ function AssignUsers({
         projectId: project.getProjectByID.id,
         projectRole: projectRoleSelected,
       },
-      refetchQueries: [GET_ONE_PROJECT],
       onCompleted: () => {
         setUserToAssign(undefined);
         setIsUsersProjectModal(false);
       },
+      refetchQueries: [GET_ONE_PROJECT, GET_USER_WITH_PROJECT],
     });
 
   if (loading || createLoading) {
@@ -46,12 +50,13 @@ function AssignUsers({
   if (error || !data || createError) {
     return <p>error</p>;
   }
+
   return (
     <div className="w-screen fixed inset-0 z-50 h-full  bg-darkGray bg-opacity-70 flex items-center justify-center ">
-      <div className="bg-darkBlue h-full lg:h-modal rounded-xl shadow-2xl  lg:w-5/12">
-        <div className="p-4  lg:px-7">
-          <div className="w-full flex justify-between items-center my-2">
-            <h2 className="lg:text-xl">Assigne Users</h2>
+      <div className="bg-darkBlue h-full lg:h-96 rounded-xl shadow-2xl  lg:w-5/12">
+        <div className="p-4  lg:px-7 shadow-2xl">
+          <div className="w-full flex justify-between items-center mt-2">
+            <h2 className="lg:text-lg">Assigne Users</h2>
             <button
               onClick={() => {
                 setIsUsersProjectModal(false);
@@ -64,24 +69,62 @@ function AssignUsers({
           </div>
           <input
             placeholder="search"
-            className="bg-transparent mt-3 border w-8/12 rounded-md focus:outline-none p-2 border-lightPurple"
+            className="bg-transparent text-sm h-9 mt-3 border w-8/12 rounded-md focus:outline-none p-2 border-lightPurple"
             type="text"
+            onChange={(e) => setSearchValue(e.target.value)}
           />
         </div>
         {userToAssign === undefined ? (
-          <div className="p-4 lg:py-0 lg:px-7">
-            {data.getAllUsers.map((item) => {
-              return (
-                <div key={item.id}>
-                  <User
-                    setIsUsersProjectModal={setIsUsersProjectModal}
-                    projectId={project.getProjectByID.id}
-                    setUserToAssign={setUserToAssign}
-                    userId={item.id}
-                  />
-                </div>
-              );
-            })}
+          <div className="p-4 lg:py-0 lg:px-7  h-64 overflow-y-scroll">
+            {searchValue === '' ? (
+              <div>
+                {data.getAllUsers.map((item) => {
+                  return (
+                    <div key={item.id}>
+                      <User
+                        projectRole=""
+                        isUsersProjectModal={isUsersProjectModal}
+                        setIsUsersProjectModal={setIsUsersProjectModal}
+                        projectId={project.getProjectByID.id}
+                        setUserToAssign={setUserToAssign}
+                        userId={item.id}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div>
+                {data.getAllUsers
+                  .filter(
+                    (item) =>
+                      item.firstName.toLocaleLowerCase() ===
+                      searchValue.toLocaleLowerCase()
+                  )
+                  .map((item) => {
+                    return (
+                      <div key={item.id}>
+                        <User
+                          projectRole=""
+                          isUsersProjectModal={isUsersProjectModal}
+                          setIsUsersProjectModal={setIsUsersProjectModal}
+                          projectId={project.getProjectByID.id}
+                          setUserToAssign={setUserToAssign}
+                          userId={item.id}
+                        />
+                      </div>
+                    );
+                  })}
+                {data.getAllUsers.filter(
+                  (item) =>
+                    item.firstName.toLowerCase() === searchValue.toLowerCase()
+                ).length === 0 && (
+                  <p className="text-pink text-sm">
+                    Wilder not found.. try with a other username
+                  </p>
+                )}
+              </div>
+            )}
           </div>
         ) : (
           <UserRole

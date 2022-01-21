@@ -11,6 +11,8 @@ interface IProps {
   setUserToAssign: Dispatch<SetStateAction<IUser | undefined>>;
   projectId: string;
   setIsUsersProjectModal: Dispatch<SetStateAction<boolean>>;
+  isUsersProjectModal: boolean;
+  projectRole: string;
 }
 
 function User({
@@ -18,9 +20,11 @@ function User({
   setUserToAssign,
   projectId,
   setIsUsersProjectModal,
+  isUsersProjectModal,
+  projectRole,
 }: IProps): JSX.Element {
   const [isAssigned, setIsAssigned] = useState(false);
-  const [role, setRole] = useState('');
+  const [role, setRole] = useState(projectRole);
   // GET ONE USER
   const { data, loading, error } = useQuery<getUserByID>(GET_ONE_USER, {
     variables: { getUserByIdId: userId },
@@ -28,12 +32,13 @@ function User({
 
   // GET PROJECT LIST OF THE USER
   useQuery<getUserWithProjects>(GET_USER_WITH_PROJECT, {
-    variables: { getUserWithProjectsId: data?.getUserByID.id },
+    variables: { getUserWithProjectsId: userId },
     onCompleted: (d) => {
       // CHECK IF THE PROJECT IS IN THE LIST
       const checkProject = d.getUserWithProjects.projects.filter(
         (item) => item.projectId === projectId
       );
+
       // IF THE LENGHT OF CHECKROLE IS DIFFERENT THAN 0 SO THE USER IS ALREADY ASSIGN TO THIS PROJECT
       if (checkProject.length !== 0) {
         setIsAssigned(true);
@@ -46,9 +51,10 @@ function User({
   const [deleteUserProject, { loading: deleteLoading, error: deleteError }] =
     useMutation(DELETE_USER_PROJECT, {
       variables: { projectId, userId },
-      refetchQueries: [GET_ONE_PROJECT],
+      refetchQueries: [GET_ONE_PROJECT, GET_USER_WITH_PROJECT],
       onCompleted: () => {
         setIsUsersProjectModal(false);
+        setIsAssigned(false);
       },
     });
 
@@ -58,17 +64,18 @@ function User({
   if (error || !data || deleteError) {
     return <p>error</p>;
   }
+
   return (
     <div className="my-4  border-b  border-lightPurple hover:bg-darkGray duration-300 ">
-      <div className="w-full lg:p-4 flex flex-col lg:flex-row justify-between items-center py-3 ">
+      <div className="w-full lg:px-4 lg:pb-2 flex flex-col lg:flex-row justify-between items-center py-3 ">
         <Avatar data={data.getUserByID} />
-        {isAssigned ? (
+        {isAssigned || !isUsersProjectModal ? (
           <div className="h-full flex flex-col items-end justify-between">
             <p className="text-xs text-green-600">Assigned as {role}</p>
             <button
               onClick={() => deleteUserProject()}
               type="button"
-              className="text-xs mt-5 underline text-lightGray"
+              className="text-xs mt-3 underline text-lightGray"
             >
               Remove from the project
             </button>

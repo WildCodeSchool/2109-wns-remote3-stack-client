@@ -14,6 +14,7 @@ function ProjectUser({ data }: IProps): JSX.Element {
     <div className="lg:w-1/2 lg:ml-5 bg-darkGray p-5 rounded-md">
       {isUsersProjectModal && (
         <AssignUsers
+          isUsersProjectModal={isUsersProjectModal}
           setUserToAssign={setUserToAssign}
           userToAssign={userToAssign}
           project={data}
@@ -26,7 +27,7 @@ function ProjectUser({ data }: IProps): JSX.Element {
         </h2>
         <button
           onClick={() => setIsUsersProjectModal(true)}
-          className="text-sm flex items-center"
+          className="text-sm flex items-center hover:text-purple"
           type="button"
         >
           Manage users
@@ -51,8 +52,10 @@ function ProjectUser({ data }: IProps): JSX.Element {
             return (
               <div key={item.userId}>
                 <User
-                  setIsUsersProjectModal={setIsUsersProjectModal}
                   projectId={data.getProjectByID.id}
+                  isUsersProjectModal={isUsersProjectModal}
+                  setIsUsersProjectModal={setIsUsersProjectModal}
+                  projectRole={item.projectRole}
                   setUserToAssign={setUserToAssign}
                   userId={item.userId}
                 />
