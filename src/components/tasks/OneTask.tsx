@@ -14,28 +14,37 @@ function OneTask({ item }: IProps): JSX.Element {
         key={item.id}
       >
         <div className="flex flex-col items-start">
-          <p className="text-xl">{item.subject}</p>
-          <p className="my-1 lg:mr-4 text-left">
-            Start Date:
-            <br /> {new Date(item.startDate).toLocaleDateString()}
-          </p>
-          <p className="my-1 lg:mx-4 text-left">
-            End Date: <br /> {new Date(item.endDate).toLocaleDateString()}
-          </p>
+          <h2 className="text-xl">{item.subject}</h2>
+          <p className="text-sm">{item.projectId}</p>
+          <div className="flex">
+            <p className="my-1 lg:mr-4 text-left">
+              Start Date:
+              <br /> {new Date(item.startDate).toLocaleDateString()}
+            </p>
+            <p className="my-1 lg:mx-4 text-left">
+              End Date: <br /> {new Date(item.endDate).toLocaleDateString()}
+            </p>
+          </div>
           <p className=" my-1 lg:ml-4 text-left">
-            Estimee spent time: <br /> {item.estimeeSpentTime}
+            Estimee spent time: {item.estimeeSpentTime}
           </p>
+          <div className="flex">
+            {item.tags.map((tag) => {
+              return (
+                <div key={tag.id}>
+                  <p
+                    className={`text-xs mr-2 rounded-full px-2 bg-${tag.color}-400`}
+                  >
+                    {tag.label}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
         </div>
-        {item.tags.map((tag) => {
-          return (
-            <div key={tag.id}>
-              <p className={`text-xs rounded-full px-2 bg-${tag.color}-400`}>
-                {tag.label}
-              </p>
-            </div>
-          );
-        })}
-        <p className="mt-2 rounded-full border px-6">{item.advancement}</p>
+        <p className="mt-2 text-xs rounded-full border px-6">
+          {item.advancement}
+        </p>
       </button>
     </Link>
   );

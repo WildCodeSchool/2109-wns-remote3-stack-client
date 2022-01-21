@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const GET_ALL_TAGS = gql`
-  query Query {
+  query GetAllTags {
     getAllTags {
       id
       label
@@ -10,8 +10,8 @@ export const GET_ALL_TAGS = gql`
   }
 `;
 export const GET_ONE_TAG = gql`
-  query GetTagByID($getTagByIdId: String!) {
-    getTagByID(id: $getTagByIdId) {
+  query GetTagByID($tagId: String!) {
+    getTagByID(id: $tagId) {
       id
       label
       color

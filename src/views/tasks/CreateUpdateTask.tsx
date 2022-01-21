@@ -5,7 +5,10 @@ import { toast } from 'react-toastify';
 import OneTag from '@components/tag/OnTag';
 import close from '@assets/icons/close.svg';
 import { format } from 'date-fns';
-import { CREATE_TASK, UPDATE_TASK } from '../../API/mutation/createTask';
+import {
+  CREATE_TASK_WITH_TAGS,
+  UPDATE_TASK,
+} from '../../API/mutation/createTask';
 import { GET_ALL_PROJECTS } from '../../API/queries/projectQueries';
 import DateInput from '../../components/formInput/DateInput';
 import NumberInput from '../../components/formInput/NumberInput';
@@ -42,7 +45,7 @@ function CreateUpdateTask({
   // CREATE A TASK
   const [create, { loading, error }] = useMutation<{
     createTask: ITaskList;
-  }>(CREATE_TASK, {
+  }>(CREATE_TASK_WITH_TAGS, {
     onCompleted: (p: { createTask: ITaskList }) => {
       toast('New task successfully created');
       // ON SUCCESS WE CALL THE TASK CREATED FUNCTION FROM THE PARENT
@@ -74,7 +77,7 @@ function CreateUpdateTask({
         format(new Date(d.getTaskByID.endDate), 'yyyy-MM-dd')
       );
     },
-    variables: { getTaskByIdId: taskId },
+    variables: { idTask: taskId },
   });
 
   // FETCH THE PROJECT LIST
@@ -108,8 +111,6 @@ function CreateUpdateTask({
       endDate: date,
       estimeeSpentTime: parseInt(data.estimeeSpentTime, 10),
     };
-    create({ variables: taskData });
-
     // IF TASK ID IS DEFINE WE UPDATE ESLE WE CREATE
     if (taskId === undefined) {
       create({ variables: taskData });

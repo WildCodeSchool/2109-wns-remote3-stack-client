@@ -36,7 +36,7 @@ function DeleteTask({ item }: IProps): JSX.Element {
             type="button"
             onClick={() =>
               deleteTask({
-                variables: { deleteTaskByIdId: item.getTaskByID.id },
+                variables: { taskId: item.getTaskByID.id },
               })
             }
           >
