@@ -6,9 +6,11 @@ import { toast } from 'react-toastify';
 import { CREATE_TAG } from '../../API/mutation/createTag';
 import SelectInput from '../../components/formInput/SelectInput';
 import TextInput from '../../components/formInput/TextInput';
+import { GetAllTags_getAllTags } from '../../API/types/GetAllTags';
+import { ITagPayload } from '../../API/types/globalTypes';
 
 interface IProps {
-  onTagCreated: (p: ITagList) => void;
+  onTagCreated: (p: GetAllTags_getAllTags) => void;
   setIsModal: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -17,9 +19,9 @@ function CreateUpdateTag({ onTagCreated, setIsModal }: IProps): JSX.Element {
 
   // CREATE A NEW TAG
   const [create, { loading, error }] = useMutation<{
-    createTag: ITagList;
+    createTag: GetAllTags_getAllTags;
   }>(CREATE_TAG, {
-    onCompleted: (p: { createTag: ITagList }) => {
+    onCompleted: (p: { createTag: GetAllTags_getAllTags }) => {
       toast('New tag successfully created');
       // ON SUCCESS WE CALL THE TAG CREATED FUNCTION FROM THE PARENT
       onTagCreated(p.createTag);

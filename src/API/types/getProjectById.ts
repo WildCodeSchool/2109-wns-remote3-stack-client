@@ -7,6 +7,12 @@
 // GraphQL query operation: getProjectById
 // ====================================================
 
+export interface getProjectById_getProjectByID_tasks_tags {
+  __typename: "ITag";
+  label: string;
+  color: string;
+}
+
 export interface getProjectById_getProjectByID_tasks {
   __typename: "ITask";
   id: string;
@@ -16,6 +22,7 @@ export interface getProjectById_getProjectByID_tasks {
   endDate: string;
   estimeeSpentTime: number;
   advancement: string;
+  tags: getProjectById_getProjectByID_tasks_tags[];
 }
 
 export interface getProjectById_getProjectByID_members {

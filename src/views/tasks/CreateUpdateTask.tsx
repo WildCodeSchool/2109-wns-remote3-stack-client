@@ -25,6 +25,7 @@ import { GetAllTags_getAllTags } from '../../API/types/GetAllTags';
 import { UpdateTaskByIdVariables } from '../../API/types/UpdateTaskById';
 import { getTaskByID } from '../../API/types/getTaskByID';
 import { CreateTaskWithTagsVariables } from '../../API/types/CreateTaskWithTags';
+import { ITagPayload } from '../../API/types/globalTypes';
 
 interface IProps {
   setIsModal: Dispatch<SetStateAction<boolean>>;
@@ -49,7 +50,7 @@ function CreateUpdateTask({
   >([]);
   const [dataTagsList, setDataTagsList] = useState<GetAllTags_getAllTags[]>([]);
   const [isModalTag, setIsModalTag] = useState(false);
-  const [dataTag, setDataTag] = useState<GetAllTags_getAllTags[]>([]);
+  const [dataTag, setDataTag] = useState<ITagPayload[]>([]);
 
   // CREATE A TASK
   const [create, { loading, error }] = useMutation<{
@@ -124,7 +125,7 @@ function CreateUpdateTask({
       tags: dataTag,
       advancement: data.advancement,
       endDate: date,
-      estimeeSpentTime: data.estimeeSpentTime,
+      estimeeSpentTime: parseFloat(`${data.estimeeSpentTime}`),
     };
     // IF TASK ID IS DEFINE WE UPDATE ESLE WE CREATE
     if (taskId === undefined) {
@@ -193,7 +194,7 @@ function CreateUpdateTask({
               required
             />
             <div className="mt-2 flex flex-wrap px-3 lg:pr-6">
-              {reverseData.map((item) => {
+              {reverseData.map(({ __typename, ...item }) => {
                 return (
                   <div
                     className="cursor-pointer"
@@ -203,7 +204,7 @@ function CreateUpdateTask({
                     onKeyPress={undefined}
                     onClick={() => setDataTag([...dataTag, item])}
                   >
-                    <OneTag item={item} />
+                    <OneTag item={{ __typename, ...item }} />
                   </div>
                 );
               })}

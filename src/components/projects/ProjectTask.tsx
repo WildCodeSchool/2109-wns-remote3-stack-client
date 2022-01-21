@@ -27,7 +27,7 @@ function ProjectTask({ data }: IProps): JSX.Element {
       ) : (
         <div>
           {data.getProjectByID.tasks.map((item) => {
-            return <OneTask isForm={false} item={item} />;
+            return <OneTask item={item} />;
           })}
         </div>
       )}

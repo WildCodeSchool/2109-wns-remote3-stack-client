@@ -1,10 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { FieldValues, UseFormRegister } from 'react-hook-form';
+import { GetAllProjects_getAllProjects } from '../../API/types/GetAllProjects';
 
 interface IProps {
   label: string;
-  data: IProjectList[];
+  data: GetAllProjects_getAllProjects[];
   name: string;
   id: string;
   register: UseFormRegister<FieldValues>;

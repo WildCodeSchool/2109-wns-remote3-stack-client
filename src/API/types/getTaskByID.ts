@@ -31,5 +31,5 @@ export interface getTaskByID {
 }
 
 export interface getTaskByIDVariables {
-  id: string;
+  taskId: string;
 }

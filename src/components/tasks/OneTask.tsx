@@ -1,9 +1,9 @@
 import React from 'react';
-import { GetAllTasks_getAllTasks } from '@api/types/GetAllTasks';
 import { Link } from 'react-router-dom';
+import { getProjectById_getProjectByID_tasks } from '../../API/types/getProjectById';
 
 interface IProps {
-  item: GetAllTasks_getAllTasks;
+  item: getProjectById_getProjectByID_tasks;
 }
 
 function OneTask({ item }: IProps): JSX.Element {
@@ -32,7 +32,7 @@ function OneTask({ item }: IProps): JSX.Element {
           <div className="flex">
             {item.tags.map((tag) => {
               return (
-                <div key={tag.id}>
+                <div key={tag.label}>
                   <p
                     className={`text-xs mr-2 rounded-full px-2 bg-${tag.color}-400`}
                   >
