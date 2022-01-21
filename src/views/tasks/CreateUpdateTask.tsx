@@ -18,6 +18,7 @@ import SelectInputProjectId from '../../components/formInput/SelectInputProjectI
 import { GET_ALL_TAGS } from '../../API/queries/tagQueries';
 import CreateUpdateTag from '../tags/CreateUpdateTag';
 import { GET_ONE_TASK } from '../../API/queries/taskQueries';
+import Loader from '../../components/Loader';
 
 interface IProps {
   setIsModal: Dispatch<SetStateAction<boolean>>;
@@ -50,6 +51,7 @@ function CreateUpdateTask({
       toast('New task successfully created');
       // ON SUCCESS WE CALL THE TASK CREATED FUNCTION FROM THE PARENT
       onTaskCreated(p.createTask);
+      window.location.reload();
     },
   });
 
@@ -117,11 +119,12 @@ function CreateUpdateTask({
     } else {
       update({ variables: { ...taskData, updateTaskId: taskId } });
     }
+    window.location.reload();
   };
   const taskAdvancement = ['TO_DO', 'IN_PROGRESS', 'BLOCKED', 'DONE'];
 
   if (loading || updateLoading || isLoading) {
-    return <p>...loading</p>;
+    return <Loader />;
   }
   if (error || isError || updateError) {
     toast('Oops something bad happen');
