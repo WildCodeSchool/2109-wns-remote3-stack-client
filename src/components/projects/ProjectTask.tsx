@@ -2,9 +2,10 @@
 import OneTask from '@components/tasks/OneTask';
 import add from '@assets/icons/add.svg';
 import React from 'react';
+import { getProjectById } from '@api/types/getProjectById';
 
 interface IProps {
-  data: IProject;
+  data: getProjectById;
 }
 
 function ProjectTask({ data }: IProps): JSX.Element {

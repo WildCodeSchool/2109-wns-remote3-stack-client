@@ -1,5 +1,5 @@
 import React from 'react';
-import dfltAvatar from '../../assets/images/DefaultAvatar.webp';
+import dfltAvatar from '@assets/images/DefaultAvatar.webp';
 
 function ProjectOwner(): JSX.Element {
   return (

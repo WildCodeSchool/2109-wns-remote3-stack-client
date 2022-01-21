@@ -2,17 +2,14 @@ import { useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 import HeaderList from '@components/navigation/HeaderList';
 import OneProject from '@components/projects/OneProject';
-import { GET_ALL_PROJECTS } from '../../API/queries/projectQueries';
+import { GetAllProjects } from '@api/types/GetAllProjects';
+import { GET_ALL_PROJECTS } from '@api/queries/projectQueries';
 import CreateUpdateProject from './CreateUpdateProject';
-
-interface IResponse {
-  getAllProjects: IProjectList[];
-}
 
 function ProjectList(): JSX.Element {
   const [isModal, setIsModal] = useState(false);
   // FETCH THE PROJECT LIST
-  const { loading, error, data } = useQuery<IResponse>(GET_ALL_PROJECTS);
+  const { loading, error, data } = useQuery<GetAllProjects>(GET_ALL_PROJECTS);
 
   if (loading) {
     return <p>...loading</p>;

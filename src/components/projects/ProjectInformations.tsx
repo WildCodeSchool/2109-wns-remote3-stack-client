@@ -1,15 +1,17 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { DELETE_PROJECT, GET_ALL_PROJECTS } from '@api/queries/projectQueries';
+import { GET_ALL_PROJECTS } from '@api/queries/projectQueries';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom';
 import DeleteModal from '@components/modal/DeleteModal';
-import ProjectOwner from './ProjectOwner';
+import { getProjectById } from '@api/types/getProjectById';
+import { DELETE_PROJECT } from '@api/mutation/projects';
 import settings from '../../assets/icons/settings.svg';
 import trash from '../../assets/icons/trash.svg';
+import ProjectOwner from './ProjectOwner';
 
 interface IProps {
-  data: IProject;
+  data: getProjectById;
   setIsModal: Dispatch<SetStateAction<boolean>>;
 }
 

@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
+import { getProjectById } from '@api/types/getProjectById';
+import { GetUserByID } from '@api/types/GetUserByID';
 import AssignUsers from './AssignUsers';
 import User from './User';
 
 interface IProps {
-  data: IProject;
+  data: getProjectById;
 }
 
 function ProjectUser({ data }: IProps): JSX.Element {
-  const [userToAssign, setUserToAssign] = useState<IUser>();
+  const [userToAssign, setUserToAssign] = useState<GetUserByID>();
   const [isUsersProjectModal, setIsUsersProjectModal] = useState(false);
 
   return (

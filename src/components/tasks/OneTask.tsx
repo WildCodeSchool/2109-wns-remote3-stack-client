@@ -1,8 +1,9 @@
+import { GetAllTasks_getAllTasks } from '@api/types/GetAllTasks';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 interface IProps {
-  item: ITaskList;
+  item: GetAllTasks_getAllTasks;
   isForm: boolean;
 }
 

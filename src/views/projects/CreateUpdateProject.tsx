@@ -4,19 +4,19 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import close from '@assets/icons/close.svg';
 import { useHistory } from 'react-router-dom';
-import {
-  CREATE_PROJECT,
-  GET_ONE_PROJECT,
-  GET_ALL_PROJECTS,
-  UPDATE_PROJECT,
-} from '@api/queries/projectQueries';
+import { GET_ONE_PROJECT, GET_ALL_PROJECTS } from '@api/queries/projectQueries';
 import { format } from 'date-fns';
 import { useUserFromStore } from '@store/user.slice';
-import DateInput from '../../components/formInput/DateInput';
-import NumberInput from '../../components/formInput/NumberInput';
-import SelectInput from '../../components/formInput/SelectInput';
-import TextArea from '../../components/formInput/TextArea';
-import TextInput from '../../components/formInput/TextInput';
+import { GetAllProjects_getAllProjects } from '@api/types/GetAllProjects';
+import { getProjectById } from '@api/types/getProjectById';
+import { createProjectVariables } from '@api/types/createProject';
+import { updateProjectVariables } from '@api/types/updateProject';
+import DateInput from '@components/formInput/DateInput';
+import NumberInput from '@components/formInput/NumberInput';
+import SelectInput from '@components/formInput/SelectInput';
+import TextArea from '@components/formInput/TextArea';
+import TextInput from '@components/formInput/TextInput';
+import { CREATE_PROJECT, UPDATE_PROJECT } from '@api/mutation/projects';
 
 interface IProps {
   setIsModal: Dispatch<SetStateAction<boolean>>;
@@ -31,9 +31,9 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
 
   // CREATE A NEW PROJECT
   const [create, { loading: createLoading, error: createError }] = useMutation<{
-    createProject: IProjectList;
+    createProject: GetAllProjects_getAllProjects;
   }>(CREATE_PROJECT, {
-    onCompleted: (d: { createProject: IProjectList }) => {
+    onCompleted: (d: { createProject: GetAllProjects_getAllProjects }) => {
       router.push(`/project/${d.createProject.id}`);
       toast('New project successfully created');
     },
@@ -42,7 +42,7 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
 
   // UPDATE A PROJECT
   const [update, { loading: updateLoading, error: updateError }] = useMutation<{
-    createProject: IProjectList;
+    createProject: GetAllProjects_getAllProjects;
   }>(UPDATE_PROJECT, {
     onCompleted: () => {
       setIsModal(false);
@@ -50,12 +50,12 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
   });
 
   // ON UPDATE GET THE PROJECT'S DATA
-  const { loading: isLoading, error: isError } = useQuery<IProject>(
+  const { loading: isLoading, error: isError } = useQuery<getProjectById>(
     GET_ONE_PROJECT,
     {
       skip: !projectId,
       // ON SUCCES SET THE DEFAULT VALUE TO THE FORM'S INPUTS
-      onCompleted: (d: IProject) => {
+      onCompleted: (d: getProjectById) => {
         setValue(
           'startDate',
           format(new Date(d.getProjectByID.startDate), 'yyyy-MM-dd')
@@ -73,7 +73,9 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
     }
   );
 
-  const onSubmit: SubmitHandler<IProjectPayload> = (data: IProjectPayload) => {
+  const onSubmit: SubmitHandler<
+    createProjectVariables | updateProjectVariables
+  > = (data: createProjectVariables | updateProjectVariables) => {
     const date1 = new Date(data.startDate);
     const date2 = new Date(data.endDate);
 
@@ -88,7 +90,7 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
         status: data.status,
         startDate: date1,
         endDate: date2,
-        estimeeSpentTime: parseInt(data.estimeeSpentTime, 10),
+        estimeeSpentTime: data.estimeeSpentTime,
       };
       // IF PROJECT ID IS DEFINE WE UPDATE ESLE WE CREATE
       if (projectId === undefined) {

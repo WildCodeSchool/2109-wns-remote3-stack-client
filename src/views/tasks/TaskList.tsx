@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 
-import HeaderList from '../../components/navigation/HeaderList';
-import * as queries from '../../API/queries/taskQueries';
-import OneTask from '../../components/tasks/OneTask';
+import HeaderList from '@components/navigation/HeaderList';
+import * as queries from '@api/queries/taskQueries';
+import OneTask from '@components/tasks/OneTask';
+import { GetAllTasks_getAllTasks } from '@api/types/GetAllTasks';
 import CreateUpdateTask from './CreateUpdateTask';
 
 interface IResponse {
-  getAllTasks: ITaskList[];
+  getAllTasks: GetAllTasks_getAllTasks[];
 }
 
 function TaskList(): JSX.Element {
-  const [data, setData] = useState<ITaskList[]>([]);
+  const [data, setData] = useState<GetAllTasks_getAllTasks[]>([]);
   const [isForm, setIsForm] = useState(false);
   // FETCH THE PROJECT LIST
   const { loading, error } = useQuery<IResponse>(queries.GetAllTasks, {
@@ -28,7 +29,7 @@ function TaskList(): JSX.Element {
   }
   return (
     <div className="py-5 lg:py-0">
-      <HeaderList setIsForm={setIsForm} name="Tasks list" />
+      <HeaderList setIsModal={setIsForm} name="Tasks list" />
       {isForm && <p>form</p>}
       <div className={`${isForm && 'flex'}`}>
         {isForm && <CreateUpdateTask setIsForm={setIsForm} isForm={isForm} />}
