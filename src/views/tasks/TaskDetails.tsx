@@ -81,7 +81,7 @@ function TaskDetails(): JSX.Element {
       )}
       <div>
         <p>Status:</p>
-        <p>{dataTask.getTaskByID.advancement}</p>
+        {dataTask && <p>{dataTask.getTaskByID.advancement}</p>}
       </div>
     </>
   );
