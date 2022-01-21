@@ -1,10 +1,12 @@
+import { getProjectById } from '@api/types/getProjectById';
+import { GetUserByID } from '@api/types/GetUserByID';
 import React, { Dispatch, SetStateAction } from 'react';
 import Avatar from './Avatar';
 
 interface IProps {
-  userToAssign: IUser | undefined;
+  userToAssign: GetUserByID | undefined;
   setProjectRoleSelected: Dispatch<SetStateAction<string>>;
-  project: IProject;
+  project: getProjectById;
   createUserProject: () => void;
 }
 
@@ -25,14 +27,18 @@ function UserRole({
     <div className="px-7 mt-5">
       <p className="text-lg">
         You want to assign{' '}
-        <span className="text-lightPurple">{userToAssign?.firstName} </span>
-        <span className="text-lightPurple">{userToAssign?.lastName}</span> to
-        the{' '}
+        <span className="text-lightPurple">
+          {userToAssign?.getUserByID.firstName}{' '}
+        </span>
+        <span className="text-lightPurple">
+          {userToAssign?.getUserByID.lastName}
+        </span>{' '}
+        to the{' '}
         <span className="text-lightPurple">{project.getProjectByID.name}</span>{' '}
         project
       </p>
       <div className="mt-5 w-full">
-        <Avatar data={userToAssign as IUser} />
+        <Avatar data={userToAssign as GetUserByID} />
         <div className="mt-5 flex items-end w-full">
           <div className="flex flex-col w-8/12">
             <p className="">Assign as</p>

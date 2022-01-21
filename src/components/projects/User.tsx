@@ -2,13 +2,15 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_ONE_USER } from '@api/queries/usersQueries';
 import { GET_USER_WITH_PROJECT } from '@api/queries/userQueries';
-import { DELETE_USER_PROJECT } from '@api/queries/userProject';
 import { GET_ONE_PROJECT } from '@api/queries/projectQueries';
+import { DELETE_USER_PROJECT } from '@api/mutation/userProject';
+import { GetUserByID } from '@api/types/GetUserByID';
+import { GetUserWithProjects } from '@api/types/GetUserWithProjects';
 import Avatar from './Avatar';
 
 interface IProps {
   userId: string;
-  setUserToAssign: Dispatch<SetStateAction<IUser | undefined>>;
+  setUserToAssign: Dispatch<SetStateAction<GetUserByID | undefined>>;
   projectId: string;
   setIsUsersProjectModal: Dispatch<SetStateAction<boolean>>;
   isUsersProjectModal: boolean;
@@ -26,12 +28,12 @@ function User({
   const [isAssigned, setIsAssigned] = useState(false);
   const [role, setRole] = useState(projectRole);
   // GET ONE USER
-  const { data, loading, error } = useQuery<getUserByID>(GET_ONE_USER, {
+  const { data, loading, error } = useQuery<GetUserByID>(GET_ONE_USER, {
     variables: { getUserByIdId: userId },
   });
 
   // GET PROJECT LIST OF THE USER
-  useQuery<getUserWithProjects>(GET_USER_WITH_PROJECT, {
+  useQuery<GetUserWithProjects>(GET_USER_WITH_PROJECT, {
     variables: { getUserWithProjectsId: userId },
     onCompleted: (d) => {
       // CHECK IF THE PROJECT IS IN THE LIST
@@ -68,7 +70,7 @@ function User({
   return (
     <div className="my-4  border-b  border-lightPurple hover:bg-darkGray duration-300 ">
       <div className="w-full lg:px-4 lg:pb-2 flex flex-col lg:flex-row justify-between items-center py-3 ">
-        <Avatar data={data.getUserByID} />
+        <Avatar data={data} />
         {isAssigned || !isUsersProjectModal ? (
           <div className="h-full flex flex-col items-end justify-between">
             <p className="text-xs text-green-600">Assigned as {role}</p>
@@ -82,7 +84,7 @@ function User({
           </div>
         ) : (
           <button
-            onClick={() => setUserToAssign(data.getUserByID)}
+            onClick={() => setUserToAssign(data)}
             className="bg-purple text-sm px-4 py-1 rounded-sm transform hover:scale-110 duration-300"
             type="button"
           >

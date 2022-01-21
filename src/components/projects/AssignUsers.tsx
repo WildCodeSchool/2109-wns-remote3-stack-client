@@ -2,17 +2,20 @@ import { GET_ALL_USERS } from '@api/queries/usersQueries';
 import { useMutation, useQuery } from '@apollo/client';
 import React, { SetStateAction, Dispatch, useState } from 'react';
 import close from '@assets/icons/close.svg';
-import { CREATE_USER_PROJECT } from '@api/queries/userProject';
 import { GET_USER_WITH_PROJECT } from '@api/queries/userQueries';
 import { GET_ONE_PROJECT } from '@api/queries/projectQueries';
+import { CREATE_USER_PROJECT } from '@api/mutation/userProject';
+import { getProjectById } from '@api/types/getProjectById';
+import { GetAllUsers } from '@api/types/GetAllUsers';
+import { GetUserByID } from '@api/types/GetUserByID';
 import User from './User';
 import UserRole from './UserRole';
 
 interface IProps {
   setIsUsersProjectModal: Dispatch<SetStateAction<boolean>>;
-  project: IProject;
-  userToAssign: IUser | undefined;
-  setUserToAssign: Dispatch<SetStateAction<IUser | undefined>>;
+  project: getProjectById;
+  userToAssign: GetUserByID | undefined;
+  setUserToAssign: Dispatch<SetStateAction<GetUserByID | undefined>>;
   isUsersProjectModal: boolean;
 }
 
@@ -27,13 +30,13 @@ function AssignUsers({
   const [searchValue, setSearchValue] = useState('');
 
   // GET ALL USERS
-  const { loading, error, data } = useQuery<getAllUsers>(GET_ALL_USERS);
+  const { loading, error, data } = useQuery<GetAllUsers>(GET_ALL_USERS);
 
   // CREATE A USER PROJECT
   const [createUserProject, { loading: createLoading, error: createError }] =
     useMutation(CREATE_USER_PROJECT, {
       variables: {
-        userId: userToAssign?.id,
+        userId: userToAssign?.getUserByID.id,
         projectId: project.getProjectByID.id,
         projectRole: projectRoleSelected,
       },

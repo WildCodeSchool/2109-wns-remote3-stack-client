@@ -21,7 +21,11 @@ function ProjectInformations({ data, setIsModal }: IProps): JSX.Element {
   const router = useHistory();
 
   const [deleteProject, { loading, error }] = useMutation(DELETE_PROJECT, {
-    refetchQueries: [{ query: GET_ALL_PROJECTS }],
+    refetchQueries: [
+      {
+        query: GET_ALL_PROJECTS,
+      },
+    ],
     onCompleted: () => {
       setIsDeleteModal(false);
       router.push('/projects');

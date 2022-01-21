@@ -21,6 +21,8 @@ export interface getProjectById_getProjectByID_tasks {
 export interface getProjectById_getProjectByID_members {
   __typename: "IUserProject";
   userId: string;
+  projectId: string;
+  projectRole: string;
 }
 
 export interface getProjectById_getProjectByID {
@@ -41,5 +43,5 @@ export interface getProjectById {
 }
 
 export interface getProjectByIdVariables {
-  id: string;
+  getProjectByIdId: string;
 }

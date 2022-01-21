@@ -90,7 +90,7 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
         status: data.status,
         startDate: date1,
         endDate: date2,
-        estimeeSpentTime: data.estimeeSpentTime,
+        estimeeSpentTime: parseFloat(`${data.estimeeSpentTime}`),
       };
       // IF PROJECT ID IS DEFINE WE UPDATE ESLE WE CREATE
       if (projectId === undefined) {
