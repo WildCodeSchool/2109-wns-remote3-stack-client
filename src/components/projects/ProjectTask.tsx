@@ -27,7 +27,11 @@ function ProjectTask({ data }: IProps): JSX.Element {
       ) : (
         <div>
           {data.getProjectByID.tasks.map((item) => {
-            return <OneTask item={item} />;
+            return (
+              <div key={item.id}>
+                <OneTask item={item} />
+              </div>
+            );
           })}
         </div>
       )}
