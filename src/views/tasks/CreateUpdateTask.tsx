@@ -60,7 +60,6 @@ function CreateUpdateTask({
       toast('New task successfully created');
       // ON SUCCESS WE CALL THE TASK CREATED FUNCTION FROM THE PARENT
       onTaskCreated(p.createTask);
-      window.location.reload();
     },
   });
 
@@ -133,7 +132,6 @@ function CreateUpdateTask({
     } else {
       update({ variables: { ...taskData, updateTaskId: taskId } });
     }
-    window.location.reload();
   };
   const taskAdvancement = ['TO_DO', 'IN_PROGRESS', 'BLOCKED', 'DONE'];
 

@@ -48,11 +48,7 @@ function TaskList(): JSX.Element {
       )}
       <div className="mt-2 px-3 lg:pr-6">
         {reverseData.map((item) => {
-          return (
-            <div key={item.id}>
-              <OneTask item={item} />
-            </div>
-          );
+          return <OneTask item={item} />;
         })}
         {data.length === 0 && (
           <p className="font-normal lg:py-5 py-2 text-purple">
