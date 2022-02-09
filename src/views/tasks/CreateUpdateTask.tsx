@@ -17,7 +17,7 @@ import TextInput from '../../components/formInput/TextInput';
 import SelectInputProjectId from '../../components/formInput/SelectInputProjectId';
 import { GET_ALL_TAGS } from '../../API/queries/tagQueries';
 import CreateUpdateTag from '../tags/CreateUpdateTag';
-import { GET_ONE_TASK } from '../../API/queries/taskQueries';
+import { GET_ALL_TASKS, GET_ONE_TASK } from '../../API/queries/taskQueries';
 import Loader from '../../components/Loader';
 import { GetAllTasks_getAllTasks } from '../../API/types/GetAllTasks';
 import { GetAllProjects_getAllProjects } from '../../API/types/GetAllProjects';
@@ -30,7 +30,6 @@ import { ITagPayload } from '../../API/types/globalTypes';
 interface IProps {
   setIsModal: Dispatch<SetStateAction<boolean>>;
   taskId: string | undefined;
-  onTaskCreated: (p: GetAllTasks_getAllTasks) => void;
 }
 interface IResponseProjects {
   getAllProjects: GetAllProjects_getAllProjects[];
@@ -39,11 +38,7 @@ interface IResponseTags {
   getAllTags: GetAllTags_getAllTags[];
 }
 
-function CreateUpdateTask({
-  setIsModal,
-  onTaskCreated,
-  taskId,
-}: IProps): JSX.Element {
+function CreateUpdateTask({ setIsModal, taskId }: IProps): JSX.Element {
   const { handleSubmit, register, setValue } = useForm();
   const [dataProjects, setDataProjects] = useState<
     GetAllProjects_getAllProjects[]
@@ -56,10 +51,10 @@ function CreateUpdateTask({
   const [create, { loading, error }] = useMutation<{
     createTask: GetAllTasks_getAllTasks;
   }>(CREATE_TASK_WITH_TAGS, {
-    onCompleted: (p: { createTask: GetAllTasks_getAllTasks }) => {
+    refetchQueries: [GET_ALL_TASKS],
+    onCompleted: () => {
       toast('New task successfully created');
-      // ON SUCCESS WE CALL THE TASK CREATED FUNCTION FROM THE PARENT
-      onTaskCreated(p.createTask);
+      setIsModal(false);
     },
   });
 
