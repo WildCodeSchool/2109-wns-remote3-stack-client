@@ -6,13 +6,21 @@ interface IProps {
 }
 
 function OneTag({ item }: IProps): JSX.Element {
-  const [backgroundColor, setBackgroundColor] = useState('bg-lightPurple');
+  const [isActive, setActive] = useState(true);
+
+  const toggleClass = () => {
+    setActive(!isActive);
+  };
   return (
     <input
-      onClick={() => setBackgroundColor(`bg-${item.color}-500`)}
+      onClick={toggleClass}
       value={item.label}
       type="button"
-      className={`cursor-pointer mr-2 hover:bg-opacity-100 bg-opacity-80 text-xs text-light px-2 rounded-full ${backgroundColor}`}
+      className={
+        isActive
+          ? `cursor-pointer mr-2 hover:bg-opacity-200 bg-opacity-80 text-xs text-light px-2 rounded-full bg-white`
+          : `cursor-pointer mr-2 hover:bg-opacity-100 bg-opacity-80 text-xs text-light px-2 rounded-full bg-${item.color}-500`
+      }
     />
   );
 }

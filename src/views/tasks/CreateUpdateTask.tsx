@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import OneTag from '@components/tag/OneTag';
 import close from '@assets/icons/close.svg';
 import { format } from 'date-fns';
+
 import {
   CREATE_TASK_WITH_TAGS,
   UPDATE_TASK,
@@ -136,6 +137,22 @@ function CreateUpdateTask({ setIsModal, taskId }: IProps): JSX.Element {
   if (error || isError || updateError) {
     toast('Oops something bad happen');
   }
+
+  // Push or remove tags into/from array dataTag
+  const handleClick = (item: ITagPayload) => {
+    let isItem = false;
+    for (let i = 0; i < dataTag.length; i += 1) {
+      if (dataTag[i].id === item.id) {
+        isItem = true;
+        setDataTag(dataTag.filter((obj) => obj.id !== item.id));
+        return;
+      }
+    }
+    if (!isItem) {
+      setDataTag([...dataTag, item]);
+    }
+  };
+
   return (
     <div className="w-screen fixed inset-0 z-50 h-full  bg-darkGray bg-opacity-70 flex items-center justify-center ">
       {isModalTag && (
@@ -195,7 +212,7 @@ function CreateUpdateTask({ setIsModal, taskId }: IProps): JSX.Element {
                     key={item.id}
                     role="button"
                     onKeyPress={undefined}
-                    onClick={() => setDataTag([...dataTag, item])}
+                    onClick={() => handleClick(item)}
                   >
                     <OneTag item={{ __typename, ...item }} />
                   </div>
