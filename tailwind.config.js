@@ -20,7 +20,7 @@ module.exports = {
       },
       height: {
         list: '600px',
-        modal: '38rem',
+        modal: '39rem',
       },
       boxShadow: {
         purple:

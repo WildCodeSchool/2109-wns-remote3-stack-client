@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { getProjectById_getProjectByID_tasks } from '../../API/types/getProjectById';
 
 interface IProps {
-  item: ITaskList;
-  isForm: boolean;
+  item: getProjectById_getProjectByID_tasks;
 }
 
-function OneTask({ item, isForm }: IProps): JSX.Element {
+function OneTask({ item }: IProps): JSX.Element {
   return (
     <Link to={`/task/${item.id}`}>
       <button
@@ -15,25 +15,37 @@ function OneTask({ item, isForm }: IProps): JSX.Element {
         key={item.id}
       >
         <div className="flex flex-col items-start">
-          <p className="text-xl">{item.subject}</p>
-          <div
-            className={`flex flex-col lg:flex-row items-start mt-2 ${
-              isForm ? 'text-xs' : 'text-sm'
-            } `}
-          >
+          <h2 className="text-xl">{item.subject}</h2>
+          <p className="text-sm">{item.projectId}</p>
+          <div className="flex">
             <p className="my-1 lg:mr-4 text-left">
               Start Date:
-              <br /> {item.startDate}
+              <br /> {new Date(item.startDate).toLocaleDateString()}
             </p>
             <p className="my-1 lg:mx-4 text-left">
-              End Date: <br /> {item.endDate}
-            </p>
-            <p className=" my-1 lg:ml-4 text-left">
-              Estimee spent time: <br /> {item.estimeeSpentTime}
+              End Date: <br /> {new Date(item.endDate).toLocaleDateString()}
             </p>
           </div>
+          <p className=" my-1 lg:ml-4 text-left">
+            Estimee spent time: {item.estimeeSpentTime}
+          </p>
+          <div className="flex">
+            {item.tags.map((tag) => {
+              return (
+                <div key={tag.label}>
+                  <p
+                    className={`text-xs mr-2 rounded-full px-2 bg-${tag.color}-400`}
+                  >
+                    {tag.label}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
         </div>
-        <p className="mt-2 rounded-full border px-6">{item.advancement}</p>
+        <p className="mt-2 text-xs rounded-full border px-6">
+          {item.advancement}
+        </p>
       </button>
     </Link>
   );

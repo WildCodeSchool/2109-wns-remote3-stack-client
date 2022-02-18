@@ -1,51 +1,46 @@
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 
-import HeaderList from '../../components/navigation/HeaderList';
-import * as queries from '../../API/queries/taskQueries';
-import OneTask from '../../components/tasks/OneTask';
+import HeaderList from '@components/navigation/HeaderList';
+import OneTask from '@components/tasks/OneTask';
+import { GetAllTasks_getAllTasks } from '@api/types/GetAllTasks';
+import { GET_ALL_TASKS } from '@api/queries/taskQueries';
 import CreateUpdateTask from './CreateUpdateTask';
 
 interface IResponse {
-  getAllTasks: ITaskList[];
+  getAllTasks: GetAllTasks_getAllTasks[];
 }
 
 function TaskList(): JSX.Element {
-  const [data, setData] = useState<ITaskList[]>([]);
-  const [isForm, setIsForm] = useState(false);
-  // FETCH THE PROJECT LIST
-  const { loading, error } = useQuery<IResponse>(queries.GetAllTasks, {
-    onCompleted: (d) => {
-      setData(d.getAllTasks);
-    },
-  });
+  const [isModal, setIsModal] = useState(false);
+  // FETCH THE TASK LIST
+  const { loading, error, data } = useQuery<IResponse>(GET_ALL_TASKS);
 
   if (loading) {
     return <p>...loading</p>;
   }
-  if (error) {
+  if (error || !data) {
     return <p>error</p>;
   }
   return (
-    <div className="py-5 lg:py-0">
-      <HeaderList setIsModal={setIsForm} name="Tasks list" />
-      {isForm && <p>form</p>}
-      <div className={`${isForm && 'flex'}`}>
-        {isForm && <CreateUpdateTask setIsForm={setIsForm} isForm={isForm} />}
-        <div
-          className={`${
-            isForm ? 'hidden lg:flex lg:flex-col lg:w-6/12 pl-5' : 'mt-2'
-          }`}
-        >
-          {data.map((item) => {
-            return <OneTask isForm={isForm} item={item} />;
-          })}
-          {data.length === 0 && (
-            <p className="font-normal lg:py-5 py-2 text-purple">
-              There is no projects for now
-            </p>
-          )}
-        </div>
+    <div className="py-5 lg:py-0 lg:pt-28">
+      <HeaderList setIsModal={setIsModal} name="Tasks list" />
+      {isModal && (
+        <CreateUpdateTask taskId={undefined} setIsModal={setIsModal} />
+      )}
+      <div className="mt-2 px-3 lg:pr-6">
+        {[...data?.getAllTasks].reverse().map((item) => {
+          return (
+            <div key={item.id}>
+              <OneTask item={item} />
+            </div>
+          );
+        })}
+        {[...data?.getAllTasks].reverse().length === 0 && (
+          <p className="font-normal lg:py-5 py-2 text-purple">
+            There is no taks for now
+          </p>
+        )}
       </div>
     </div>
   );

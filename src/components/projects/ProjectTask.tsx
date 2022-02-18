@@ -2,14 +2,15 @@
 import OneTask from '@components/tasks/OneTask';
 import add from '@assets/icons/add.svg';
 import React from 'react';
+import { getProjectById } from '@api/types/getProjectById';
 
 interface IProps {
-  data: IProject;
+  data: getProjectById;
 }
 
 function ProjectTask({ data }: IProps): JSX.Element {
   return (
-    <div className="lg:w-1/2 lg:mr-5">
+    <div className="lg:w-1/2 lg:mr-5 bg-darkGray lg:p-5 rounded-md">
       <div className="flex w-full justify-between pr-5  pb-2 items-center border-b border-lightPurple">
         <h2 className="text-xl text-lightPurple w-6/12 lg:w-8/12">
           {`Project's Tasks`}
@@ -26,7 +27,11 @@ function ProjectTask({ data }: IProps): JSX.Element {
       ) : (
         <div>
           {data.getProjectByID.tasks.map((item) => {
-            return <OneTask isForm={false} item={item} />;
+            return (
+              <div key={item.id}>
+                <OneTask item={item} />
+              </div>
+            );
           })}
         </div>
       )}
