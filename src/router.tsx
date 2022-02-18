@@ -9,7 +9,8 @@ import UsersList from '@views/UsersList';
 import Page404 from '@views/Page404';
 import ProjectDetails from '@views/projects/ProjectDetails';
 import TaskDetails from '@views/tasks/TaskDetails';
-import Login from '@views/login';
+import Login from '@views/Login';
+import Signup from '@views/Signup';
 
 function Routes(): JSX.Element {
   return (
@@ -17,6 +18,7 @@ function Routes(): JSX.Element {
       {' '}
       <Route exact path="/" component={HomePage} />
       <Route path="/login" component={Login} />
+      <Route path="/signup" component={Signup} />
       <Route exact path="/projects" component={ProjectList} />
       <Route exact path="/tasks" component={TaskList} />
       <Route exact path="/users" component={UsersList} />
