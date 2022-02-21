@@ -23,7 +23,8 @@ module.exports = {
         modal: '39rem',
       },
       boxShadow: {
-        purple: '2px 1px 19px 5px rgba(121, 80, 236, 0.1)',
+        purple:
+          '0px 4px 18px rgba(0, 0, 0, 0.4), 9px 26px 250px -25px rgba(255, 70, 12, 0.4), 0px 31px 109px -25px rgba(105, 12, 255, 0.4)',
       },
     },
   },

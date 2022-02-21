@@ -98,6 +98,8 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
       };
       // IF PROJECT ID IS DEFINE WE UPDATE ESLE WE CREATE
       if (projectId === undefined) {
+        // TODO: CHECK THIS BUG LATER
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         create({ variables: { ...projectData, userId: user.id! } });
       } else {
         update({ variables: { ...projectData, updateProjectId: projectId } });
