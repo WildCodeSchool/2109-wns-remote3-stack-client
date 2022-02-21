@@ -10,7 +10,7 @@ import Page404 from '@views/Page404';
 import TaskDetails from '@views/tasks/TaskDetails';
 import Login from '@views/Login';
 import Signup from '@views/Signup';
-import ProjectDetails from './views/projects/ProjectDetails';
+import ProjectDetails from '@views/projects/ProjectDetails';
 
 function Routes(): JSX.Element {
   return (
