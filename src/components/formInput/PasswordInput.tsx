@@ -29,7 +29,7 @@ function PswdInput({
         type="email"
         placeholder={placeholder}
         {...register(password, { required })}
-        className="p-4 bg-white text-lightPurple rounded-md focus:outline-none p-2 peer h-10"
+        className="p-4 bg-white text-lightPurple rounded-md focus:outline-none  peer h-10"
       />
       <p className="text-red text-xs">{error}</p>
       {required && (

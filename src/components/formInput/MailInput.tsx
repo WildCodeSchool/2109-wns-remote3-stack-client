@@ -29,7 +29,7 @@ function EmailInput({
         type="email"
         placeholder={placeholder}
         {...register(email, { required })}
-        className="p-4 bg-white text-lightPurple mt-2  rounded-md focus:outline-none p-2 peer h-10"
+        className="p-4 bg-white text-lightPurple mt-2  rounded-md focus:outline-none  peer h-10"
       />
       <p className="text-red text-xs">{error}</p>
       {required && (
