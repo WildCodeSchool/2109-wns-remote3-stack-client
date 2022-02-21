@@ -6,30 +6,30 @@ interface IProps {
   label: string;
   placeholder: string;
   register: UseFormRegister<FieldValues>;
-  email: string;
+  password: string;
   required: boolean;
   error: string;
   id: string;
 }
 
-function EmailInput({
+function PswdConfInput({
   placeholder,
   label,
   register,
-  email,
+  password,
   required,
   id,
   error,
 }: IProps): JSX.Element {
   return (
-    <label htmlFor={id} className="flex w-full mt-5 flex-col text-sm">
+    <label htmlFor={id} className="flex w-full flex-col text-sm">
       {label}
       <input
         id={id}
         type="email"
         placeholder={placeholder}
-        {...register(email, { required })}
-        className="p-4 bg-white text-lightPurple mt-2  rounded-md focus:outline-none p-2 peer h-10"
+        {...register(password, { required })}
+        className="p-4 bg-white text-lightPurple rounded-md focus:outline-none p-2 peer h-10"
       />
       <p className="text-red text-xs">{error}</p>
       {required && (
@@ -41,4 +41,4 @@ function EmailInput({
   );
 }
 
-export default EmailInput;
+export default PswdConfInput;

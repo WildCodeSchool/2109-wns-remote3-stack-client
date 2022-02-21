@@ -22,17 +22,21 @@ function PswdInput({
   error,
 }: IProps): JSX.Element {
   return (
-    <label htmlFor={id} className="flex w-full mt-5 flex-col text-sm">
+    <label htmlFor={id} className="flex w-full flex-col text-sm">
       {label}
       <input
         id={id}
         type="email"
         placeholder={placeholder}
         {...register(password, { required })}
-        className="bg-white text-lightPurple mt-2  rounded-md focus:outline-none p-2"
+        className="p-4 bg-white text-lightPurple rounded-md focus:outline-none p-2 peer h-10"
       />
       <p className="text-red text-xs">{error}</p>
-      {required && <p className="text-xs text-purple mt-1">Fieds required</p>}
+      {required && (
+        <p className="invisible peer-invalid:visible text-xs text-purple mt-1">
+          Fieds required
+        </p>
+      )}
     </label>
   );
 }
