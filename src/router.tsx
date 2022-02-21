@@ -8,7 +8,7 @@ import TaskList from '@views/tasks/TaskList';
 import UsersList from '@views/UsersList';
 import Page404 from '@views/Page404';
 import TaskDetails from '@views/tasks/TaskDetails';
-import Login from '@views/LoginPage';
+import Login from '@views/Login';
 import Signup from '@views/Signup';
 import ProjectDetails from '@views/projects/ProjectDetails';
 
