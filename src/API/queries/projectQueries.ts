@@ -12,8 +12,8 @@ export const GET_ALL_PROJECTS = gql`
     }
   }
 `;
-export const GetOneProject = gql`
-  query getProjectByIdId($getProjectByIdId: String!) {
+export const GET_ONE_PROJECT = gql`
+  query getProjectById($getProjectByIdId: String!) {
     getProjectByID(id: $getProjectByIdId) {
       id
       name
@@ -27,40 +27,16 @@ export const GetOneProject = gql`
         endDate
         estimeeSpentTime
         advancement
+        tags {
+          label
+          color
+        }
       }
       members {
         userId
+        projectId
+        projectRole
       }
-      startDate
-      endDate
-      estimeeSpentTime
-    }
-  }
-`;
-
-export const UPDATE_PROJECT = gql`
-  mutation Mutation(
-    $updateProjectId: String!
-    $name: String!
-    $description: String!
-    $status: String!
-    $startDate: DateTime!
-    $endDate: String!
-    $estimeeSpentTime: Float!
-  ) {
-    updateProject(
-      id: $updateProjectId
-      name: $name
-      description: $description
-      status: $status
-      startDate: $startDate
-      endDate: $endDate
-      estimeeSpentTime: $estimeeSpentTime
-    ) {
-      id
-      name
-      description
-      status
       startDate
       endDate
       estimeeSpentTime
