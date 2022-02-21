@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import PswdInput from '@components/formInput/PswdInput';
-import EmailInput from '@components/formInput/EmailInput';
+import MailInput from '@components/formInput/MailInput';
+import PasswordInput from '@components/formInput/PasswordInput';
 
 function Signup(): JSX.Element {
   const { register } = useForm();
@@ -14,7 +14,7 @@ function Signup(): JSX.Element {
           <div className="block p-7 rounded-lg bg-darkGray max-w-sm shadow-purple border border-gray-600">
             <div className="text-center text-4xl font-extralight">Hi There</div>
             <form>
-              <EmailInput
+              <MailInput
                 label=""
                 placeholder="user@email.com"
                 register={register}
@@ -23,7 +23,7 @@ function Signup(): JSX.Element {
                 error=""
                 id="id"
               />
-              <PswdInput
+              <PasswordInput
                 label=""
                 placeholder="password"
                 register={register}
@@ -32,7 +32,7 @@ function Signup(): JSX.Element {
                 error=""
                 id="id"
               />
-              <PswdInput
+              <PasswordInput
                 label=""
                 placeholder="confirm password"
                 register={register}
