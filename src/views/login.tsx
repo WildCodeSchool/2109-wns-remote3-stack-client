@@ -1,19 +1,15 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import welcome from '@assets/welcomeLoginText.svg';
-import welcome2 from '@assets/welcomeText2.svg';
-import EmailInput from '@components/formInput/emailInput';
-import PswdInput from '@components/formInput/pswdInput';
+import EmailInput from '@components/formInput/EmailInput';
+import PswdInput from '@components/formInput/PswdInput';
 
 function Login(): JSX.Element {
   const { register } = useForm();
   return (
     <div>
       <div className="md:flex align-center mt-40 ml-10">
-        <div className="flex-1 p-7">
-          <img className="mb-5" src={welcome} alt="logo-stack" />
-          <img className="" src={welcome2} alt="logo-stack" />
-        </div>
+        {/* <div className="flex-1 p-7">
+        </div> */}
         <div className="flex-1 mt-2 p-7 ">
           <div className="block p-7 rounded-lg bg-darkGray max-w-sm shadow-purple border border-gray-600">
             <div className="text-center text-4xl font-extralight">Hi There</div>
