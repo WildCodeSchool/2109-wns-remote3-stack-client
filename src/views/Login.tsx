@@ -1,18 +1,38 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+// import UserCard from '@assets/User_card.png';
 import MailInput from '@components/formInput/MailInput';
 import PasswordInput from '@components/formInput/PasswordInput';
+import { useHistory } from 'react-router-dom';
 
 function Login(): JSX.Element {
+  const history = useHistory();
   const { register } = useForm();
+
+  function goToSignup() {
+    history.push('/signup');
+  }
+
   return (
-    <div>
-      <div className="md:flex align-center mt-40 ml-10">
-        {/* <div className="flex-1 p-7">
+    <div className="flex items-center justify-center h-screen w-full">
+      <div className="md:flex gap-20 w-10/12 lg:w-7/12">
+        <div className="m-auto">
+          <div className="sm:text-7xl text-4xl text-center bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 mb-5 drop-shadow-lg">
+            Welcome to Stack.
+          </div>
+          <div className="text-justify bg-clip-text hidden md:flex text-lightGray ">
+            Get your work done. Stack helps you to manage your projects, create
+            tasks, and many more.
+          </div>
+        </div>
+        {/* <div className="absolute z-0 right-2 hidden lg:flex">
+          <img src={UserCard} alt="userCard" />
         </div> */}
-        <div className="flex-1 mt-2 p-7 ">
-          <div className="block p-7 rounded-lg bg-darkGray max-w-sm shadow-purple border border-gray-600">
-            <div className="text-center text-4xl font-extralight">Hi There</div>
+        <div className="justify-center z-10">
+          <div className="m-auto lg:m-0 block p-8 rounded-lg bg-darkGray w-96 shadow-purple border border-gray-600">
+            <div className="text-center text-4xl font-extralight drop-shadow-md">
+              Hi There
+            </div>
             <form>
               <MailInput
                 label=""
@@ -42,20 +62,18 @@ function Login(): JSX.Element {
               >
                 Login
               </button>
+              <button
+                type="submit"
+                onClick={goToSignup}
+                className="mt-4 ml-16  text-justify font-extralight drop-shadow-md"
+                style={{ color: ' #8560EE' }}
+              >
+                No account? Register one
+              </button>
             </form>
           </div>
         </div>
       </div>
-      {/* <div>
-        <div className="text-center mt-10 space-y-8">
-        </div>
-      </div>
-      <div className="text-center mt-36 space-y-8">
-        <div className="w-screen h-screen bg-darkBlue z-50 p-5">
-          <div className="text-center max-w-md">
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 }
