@@ -22,7 +22,6 @@ function Signup(): JSX.Element {
 
   // check password + password confirm + mutation si OK
   const onSubmit = (data: SignupVariables & { confirm_password: string }) => {
-    console.log(data);
     if (data.password === data.confirm_password) {
       signupMutation({
         variables: {
@@ -30,7 +29,7 @@ function Signup(): JSX.Element {
         },
       });
     }
-    // todo : put else
+    // TODO : add error notification or error state for inputs
   };
 
   function goToLogin() {
