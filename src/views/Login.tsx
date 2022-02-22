@@ -62,7 +62,7 @@ function Login(): JSX.Element {
                 email="email"
                 required
                 error=""
-                id="id"
+                id="email"
               />
               <PasswordInput
                 label=""
@@ -71,7 +71,7 @@ function Login(): JSX.Element {
                 password="password"
                 required
                 error=""
-                id="id"
+                id="password"
               />
               <button
                 type="submit"

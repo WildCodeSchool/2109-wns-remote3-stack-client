@@ -4,10 +4,28 @@ import { useForm } from 'react-hook-form';
 import MailInput from '@components/formInput/MailInput';
 import PasswordInput from '@components/formInput/PasswordInput';
 import { useHistory } from 'react-router-dom';
+import { SignupVariables, Signup_signup } from '@api/types/Signup';
+import { useMutation } from '@apollo/client';
+import { SIGNUP } from '@api/mutation/signup';
+import TextInput from '@components/formInput/TextInput';
 
 function Signup(): JSX.Element {
   const history = useHistory();
-  const { register } = useForm();
+  const { register, handleSubmit } = useForm();
+
+  const [signupMutation] = useMutation<Signup_signup, SignupVariables>(SIGNUP, {
+    onCompleted: () => {
+      history.push('/');
+    },
+  });
+
+  const onSubmit = (data: SignupVariables) => {
+    signupMutation({
+      variables: {
+        ...data,
+      },
+    });
+  };
 
   function goToLogin() {
     history.push('/login');
@@ -35,7 +53,25 @@ function Signup(): JSX.Element {
             <div className="text-center text-4xl font-extralight drop-shadow-md">
               Hi There
             </div>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <TextInput
+                label=""
+                placeholder="firstname"
+                register={register}
+                name="firstName"
+                required
+                error=""
+                id="firstname"
+              />
+              <TextInput
+                label=""
+                placeholder="lastname"
+                register={register}
+                name="lastName"
+                required
+                error=""
+                id="lastName"
+              />
               <MailInput
                 label=""
                 placeholder="user@email.com"
@@ -43,7 +79,7 @@ function Signup(): JSX.Element {
                 email="email"
                 required
                 error=""
-                id="id"
+                id="email"
               />
               <PasswordInput
                 label=""
@@ -52,16 +88,16 @@ function Signup(): JSX.Element {
                 password="password"
                 required
                 error=""
-                id="id"
+                id="password"
               />
               <PasswordInput
                 label=""
                 placeholder="confirm password"
                 register={register}
-                password="password"
+                password="confirm-password"
                 required
                 error=""
-                id="id"
+                id="confirm-password"
               />
               <button
                 type="submit"
@@ -74,7 +110,7 @@ function Signup(): JSX.Element {
                 Signup
               </button>
               <button
-                type="submit"
+                type="button"
                 onClick={goToLogin}
                 className="mt-4 ml-6 text-center font-extralight drop-shadow-md"
                 style={{ color: ' #8560EE' }}
