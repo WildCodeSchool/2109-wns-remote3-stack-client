@@ -4,18 +4,21 @@ import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { SignupVariables, Signup_signup } from '@api/types/Signup';
 import { useMutation } from '@apollo/client';
-import { SIGNUP } from '@api/mutation/signup';
+import { SIGNUP_MUTATION } from '@api/mutation/signup';
 import LoginInput from '@components/formInput/LoginInput';
 
 function Signup(): JSX.Element {
   const history = useHistory();
   const { register, handleSubmit } = useForm();
 
-  const [signupMutation] = useMutation<Signup_signup, SignupVariables>(SIGNUP, {
-    onCompleted: () => {
-      history.push('/');
-    },
-  });
+  const [signupMutation] = useMutation<Signup_signup, SignupVariables>(
+    SIGNUP_MUTATION,
+    {
+      onCompleted: () => {
+        history.push('/');
+      },
+    }
+  );
 
   // check password + password confirm + mutation si OK
   const onSubmit = (data: SignupVariables & { confirm_password: string }) => {
