@@ -25,7 +25,9 @@ function Signup(): JSX.Element {
             tasks, and many more.
           </div>
         </div>
-        {/* <div className="absolute z-0 right-2 hidden lg:flex">
+        {/* 
+        // usercard - image behind form, optionnal. Prefer without but it's there.
+        <div className="absolute z-0 right-2 hidden lg:flex">
           <img src={UserCard} alt="userCard" />
         </div> */}
         <div className="justify-center z-10">
