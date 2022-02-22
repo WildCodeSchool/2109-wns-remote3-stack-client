@@ -1,12 +1,11 @@
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 // import UserCard from '@assets/User_card.png';
-import MailInput from '@components/formInput/MailInput';
-import PasswordInput from '@components/formInput/PasswordInput';
 import { useHistory } from 'react-router-dom';
 import { LoginVariables, Login_login } from '@api/types/Login';
 import { useMutation } from '@apollo/client';
 import { LOGIN_MUTATION } from '@api/mutation/login';
+import LoginInput from '@components/formInput/LoginInput';
 
 function Login(): JSX.Element {
   const history = useHistory();
@@ -55,20 +54,22 @@ function Login(): JSX.Element {
               Hi There
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <MailInput
+              <LoginInput
                 label=""
                 placeholder="user@email.com"
                 register={register}
-                email="email"
+                name="email"
+                type="email"
                 required
                 error=""
                 id="email"
               />
-              <PasswordInput
+              <LoginInput
                 label=""
                 placeholder="password"
                 register={register}
-                password="password"
+                name="password"
+                type="password"
                 required
                 error=""
                 id="password"
