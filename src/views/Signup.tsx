@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom';
 import { SignupVariables, Signup_signup } from '@api/types/Signup';
 import { useMutation } from '@apollo/client';
 import { SIGNUP } from '@api/mutation/signup';
-import TextInput from '@components/formInput/TextInput';
 import LoginInput from '@components/formInput/LoginInput';
 
 function Signup(): JSX.Element {
@@ -20,7 +19,8 @@ function Signup(): JSX.Element {
 
   // check password + password confirm + mutation si OK
   const onSubmit = (data: SignupVariables & { confirm_password: string }) => {
-    if (data.password !== data.confirm_password) {
+    console.log(data);
+    if (data.password === data.confirm_password) {
       signupMutation({
         variables: {
           ...data,
@@ -57,20 +57,22 @@ function Signup(): JSX.Element {
               Hi There
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <TextInput
+              <LoginInput
                 label=""
                 placeholder="firstname"
                 register={register}
                 name="firstName"
+                type="text"
                 required
                 error=""
                 id="firstname"
               />
-              <TextInput
+              <LoginInput
                 label=""
                 placeholder="lastname"
                 register={register}
                 name="lastName"
+                type="text"
                 required
                 error=""
                 id="lastName"
