@@ -21,7 +21,8 @@ export const GET_ONE_PROJECT = gql`
       status
       tasks {
         id
-        subject
+        name
+        description
         projectId
         startDate
         endDate

@@ -17,7 +17,8 @@ export interface UpdateTaskById_updateTaskById_tags {
 export interface UpdateTaskById_updateTaskById {
   __typename: "ITask";
   id: string;
-  subject: string;
+  name: string;
+  description: string;
   projectId: string;
   startDate: string;
   endDate: string;
@@ -31,8 +32,9 @@ export interface UpdateTaskById {
 }
 
 export interface UpdateTaskByIdVariables {
-  idTask: string;
-  subject: string;
+  updateTaskByIdId: string;
+  name: string;
+  description: string;
   projectId: string;
   endDate: string;
   advancement: string;

@@ -17,7 +17,8 @@ export interface getTaskByID_getTaskByID_tags {
 export interface getTaskByID_getTaskByID {
   __typename: "ITask";
   id: string;
-  subject: string;
+  name: string;
+  description: string;
   projectId: string;
   startDate: string;
   endDate: string;

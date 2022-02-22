@@ -18,7 +18,8 @@ export interface GetAllTasks_getAllTasks {
   __typename: "ITask";
   id: string;
   projectId: string;
-  subject: string;
+  name: string;
+  description: string;
   startDate: string;
   endDate: string;
   estimeeSpentTime: number;

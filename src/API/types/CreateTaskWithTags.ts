@@ -19,7 +19,8 @@ export interface CreateTaskWithTags_createTaskWithTags_tags {
 export interface CreateTaskWithTags_createTaskWithTags {
   __typename: "ITask";
   id: string;
-  subject: string;
+  name: string;
+  description: string;
   projectId: string;
   startDate: string;
   endDate: string;
@@ -34,7 +35,8 @@ export interface CreateTaskWithTags {
 
 export interface CreateTaskWithTagsVariables {
   tags: ITagPayload[];
-  subject: string;
+  name: string;
+  description: string;
   projectId: string;
   endDate: string;
   advancement: string;
