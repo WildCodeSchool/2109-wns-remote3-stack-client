@@ -1,13 +1,12 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 // import UserCard from '@assets/User_card.png';
-import MailInput from '@components/formInput/MailInput';
-import PasswordInput from '@components/formInput/PasswordInput';
 import { useHistory } from 'react-router-dom';
 import { SignupVariables, Signup_signup } from '@api/types/Signup';
 import { useMutation } from '@apollo/client';
 import { SIGNUP } from '@api/mutation/signup';
 import TextInput from '@components/formInput/TextInput';
+import LoginInput from '@components/formInput/LoginInput';
 
 function Signup(): JSX.Element {
   const history = useHistory();
@@ -19,12 +18,16 @@ function Signup(): JSX.Element {
     },
   });
 
-  const onSubmit = (data: SignupVariables) => {
-    signupMutation({
-      variables: {
-        ...data,
-      },
-    });
+  // check password + password confirm + mutation si OK
+  const onSubmit = (data: SignupVariables & { confirm_password: string }) => {
+    if (data.password !== data.confirm_password) {
+      signupMutation({
+        variables: {
+          ...data,
+        },
+      });
+    }
+    // todo : put else
   };
 
   function goToLogin() {
@@ -72,32 +75,35 @@ function Signup(): JSX.Element {
                 error=""
                 id="lastName"
               />
-              <MailInput
+              <LoginInput
                 label=""
                 placeholder="user@email.com"
                 register={register}
-                email="email"
+                name="email"
+                type="email"
                 required
                 error=""
                 id="email"
               />
-              <PasswordInput
+              <LoginInput
                 label=""
                 placeholder="password"
                 register={register}
-                password="password"
+                name="password"
+                type="password"
                 required
                 error=""
                 id="password"
               />
-              <PasswordInput
+              <LoginInput
                 label=""
                 placeholder="confirm password"
                 register={register}
-                password="confirm-password"
+                name="confirm_password"
+                type="password"
                 required
                 error=""
-                id="confirm-password"
+                id="confirm_password"
               />
               <button
                 type="submit"
