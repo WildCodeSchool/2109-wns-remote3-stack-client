@@ -48,8 +48,9 @@ function Sidebar({ setIsSidebar, isSideBar }: IProps): JSX.Element {
         <button
           type="button"
           onClick={() => {
-            dispatchLogout();
-            logoutMutation();
+            logoutMutation({
+              onCompleted: () => dispatchLogout(),
+            });
           }}
           className="bg-purple items-center  justify-center p-2 w-full  mt-2 lg:mt-10 rounded-md flex"
         >
