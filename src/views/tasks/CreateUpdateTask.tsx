@@ -74,7 +74,8 @@ function CreateUpdateTask({ setIsModal, taskId }: IProps): JSX.Element {
       skip: !taskId,
       // ON SUCCES SET THE DEFAULT VALUE TO THE FORM'S INPUTS
       onCompleted: (d: getTaskByID) => {
-        setValue('subject', d.getTaskByID.subject);
+        setValue('name', d.getTaskByID.name);
+        setValue('description', d.getTaskByID.description);
         setValue('advancement', d.getTaskByID.advancement);
         setValue('estimeeSpentTime', d.getTaskByID.estimeeSpentTime);
         setValue('taskId', d.getTaskByID.id);
@@ -114,7 +115,8 @@ function CreateUpdateTask({ setIsModal, taskId }: IProps): JSX.Element {
   ) => {
     const date = new Date(data.endDate);
     const taskData = {
-      subject: data.subject,
+      name: data.name,
+      description: data.description,
       projectId: data.projectId,
       tags: dataTag,
       advancement: data.advancement,
@@ -170,12 +172,21 @@ function CreateUpdateTask({ setIsModal, taskId }: IProps): JSX.Element {
               required
             />
             <TextInput
-              label="Subject"
-              placeholder="subject"
+              label="Name"
+              placeholder="name"
               register={register}
-              name="subject"
+              name="name"
               required
-              id="subject"
+              id="name"
+              error=""
+            />
+            <TextInput
+              label="Description"
+              placeholder="description"
+              register={register}
+              name="description"
+              required
+              id="description"
               error=""
             />
             <SelectInput
