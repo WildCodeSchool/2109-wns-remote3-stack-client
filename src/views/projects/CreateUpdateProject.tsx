@@ -38,6 +38,7 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
     createProjectVariables
   >(CREATE_PROJECT, {
     onCompleted: (d) => {
+      console.log(d);
       router.push(`/project/${d.id}`);
       toast('New project successfully created');
     },

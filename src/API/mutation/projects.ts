@@ -66,8 +66,6 @@ export const UPDATE_PROJECT = gql`
 
 export const DELETE_PROJECT = gql`
   mutation DeleteProject($deleteProjectByIdId: String!) {
-    deleteProjectById(id: $deleteProjectByIdId) {
-      id
-    }
+    deleteProjectById(id: $deleteProjectByIdId)
   }
 `;
