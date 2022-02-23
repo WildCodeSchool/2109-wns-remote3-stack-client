@@ -1,17 +1,37 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 // import UserCard from '@assets/User_card.png';
-import MailInput from '@components/formInput/MailInput';
-import PasswordInput from '@components/formInput/PasswordInput';
 import { useHistory } from 'react-router-dom';
+import { LoginVariables, Login_login } from '@api/types/Login';
+import { useMutation } from '@apollo/client';
+import { LOGIN_MUTATION } from '@api/mutation/login';
+import LoginInput from '@components/formInput/LoginInput';
 
 function Login(): JSX.Element {
   const history = useHistory();
-  const { register } = useForm();
+  const { register, handleSubmit } = useForm();
+
+  // TODO: once the user is logged in, recover data and save it in store
+  const [loginMutation] = useMutation<Login_login, LoginVariables>(
+    LOGIN_MUTATION,
+    {
+      onCompleted: () => {
+        history.push('/');
+      },
+    }
+  );
 
   function goToSignup() {
     history.push('/signup');
   }
+
+  const onSubmit: SubmitHandler<LoginVariables> = (data: LoginVariables) => {
+    loginMutation({
+      variables: {
+        ...data,
+      },
+    });
+  };
 
   return (
     <div className="flex items-center justify-center h-screen w-full">
@@ -33,24 +53,26 @@ function Login(): JSX.Element {
             <div className="text-center text-4xl font-extralight drop-shadow-md">
               Hi There
             </div>
-            <form>
-              <MailInput
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <LoginInput
                 label=""
                 placeholder="user@email.com"
                 register={register}
-                email="email"
+                name="email"
+                type="email"
                 required
                 error=""
-                id="id"
+                id="email"
               />
-              <PasswordInput
+              <LoginInput
                 label=""
                 placeholder="password"
                 register={register}
-                password="password"
+                name="password"
+                type="password"
                 required
                 error=""
-                id="id"
+                id="password"
               />
               <button
                 type="submit"

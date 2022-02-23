@@ -1,13 +1,36 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 // import UserCard from '@assets/User_card.png';
-import MailInput from '@components/formInput/MailInput';
-import PasswordInput from '@components/formInput/PasswordInput';
 import { useHistory } from 'react-router-dom';
+import { SignupVariables, Signup_signup } from '@api/types/Signup';
+import { useMutation } from '@apollo/client';
+import { SIGNUP_MUTATION } from '@api/mutation/signup';
+import LoginInput from '@components/formInput/LoginInput';
 
 function Signup(): JSX.Element {
   const history = useHistory();
-  const { register } = useForm();
+  const { register, handleSubmit } = useForm();
+
+  const [signupMutation] = useMutation<Signup_signup, SignupVariables>(
+    SIGNUP_MUTATION,
+    {
+      onCompleted: () => {
+        history.push('/');
+      },
+    }
+  );
+
+  // check password + password confirm + mutation si OK
+  const onSubmit = (data: SignupVariables & { confirm_password: string }) => {
+    if (data.password === data.confirm_password) {
+      signupMutation({
+        variables: {
+          ...data,
+        },
+      });
+    }
+    // TODO : add error notification or error state for inputs
+  };
 
   function goToLogin() {
     history.push('/login');
@@ -35,33 +58,56 @@ function Signup(): JSX.Element {
             <div className="text-center text-4xl font-extralight drop-shadow-md">
               Hi There
             </div>
-            <form>
-              <MailInput
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <LoginInput
+                label=""
+                placeholder="firstname"
+                register={register}
+                name="firstName"
+                type="text"
+                required
+                error=""
+                id="firstname"
+              />
+              <LoginInput
+                label=""
+                placeholder="lastname"
+                register={register}
+                name="lastName"
+                type="text"
+                required
+                error=""
+                id="lastName"
+              />
+              <LoginInput
                 label=""
                 placeholder="user@email.com"
                 register={register}
-                email="email"
+                name="email"
+                type="email"
                 required
                 error=""
-                id="id"
+                id="email"
               />
-              <PasswordInput
+              <LoginInput
                 label=""
                 placeholder="password"
                 register={register}
-                password="password"
+                name="password"
+                type="password"
                 required
                 error=""
-                id="id"
+                id="password"
               />
-              <PasswordInput
+              <LoginInput
                 label=""
                 placeholder="confirm password"
                 register={register}
-                password="password"
+                name="confirm_password"
+                type="password"
                 required
                 error=""
-                id="id"
+                id="confirm_password"
               />
               <button
                 type="submit"
@@ -74,7 +120,7 @@ function Signup(): JSX.Element {
                 Signup
               </button>
               <button
-                type="submit"
+                type="button"
                 onClick={goToLogin}
                 className="mt-4 ml-6 text-center font-extralight drop-shadow-md"
                 style={{ color: ' #8560EE' }}

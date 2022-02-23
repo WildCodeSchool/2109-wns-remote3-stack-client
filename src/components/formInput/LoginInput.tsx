@@ -6,17 +6,19 @@ interface IProps {
   label: string;
   placeholder: string;
   register: UseFormRegister<FieldValues>;
-  email: string;
-  required: boolean;
-  error: string;
+  name: string;
+  type: 'email' | 'password' | 'text';
+  error: string | null;
   id: string;
+  required: boolean;
 }
 
-function EmailInput({
+function LoginInput({
   placeholder,
   label,
   register,
-  email,
+  name,
+  type,
   required,
   id,
   error,
@@ -26,9 +28,9 @@ function EmailInput({
       {label}
       <input
         id={id}
-        type="email"
+        type={type}
         placeholder={placeholder}
-        {...register(email, { required })}
+        {...register(name, { required })}
         className="p-4 bg-white text-lightPurple mt-2  rounded-md focus:outline-none peer h-10"
       />
       <p className="text-red text-xs">{error}</p>
@@ -41,4 +43,4 @@ function EmailInput({
   );
 }
 
-export default EmailInput;
+export default LoginInput;
