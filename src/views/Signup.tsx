@@ -1,45 +1,115 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import MailInput from '@components/formInput/MailInput';
-import PasswordInput from '@components/formInput/PasswordInput';
+// import UserCard from '@assets/User_card.png';
+import { useHistory } from 'react-router-dom';
+import { SignupVariables, Signup } from '@api/types/Signup';
+import { useMutation } from '@apollo/client';
+import { SIGNUP_MUTATION } from '@api/mutation/signup';
+import LoginInput from '@components/formInput/LoginInput';
+import { useUserFromStore } from '@store/user.slice';
 
-function Signup(): JSX.Element {
-  const { register } = useForm();
+function SignUp(): JSX.Element {
+  const history = useHistory();
+  const { register, handleSubmit } = useForm();
+  const { dispatchLogin } = useUserFromStore();
+  const [signupMutation] = useMutation<Signup, SignupVariables>(
+    SIGNUP_MUTATION,
+    {
+      onCompleted: (data) => {
+        dispatchLogin(data.signup);
+        history.push('/');
+      },
+    }
+  );
+
+  // check password + password confirm + mutation si OK
+  const onSubmit = (data: SignupVariables & { confirm_password: string }) => {
+    if (data.password === data.confirm_password) {
+      signupMutation({
+        variables: {
+          ...data,
+        },
+      });
+    }
+    // TODO : add error notification or error state for inputs
+  };
+
+  function goToLogin() {
+    history.push('/login');
+  }
+
   return (
-    <div>
-      <div className="md:flex align-center mt-40 ml-10">
-        {/* <div className="flex-1 p-7">
+    <div className="flex items-center justify-center h-screen w-full">
+      <div className="md:flex gap-20 w-10/12 lg:w-7/12">
+        <div className="m-auto">
+          <div className="sm:text-7xl text-4xl text-center group-hover:text-center bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 mb-5 drop-shadow-lg">
+            Welcome to Stack.
+          </div>
+          <div className="text-justify bg-clip-text hidden md:flex text-lightGray ">
+            Get your work done. Stack helps you to manage your projects, create
+            tasks, and many more.
+          </div>
+        </div>
+        {/* 
+        // usercard - image behind form, optionnal. Prefer without but it's there.
+        <div className="absolute z-0 right-2 hidden lg:flex">
+          <img src={UserCard} alt="userCard" />
         </div> */}
-        <div className="flex-1 mt-2 p-7 ">
-          <div className="block p-7 rounded-lg bg-darkGray max-w-sm shadow-purple border border-gray-600">
-            <div className="text-center text-4xl font-extralight">Hi There</div>
-            <form>
-              <MailInput
+        <div className="justify-center z-10">
+          <div className="m-auto lg:m-0 block p-8 rounded-lg bg-darkGray w-96 shadow-purple border border-gray-600">
+            <div className="text-center text-4xl font-extralight drop-shadow-md">
+              Hi There
+            </div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <LoginInput
+                label=""
+                placeholder="firstname"
+                register={register}
+                name="firstName"
+                type="text"
+                required
+                error=""
+                id="firstname"
+              />
+              <LoginInput
+                label=""
+                placeholder="lastname"
+                register={register}
+                name="lastName"
+                type="text"
+                required
+                error=""
+                id="lastName"
+              />
+              <LoginInput
                 label=""
                 placeholder="user@email.com"
                 register={register}
-                email="email"
+                name="email"
+                type="email"
                 required
                 error=""
-                id="id"
+                id="email"
               />
-              <PasswordInput
+              <LoginInput
                 label=""
                 placeholder="password"
                 register={register}
-                password="password"
+                name="password"
+                type="password"
                 required
                 error=""
-                id="id"
+                id="password"
               />
-              <PasswordInput
+              <LoginInput
                 label=""
                 placeholder="confirm password"
                 register={register}
-                password="password"
+                name="confirm_password"
+                type="password"
                 required
                 error=""
-                id="id"
+                id="confirm_password"
               />
               <button
                 type="submit"
@@ -51,28 +121,20 @@ function Signup(): JSX.Element {
               >
                 Signup
               </button>
-              <div
-                className="mt-4 text-center font-extralight"
+              <button
+                type="button"
+                onClick={goToLogin}
+                className="mt-4 ml-6 text-center font-extralight drop-shadow-md"
                 style={{ color: ' #8560EE' }}
               >
-                Already have an account? Sign in
-              </div>
+                Already have an account? Login in
+              </button>
             </form>
           </div>
         </div>
       </div>
-      {/* <div>
-        <div className="text-center mt-10 space-y-8">
-        </div>
-      </div>
-      <div className="text-center mt-36 space-y-8">
-        <div className="w-screen h-screen bg-darkBlue z-50 p-5">
-          <div className="text-center max-w-md">
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 }
 
-export default Signup;
+export default SignUp;

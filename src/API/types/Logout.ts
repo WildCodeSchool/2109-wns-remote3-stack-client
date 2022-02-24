@@ -4,13 +4,9 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: DeleteProject
+// GraphQL mutation operation: Logout
 // ====================================================
 
-export interface DeleteProject {
-  deleteProjectById: boolean;
-}
-
-export interface DeleteProjectVariables {
-  deleteProjectByIdId: string;
+export interface Logout {
+  logout: boolean;
 }

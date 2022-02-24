@@ -30,7 +30,6 @@ export interface createProject {
 }
 
 export interface createProjectVariables {
-  userId: string;
   name: string;
   description: string;
   status: string;

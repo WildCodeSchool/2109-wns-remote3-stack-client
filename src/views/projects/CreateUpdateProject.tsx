@@ -6,7 +6,6 @@ import close from '@assets/icons/close.svg';
 import { useHistory } from 'react-router-dom';
 import { GET_ONE_PROJECT, GET_ALL_PROJECTS } from '@api/queries/projectQueries';
 import { format } from 'date-fns';
-import { useUserFromStore } from '@store/user.slice';
 import { GetAllProjects_getAllProjects } from '@api/types/GetAllProjects';
 import { getProjectById } from '@api/types/getProjectById';
 import {
@@ -28,7 +27,6 @@ interface IProps {
 
 function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
   const { handleSubmit, register, setValue } = useForm();
-  const { user } = useUserFromStore();
   const router = useHistory();
   const [dateError, setDateError] = useState('');
 
@@ -100,7 +98,7 @@ function CreateUpdateProject({ setIsModal, projectId }: IProps): JSX.Element {
       if (projectId === undefined) {
         // TODO: CHECK THIS BUG LATER
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        create({ variables: { ...projectData, userId: user.id! } });
+        create({ variables: { ...projectData } });
       } else {
         update({ variables: { ...projectData, updateProjectId: projectId } });
       }

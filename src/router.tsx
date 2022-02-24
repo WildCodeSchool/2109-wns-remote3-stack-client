@@ -15,7 +15,6 @@ import Login from '@views/Login';
 function Routes(): JSX.Element {
   return (
     <div>
-      {' '}
       <Route exact path="/" component={HomePage} />
       <Route path="/login" component={Login} />
       <Route path="/signup" component={Signup} />
