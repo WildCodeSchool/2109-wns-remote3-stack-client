@@ -3,7 +3,8 @@ import { gql } from '@apollo/client';
 export const CREATE_TASK_WITH_TAGS = gql`
   mutation CreateTaskWithTags(
     $tags: [ITagPayload!]!
-    $subject: String!
+    $name: String!
+    $description: String!
     $projectId: String!
     $endDate: String!
     $advancement: String!
@@ -11,14 +12,16 @@ export const CREATE_TASK_WITH_TAGS = gql`
   ) {
     createTaskWithTags(
       tags: $tags
-      subject: $subject
+      name: $name
+      description: $description
       projectId: $projectId
       endDate: $endDate
       advancement: $advancement
       estimeeSpentTime: $estimeeSpentTime
     ) {
       id
-      subject
+      name
+      description
       projectId
       startDate
       endDate
@@ -35,23 +38,26 @@ export const CREATE_TASK_WITH_TAGS = gql`
 
 export const UPDATE_TASK = gql`
   mutation UpdateTaskById(
-    $idTask: String!
-    $subject: String!
+    $updateTaskByIdId: String!
+    $name: String!
+    $description: String!
     $projectId: String!
     $endDate: String!
     $advancement: String!
     $estimeeSpentTime: Float!
   ) {
     updateTaskById(
-      id: $idTask
-      subject: $subject
+      id: $updateTaskByIdId
+      name: $name
+      description: $description
       projectId: $projectId
       endDate: $endDate
       advancement: $advancement
       estimeeSpentTime: $estimeeSpentTime
     ) {
       id
-      subject
+      name
+      description
       projectId
       startDate
       endDate

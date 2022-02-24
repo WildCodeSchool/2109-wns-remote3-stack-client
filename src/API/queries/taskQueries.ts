@@ -5,7 +5,8 @@ export const GET_ALL_TASKS = gql`
     getAllTasks {
       id
       projectId
-      subject
+      name
+      description
       startDate
       endDate
       estimeeSpentTime
@@ -23,7 +24,8 @@ export const GET_ONE_TASK = gql`
   query getTaskByID($taskId: String!) {
     getTaskByID(id: $taskId) {
       id
-      subject
+      name
+      description
       projectId
       startDate
       endDate

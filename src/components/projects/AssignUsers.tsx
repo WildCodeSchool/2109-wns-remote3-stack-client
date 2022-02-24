@@ -51,7 +51,7 @@ function AssignUsers({
     return <p>...loading</p>;
   }
   if (error || !data || createError) {
-    return <p>error</p>;
+    return <p className="bg-red-200">error</p>;
   }
 
   return (
