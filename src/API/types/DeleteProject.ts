@@ -7,13 +7,8 @@
 // GraphQL mutation operation: DeleteProject
 // ====================================================
 
-export interface DeleteProject_deleteProjectById {
-  __typename: "IProject";
-  id: string;
-}
-
 export interface DeleteProject {
-  deleteProjectById: DeleteProject_deleteProjectById;
+  deleteProjectById: boolean;
 }
 
 export interface DeleteProjectVariables {

@@ -2,24 +2,23 @@ import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 // import UserCard from '@assets/User_card.png';
 import { useHistory } from 'react-router-dom';
-import { LoginVariables, Login_login } from '@api/types/Login';
+import { LoginVariables, Login } from '@api/types/Login';
 import { useMutation } from '@apollo/client';
 import { LOGIN_MUTATION } from '@api/mutation/login';
 import LoginInput from '@components/formInput/LoginInput';
+import { useUserFromStore } from '@store/user.slice';
 
-function Login(): JSX.Element {
+function LogIn(): JSX.Element {
   const history = useHistory();
   const { register, handleSubmit } = useForm();
-
+  const { dispatchLogin } = useUserFromStore();
   // TODO: once the user is logged in, recover data and save it in store
-  const [loginMutation] = useMutation<Login_login, LoginVariables>(
-    LOGIN_MUTATION,
-    {
-      onCompleted: () => {
-        history.push('/');
-      },
-    }
-  );
+  const [loginMutation] = useMutation<Login, LoginVariables>(LOGIN_MUTATION, {
+    onCompleted: (data: Login) => {
+      dispatchLogin(data.login);
+      history.push('/');
+    },
+  });
 
   function goToSignup() {
     history.push('/signup');
@@ -100,4 +99,4 @@ function Login(): JSX.Element {
   );
 }
 
-export default Login;
+export default LogIn;

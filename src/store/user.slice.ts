@@ -4,13 +4,10 @@ import { RootState } from '.';
 
 export interface UserState {
   id?: string;
-  username?: string;
+  firstName?: string;
+  lastName?: string;
   email?: string;
-  avatarUrl?: string;
-}
-
-interface UserStateWithLogged extends UserState {
-  logged: boolean;
+  avatar?: string | null;
 }
 
 // TODO: improve dispatch types
@@ -29,11 +26,12 @@ interface ReturnUseUserFromStore {
   };
 }
 
-const initialState: UserStateWithLogged = {
-  logged: false,
-  id: '0626cca8-f77c-456a-a5a2-fab4ab667575',
-  username: 'John',
-  email: 'john@gmail.com',
+const initialState: UserState = {
+  id: undefined,
+  firstName: undefined,
+  lastName: undefined,
+  email: undefined,
+  avatar: undefined,
 };
 
 export const userSlice = createSlice({
@@ -42,7 +40,6 @@ export const userSlice = createSlice({
   reducers: {
     login: (state, action: PayloadAction<UserState>) => ({
       ...action.payload,
-      logged: true,
     }),
     logout: () => initialState,
     update: (state, action: PayloadAction<UserState>) => ({

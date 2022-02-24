@@ -2,7 +2,6 @@ import { gql } from '@apollo/client';
 
 export const CREATE_PROJECT = gql`
   mutation createProject(
-    $userId: String!
     $name: String!
     $description: String!
     $status: String!
@@ -11,7 +10,6 @@ export const CREATE_PROJECT = gql`
     $estimeeSpentTime: Float!
   ) {
     createProject(
-      userId: $userId
       name: $name
       description: $description
       status: $status
@@ -66,8 +64,6 @@ export const UPDATE_PROJECT = gql`
 
 export const DELETE_PROJECT = gql`
   mutation DeleteProject($deleteProjectByIdId: String!) {
-    deleteProjectById(id: $deleteProjectByIdId) {
-      id
-    }
+    deleteProjectById(id: $deleteProjectByIdId)
   }
 `;

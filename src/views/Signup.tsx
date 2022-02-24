@@ -2,19 +2,21 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 // import UserCard from '@assets/User_card.png';
 import { useHistory } from 'react-router-dom';
-import { SignupVariables, Signup_signup } from '@api/types/Signup';
+import { SignupVariables, Signup } from '@api/types/Signup';
 import { useMutation } from '@apollo/client';
 import { SIGNUP_MUTATION } from '@api/mutation/signup';
 import LoginInput from '@components/formInput/LoginInput';
+import { useUserFromStore } from '@store/user.slice';
 
-function Signup(): JSX.Element {
+function SignUp(): JSX.Element {
   const history = useHistory();
   const { register, handleSubmit } = useForm();
-
-  const [signupMutation] = useMutation<Signup_signup, SignupVariables>(
+  const { dispatchLogin } = useUserFromStore();
+  const [signupMutation] = useMutation<Signup, SignupVariables>(
     SIGNUP_MUTATION,
     {
-      onCompleted: () => {
+      onCompleted: (data) => {
+        dispatchLogin(data.signup);
         history.push('/');
       },
     }
@@ -135,4 +137,4 @@ function Signup(): JSX.Element {
   );
 }
 
-export default Signup;
+export default SignUp;
