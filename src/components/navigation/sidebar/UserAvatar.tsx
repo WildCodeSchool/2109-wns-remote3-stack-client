@@ -9,7 +9,6 @@ interface IProps {
 
 function UserAvatar({ setIsSidebar }: IProps): JSX.Element {
   const { user } = useUserFromStore();
-  console.log(user);
   return (
     <div>
       <Link to="/profil">
