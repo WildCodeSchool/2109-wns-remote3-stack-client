@@ -11,3 +11,15 @@ export const GET_USER_WITH_PROJECT = gql`
     }
   }
 `;
+
+export const GET_SELF = gql`
+  query GetSelf {
+    getSelf {
+      id
+      email
+      firstName
+      lastName
+      avatar
+    }
+  }
+`;

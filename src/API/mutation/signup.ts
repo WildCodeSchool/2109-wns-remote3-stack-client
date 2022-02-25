@@ -18,6 +18,7 @@ export const SIGNUP_MUTATION = gql`
       firstName
       lastName
       avatar
+      token
     }
   }
 `;
