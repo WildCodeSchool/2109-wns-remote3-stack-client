@@ -13,15 +13,15 @@ function SignUp(): JSX.Element {
   const history = useHistory();
   const { register, handleSubmit } = useForm();
   const { dispatchLogin } = useUserFromStore();
-  const [signupMutation] = useMutation<Signup, SignupVariables>(
-    SIGNUP_MUTATION,
-    {
-      onCompleted: (data) => {
-        dispatchLogin(data.signup);
-        history.push('/');
-      },
-    }
-  );
+  const [signupMutation, { loading, error }] = useMutation<
+    Signup,
+    SignupVariables
+  >(SIGNUP_MUTATION, {
+    onCompleted: (data) => {
+      dispatchLogin(data.signup);
+      history.push('/');
+    },
+  });
 
   // check password + password confirm + mutation si OK
   const onSubmit = (data: SignupVariables & { confirm_password: string }) => {
@@ -32,11 +32,17 @@ function SignUp(): JSX.Element {
         },
       });
     }
-    // TODO : add error notification or error state for inputs
   };
 
   function goToLogin() {
     history.push('/login');
+  }
+
+  if (loading) {
+    return <p>...loading</p>;
+  }
+  if (error) {
+    return <p>error</p>;
   }
 
   return (

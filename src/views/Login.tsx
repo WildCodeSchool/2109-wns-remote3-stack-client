@@ -14,7 +14,10 @@ function LogIn(): JSX.Element {
   const { register, handleSubmit } = useForm();
   const { dispatchLogin } = useUserFromStore();
   // TODO: once the user is logged in, recover data and save it in store
-  const [loginMutation] = useMutation<Login, LoginVariables>(LOGIN_MUTATION, {
+  const [loginMutation, { loading, error }] = useMutation<
+    Login,
+    LoginVariables
+  >(LOGIN_MUTATION, {
     onCompleted: (data: Login) => {
       dispatchLogin(data.login);
       history.push('/');
@@ -32,6 +35,13 @@ function LogIn(): JSX.Element {
       },
     });
   };
+
+  if (loading) {
+    return <p>...loading</p>;
+  }
+  if (error) {
+    return <p>error</p>;
+  }
 
   return (
     <LogContainer>
