@@ -8,12 +8,13 @@
 // ====================================================
 
 export interface Login_login {
-  __typename: "IUser";
+  __typename: "IUserWithToken";
   id: string;
   email: string;
   firstName: string;
   lastName: string;
   avatar: string | null;
+  token: string;
 }
 
 export interface Login {

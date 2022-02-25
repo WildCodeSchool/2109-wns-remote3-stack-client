@@ -7,6 +7,11 @@
 // GraphQL mutation operation: Logout
 // ====================================================
 
+export interface Logout_logout {
+  __typename: "IToken";
+  token: string;
+}
+
 export interface Logout {
-  logout: boolean;
+  logout: Logout_logout;
 }

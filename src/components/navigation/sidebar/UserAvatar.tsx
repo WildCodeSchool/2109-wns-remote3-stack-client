@@ -9,7 +9,6 @@ interface IProps {
 
 function UserAvatar({ setIsSidebar }: IProps): JSX.Element {
   const { user } = useUserFromStore();
-
   return (
     <div>
       <Link to="/profil">
@@ -22,7 +21,7 @@ function UserAvatar({ setIsSidebar }: IProps): JSX.Element {
             className="h-24 lg:h-10 lg:w-10 w-24 rounded-full border-4 lg:border-2 border-purple"
             style={{
               backgroundImage: `url(${
-                user.avatarUrl === undefined ? dfltAvatar : user.avatarUrl
+                user.avatar === undefined ? dfltAvatar : user.avatar
               })`,
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
@@ -31,7 +30,7 @@ function UserAvatar({ setIsSidebar }: IProps): JSX.Element {
           />
           <div className="flex  flex-col items-center lg:items-start lg:ml-1">
             <div className="flex  font-bold text-purple text-2xl lg:text-base mt-2 lg:mt-0">
-              <p className="lg:ml-2">{user.username}</p>
+              <p className="lg:ml-2">{user.firstName}</p>
             </div>
             <p className="text-gray-500 text-sm lg:ml-2">{user.email}</p>
           </div>

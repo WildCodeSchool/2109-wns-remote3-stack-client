@@ -4,26 +4,18 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: Signup
+// GraphQL query operation: GetSelf
 // ====================================================
 
-export interface Signup_signup {
-  __typename: "IUserWithToken";
+export interface GetSelf_getSelf {
+  __typename: "IUser";
   id: string;
   email: string;
   firstName: string;
   lastName: string;
   avatar: string | null;
-  token: string;
 }
 
-export interface Signup {
-  signup: Signup_signup;
-}
-
-export interface SignupVariables {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
+export interface GetSelf {
+  getSelf: GetSelf_getSelf;
 }
