@@ -19,6 +19,7 @@ function Sidebar({ setIsSidebar, isSideBar }: IProps): JSX.Element {
   const { dispatchLogout } = useUserFromStore();
   const [logoutMutation] = useMutation<Logout>(LOGOUT_MUTATION, {
     onCompleted: () => {
+      dispatchLogout();
       history.push('/login');
     },
   });
@@ -48,9 +49,7 @@ function Sidebar({ setIsSidebar, isSideBar }: IProps): JSX.Element {
         <button
           type="button"
           onClick={() => {
-            logoutMutation({
-              onCompleted: () => dispatchLogout(),
-            });
+            logoutMutation();
           }}
           className="bg-purple items-center  justify-center p-2 w-full  mt-2 lg:mt-10 rounded-md flex"
         >

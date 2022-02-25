@@ -8,6 +8,11 @@ export interface UserState {
   lastName?: string;
   email?: string;
   avatar?: string | null;
+  logged?: boolean;
+}
+
+interface UserStateWithLogged extends UserState {
+  logged: boolean;
 }
 
 // TODO: improve dispatch types
@@ -26,7 +31,8 @@ interface ReturnUseUserFromStore {
   };
 }
 
-const initialState: UserState = {
+const initialState: UserStateWithLogged = {
+  logged: false,
   id: undefined,
   firstName: undefined,
   lastName: undefined,
@@ -40,6 +46,7 @@ export const userSlice = createSlice({
   reducers: {
     login: (state, action: PayloadAction<UserState>) => ({
       ...action.payload,
+      logged: true,
     }),
     logout: () => initialState,
     update: (state, action: PayloadAction<UserState>) => ({
