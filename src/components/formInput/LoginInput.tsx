@@ -24,14 +24,14 @@ function LoginInput({
   error,
 }: IProps): JSX.Element {
   return (
-    <label htmlFor={id} className="flex w-full mt-5 flex-col text-sm">
+    <label htmlFor={id} className="flex w-full flex-col text-sm">
       {label}
       <input
         id={id}
         type={type}
         placeholder={placeholder}
         {...register(name, { required })}
-        className="p-4 bg-white text-lightPurple mt-2  rounded-md focus:outline-none peer h-10"
+        className="p-4 bg-white text-lightPurple  rounded-md focus:outline-none peer h-10"
       />
       <p className="text-red text-xs">{error}</p>
       {required && (
