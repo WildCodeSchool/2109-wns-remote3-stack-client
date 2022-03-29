@@ -46,7 +46,7 @@ function TaskDetails(): JSX.Element {
                 <h2 className="text-2xl text-lightPurple">
                   {dataProject?.getProjectByID.name}
                 </h2>
-                <h1 className="ml-2">/ {dataTask.getTaskByID.subject}</h1>
+                <h1 className="ml-2">/ {dataTask.getTaskByID.description}</h1>
               </div>
               <div className="flex">
                 {dataTask.getTaskByID.tags.map((tag) => {
