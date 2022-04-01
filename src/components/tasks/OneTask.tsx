@@ -15,7 +15,7 @@ function OneTask({ item }: IProps): JSX.Element {
         key={item.id}
       >
         <div className="flex flex-col items-start">
-          <h2 className="text-xl">{item.subject}</h2>
+          {/* <h2 className="text-xl">{item.subject}</h2> */}
           <p className="text-sm">{item.projectId}</p>
           <div className="flex">
             <p className="my-1 lg:mr-4 text-left">
