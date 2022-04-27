@@ -21,6 +21,6 @@ jobs:
         name: Build and push
         with:
           context: ./
-          file: ./Dockerfile
+          file: ./Dockerfile.deployment
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_IMAGE_NAME }}:latest
