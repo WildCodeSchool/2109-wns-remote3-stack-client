@@ -22,8 +22,8 @@ export interface CreateTaskWithTags_createTaskWithTags {
   name: string;
   description: string;
   projectId: string;
-  startDate: string;
-  endDate: string;
+  startDate: any;
+  endDate: any;
   estimeeSpentTime: number;
   advancement: string;
   tags: CreateTaskWithTags_createTaskWithTags_tags[];

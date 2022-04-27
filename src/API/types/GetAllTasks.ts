@@ -20,8 +20,8 @@ export interface GetAllTasks_getAllTasks {
   projectId: string;
   name: string;
   description: string;
-  startDate: string;
-  endDate: string;
+  startDate: any;
+  endDate: any;
   estimeeSpentTime: number;
   advancement: string;
   tags: GetAllTasks_getAllTasks_tags[];

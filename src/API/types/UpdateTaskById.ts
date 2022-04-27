@@ -20,8 +20,8 @@ export interface UpdateTaskById_updateTaskById {
   name: string;
   description: string;
   projectId: string;
-  startDate: string;
-  endDate: string;
+  startDate: any;
+  endDate: any;
   estimeeSpentTime: number;
   advancement: string;
   tags: UpdateTaskById_updateTaskById_tags[];
