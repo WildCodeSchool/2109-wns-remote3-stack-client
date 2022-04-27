@@ -7,7 +7,6 @@ COPY package*.json ./
 
 RUN yarn
 
-COPY tsconfig.json ./
-COPY src src
+COPY . .
 
 CMD ["yarn", "dev"]
