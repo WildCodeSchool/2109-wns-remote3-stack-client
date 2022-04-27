@@ -8,7 +8,7 @@ module.exports = {
       jsx: true, // Enable JSX since we're using React
     },
   },
-  plugins: [],
+  plugins: ['@typescript-eslint', 'import'],
   settings: {
     react: {
       version: 'detect', // Automatically detect the react version
@@ -17,6 +17,7 @@ module.exports = {
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
+      typescript: {},
     },
   },
   env: {
@@ -43,6 +44,7 @@ module.exports = {
     },
   ],
   rules: {
+    camelcase: 'off',
     'no-use-before-define': 'off',
     'no-console': 1,
     'no-unused-vars': 'off',

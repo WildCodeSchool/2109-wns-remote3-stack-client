@@ -7,9 +7,11 @@ export interface UserState {
   firstName?: string;
   lastName?: string;
   email?: string;
-  role?: 'USER' | 'ADMIN' | 'SUPERADMIN' | null;
-  companyId?: string;
-  jobId?: string;
+  avatar?: string | null;
+}
+
+interface UserStateWithToken extends UserState {
+  token: string;
 }
 
 interface UserStateWithLogged extends UserState {
@@ -18,13 +20,17 @@ interface UserStateWithLogged extends UserState {
 
 // TODO: improve dispatch types
 interface ReturnUseUserFromStore {
-  user: UserState;
-  dispatchLogin: (payload: UserState) => {
+  user: UserStateWithLogged;
+  dispatchLogin: (payload: UserStateWithToken) => {
     type: string;
-    payload: UserState;
+    payload: UserStateWithToken;
   };
   dispatchLogout: () => {
     type: string;
+  };
+  dispatchSelf: (payload: UserState) => {
+    type: string;
+    payload: UserState;
   };
   dispatchUser: (payload: UserState) => {
     type: string;
@@ -34,17 +40,33 @@ interface ReturnUseUserFromStore {
 
 const initialState: UserStateWithLogged = {
   logged: false,
+  id: undefined,
+  firstName: undefined,
+  lastName: undefined,
+  email: undefined,
+  avatar: undefined,
 };
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<UserState>) => ({
+    login: (state, action: PayloadAction<UserStateWithToken>) => {
+      const { token, ...user } = action.payload;
+      localStorage.setItem('token', token);
+      return {
+        ...user,
+        logged: true,
+      };
+    },
+    logout: () => {
+      localStorage.removeItem('token');
+      return initialState;
+    },
+    self: (state, action: PayloadAction<UserState>) => ({
       ...action.payload,
       logged: true,
     }),
-    logout: () => initialState,
     update: (state, action: PayloadAction<UserState>) => ({
       ...state,
       ...action.payload,
@@ -52,18 +74,21 @@ export const userSlice = createSlice({
   },
 });
 
-export const { login, logout, update } = userSlice.actions;
+export const { login, logout, self, update } = userSlice.actions;
 
 export const useUserFromStore = (): ReturnUseUserFromStore => {
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
-  const dispatchLogin = (payload: UserState) => dispatch(login(payload));
+  const dispatchLogin = (payload: UserStateWithToken) =>
+    dispatch(login(payload));
+  const dispatchSelf = (payload: UserState) => dispatch(self(payload));
   const dispatchLogout = () => dispatch(logout());
   const dispatchUser = (payload: UserState) => dispatch(update(payload));
   return {
     user,
     dispatchLogin,
     dispatchLogout,
+    dispatchSelf,
     dispatchUser,
   };
 };
